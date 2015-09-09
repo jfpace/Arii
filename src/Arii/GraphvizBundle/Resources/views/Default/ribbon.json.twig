@@ -1,0 +1,28 @@
+{
+   "items":
+   [
+      {   "type":"block", 
+          text:"{{ "module.GVZ" | trans }}", 
+          "text_pos": "top", 
+          "list":
+          [
+             {   "type": "buttonSelect", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/gvz.png",
+                 items:
+                 [ 
+                    { id:"audit", text: "{{ "Audit" | trans }}", img: "audit.png" }
+                 ]
+             },
+            { "type": "button", id:"live", text: "{{ "Live" | trans }}", img: "live.png" },
+            { "type": "button", id:"_all", text: "'{{ "All" | trans }}'", img: "all.png"  },
+            { "type": "buttonSelect", id:"remote", text: "{{ "Remote" | trans }}", img: "remote.png",
+              items: [ {% for scheduler in Schedulers %}{ id: "remote_{{ scheduler }}", text: "{{ scheduler }}" }{% if not loop.last %},{% endif %}
+{% endfor %} 
+                    ]
+            }
+         ]
+      }
+   ]
+}

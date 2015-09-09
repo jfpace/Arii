@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<job_chain  orders_recoverable="no" visible="yes" title="Synchronisation entre la base du scheduler et Ari'i">
+    <job_chain_node  state="RUNTIMES" job="updateDB" next_state="ORDER_RUNS" error_state="!RUNTIMES"/>
+
+    <job_chain_node  state="ORDER_RUNS" job="updateDB" next_state="NODE_RUNS" error_state="!ORDER_RUNS"/>
+
+    <job_chain_node  state="NODE_RUNS" job="updateDB" next_state="STATUS" error_state="!NODE_RUNS"/>
+
+    <job_chain_node  state="STATUS" job="updateDB" next_state="SUCCESS" error_state="!STATUS"/>
+
+    <job_chain_node  state="SUCCESS"/>
+
+    <job_chain_node  state="!RUNTIMES"/>
+
+    <job_chain_node  state="!ORDER_RUNS"/>
+
+    <job_chain_node  state="!NODE_RUNS"/>
+
+    <job_chain_node  state="!STATUS"/>
+</job_chain>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<job_chain  orders_recoverable="no" visible="yes">
+    <job_chain_node  state="STATE" job="getShowState" next_state="POST" error_state="!STATE"/>
+
+    <job_chain_node  state="POST" job="postShowState" next_state="SUCCESS" error_state="!POST"/>
+
+    <job_chain_node  state="SUCCESS"/>
+
+    <job_chain_node  state="!STATE"/>
+
+    <job_chain_node  state="!POST"/>
+</job_chain>

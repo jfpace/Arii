@@ -1,0 +1,475 @@
+{# src/Arii/AdminBundle/Resources/views/Default/database.html.twig #}
+
+{% extends "AriiAdminBundle::layout.html.twig" %}
+
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Spoolers" | trans }}</h2>
+                <ul  class="section_menu">
+      <li><a href="{{ url('arii_Admin_spoolers') }}" class="active"><span><span><img src="{{ asset('arii/images/menu/cog.png') }}"/>&nbsp;{{ "Spoolers" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_repositories') }}" class=""><span><span><img src="{{ asset('arii/images/menu/database.png') }}"/>&nbsp;{{ "Repositories" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_connections') }}" class=""><span><span><img src="{{ asset('arii/images/menu/transmit.png') }}"/>&nbsp;{{ "Connections" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_sites') }}" class=""><span><span><img src="{{ asset('arii/images/menu/world.png') }}"/>&nbsp;{{ "Sites" | trans }}</span></span></a></li>
+</ul>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                                <div class="sct_right">
+     <div id="mygrid" style="height:580px;overflow:hidden;width: 100%;position: relative;"></div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+<script language="javascript">
+dhtmlx.skin = "dhx_skyblue";
+
+var menu = new dhtmlXMenuObject();
+menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+menu.renderAsContextMenu();
+menu.attachEvent("onClick", onMenuClick);
+menu.loadXML("{{ url('xml_Admin_spoolers_menu') }}");
+
+var dhxLayout = new dhtmlXLayoutObject("mygrid","2U");
+dhxLayout.cells("a").hideHeader();
+dhxLayout.cells("b").setWidth(420);
+dhxLayout.cells("b").hideHeader();
+
+var toolbarb;
+toolbarb = dhxLayout.cells("b").attachToolbar();
+toolbarb.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbarb.loadXML("{{ url('xml_Admin_spooler_toolbar') }}", function () {
+    toolbarb.hideItem("delete_spooler");
+});
+toolbarb.attachEvent("onClick",onClick);
+
+
+var myform,formData;
+formData = [
+    { type: "settings", position: "label-left", labelWidth: 130, inputWidth: 200,labelAlign: "left",noteWidth: 200 },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "b1",
+        list: [
+             {
+                type: "fieldset",
+                name: "connection_info",
+                label: "{{ "Connection Info" | trans }}",
+                width: "auto",
+                list: [
+                    {type: "hidden",name: "id"},
+                    { type: "select",
+                      name: "supervisor_id",
+                      label: "{{ "Supervisor"| trans }}",
+                      options: [
+                        { text: "", value:"" }
+                      ],
+                      connector: "{{ url('xml_Admin_spooler_supervisors_select') }}",
+                      note: {
+                           text: "{{ "spooler.supervisor.note" | trans }}"
+                      }
+                    },
+                    {
+                      type: "select",
+                      name: "db_id",
+                      label: "{{ "DB Connection" | trans}}",
+                      options: [
+                        { text: "", value:"" }
+                      ],
+                      connector: "{{ url('xml_Admin_spooler_repositories_select') }}",
+                      note: {
+                           text: "{{ "spooler.database.note" | trans }}"
+                      }
+                    },
+                    {
+                      type: "select",
+                      name: "smtp_id",
+                      label: "{{ "Mail Connection" | trans}}",
+                      options: [
+                        { text: "", value:"" }
+                      ],
+                      connector: "{{ url('xml_Admin_spooler_mail_select') }}",
+                      note: {
+                           text: "{{ "spooler.mail.note" | trans }}"
+                      }
+                    },
+                    {
+                      type: "select",
+                      name: "site_id",
+                      label: "{{ "Site" | trans}}",
+                      connector: "{{ url('xml_Admin_spooler_sites_select') }}",
+                      note: {
+                           text: "{{ "spooler.site.note" | trans }}"
+                      },
+                      required: true
+                    },   
+                    {
+                      type: "select",
+                      name: "primary_id",
+                      label: "{{ "Backup Spooler" | trans}}",
+                      options: [
+                        { text: "", value: "" }
+                      ],
+                      connector: "{{ url('xml_Admin_spooler_backup_select') }}",
+                      note: {
+                           text: "{{ "spooler.backup.note" | trans }}"
+                      }
+                    }
+                ]
+             }
+        ]
+    },
+    {
+        type: "block",
+        inputWidth: "auto",
+        id: "b2",
+        list: [
+             { 
+                type: "fieldset",
+                name: "basic_info",
+                label: "{{ "Basic Info" | trans }}",
+                width: "auto",
+                list: [
+                    {type: "hidden",name: "id"},
+                    { type: "input",
+                      name: "scheduler",
+                      label: "{{ "Spooler ID"| trans }}",
+                      required: true
+                    },         
+                    { type: "input",
+                      name: "name",
+                      label: "{{ "Spooler Name"| trans }}"
+                    },
+                    { type: "input",
+                      name: "spooler_description",
+                      label: "{{ "Spooler Description" | trans }}",
+                      rows: 3
+                    },
+                    { type: "input",
+                      name: "host",
+                      label: "{{ "Host"| trans }}",
+                      required: true
+                    },
+                    {
+                        type: "input",
+                        name: "ip",
+                        label: "{{ "IP" | trans }}",
+                        note: {
+                            text: "{{ "Specify the ip address of the host" | trans }}"
+                        }
+                    },
+                    { type: "input",
+                      name: "port",
+                      label: "{{ "Port"| trans }}",
+                      required: true
+                    },
+                    { type: "checkbox",
+                      name: "events",
+                      label: "{{ "Events"| trans }}",
+                      value: 1,
+                      note: {
+                           text: "{{ "spooler.events.note" | trans }}"
+                      }
+                    },
+                    { type: "checkbox",
+                      name: "remote",
+                      label: "{{ "Remote"| trans }}",
+                      value: 1,
+                      note: {
+                           text: "{{ "spooler.remote.note" | trans }}"
+                      }
+                    }
+                ]
+             }
+             
+        ]
+    },
+    {
+        type: "block",
+        inputWidth: "auto",
+        id: "b3",
+        list: []
+    },
+    {
+        type: "block",
+        inputWidth: "auto",
+        id: "b4",
+        list: [
+            { type: "fieldset",
+              name: "install_info",
+              label: "{{ "Install Info" | trans }}",
+              width: "auto",
+              list: [
+                { type: "hidden",name: "id" },         
+                { type: "input",
+                  name: "install_path",
+                  label: "{{ "Install path"| trans }}"
+                },{ type: "input",
+                  name: "user_path",
+                  label: "{{ "User path"| trans }}"
+                },{ type: "input",
+                  name: "timezone",
+                  label: "{{ "Timezone"| trans }}"
+                }
+              ]
+            }
+            
+        ]
+    }
+];
+
+myform = dhxLayout.cells("a").attachForm(formData);
+myform.setSkin("dhx_skyblue");
+//myform.enableLiveValidation(true);
+
+
+var tabbar = dhxLayout.cells("b").attachTabbar();
+tabbar.setImagePath("{{asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/")}}");
+tabbar.setSkin("dhx_skyblue");
+tabbar.addTab("b1","{{ "Basic Info" | trans }}","100px");
+tabbar.addTab("b2","{{ "Connection Info" | trans }}","100px");
+tabbar.addTab("b3","{{ "Remote Access" | trans }}","100px");
+tabbar.addTab("b4","{{ "Install Info" | trans }}","100px");
+tabbar.setTabActive("b1");
+
+
+tabbar.cells("b1").attachObject("b2");
+tabbar.cells("b2").attachObject("b1");
+tabbar.cells("b3").attachObject("b3");
+tabbar.cells("b4").attachObject("b4");
+
+
+var mygrid;
+var sb = dhxLayout.cells("a").attachStatusBar();
+sb.setText('<div id="recinfoArea"></div>');
+dhxLayout.cells("a").vs[dhxLayout.cells("a").av].sbHeight = 40;
+
+mygrid = dhxLayout.cells("a").attachGrid();
+mygrid.selMultiRows = true;
+mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+mygrid.enableTreeGridLines(true);
+mygrid.enableTreeCellEdit(false);
+mygrid.setHeader("{{ "Location"| trans }},{{ "Host"| trans }},{{ "Supervisor"| trans }},{{ "Ver."| trans }},{{ "Status"| trans }},#cspan,{{ "EM"| trans }}");
+mygrid.setInitWidths("*,100,100,40,30,30,40");
+mygrid.setColAlign("left,left,left,right,right,right,right");
+mygrid.setColTypes("tree,ro,ro,ro,ro,ro,ch");
+mygrid.enableContextMenu(menu);
+mygrid.enableLightMouseNavigation( true );
+mygrid.enablePaging(true,"25", 3, "recinfoArea");
+mygrid.setPagingSkin("toolbar","dhx_skyblue");
+mygrid.setPagingWTMode(true,true,true,["25"]);
+mygrid.load("{{ url('xml_Admin_spoolers_treegrid') }}");
+mygrid.init();
+
+
+mygrid.attachEvent("onRowDblClicked", function (id) {
+    if (mygrid.getUserData(id,"type")==="spooler"){
+        EditSpooler(id);
+    }
+});
+
+mygrid.attachEvent("onBeforeContextMenu", function (id) {
+    menu.showItem('add_enterprise');
+    menu.showItem('add_repository');
+    menu.showItem('add_site');
+    menu.showItem('add_spooler');
+    menu.hideItem('edit_enterprise');
+    menu.hideItem('delete_enterprise');
+    menu.hideItem('edit_repository');
+    menu.hideItem('edit_site');
+    menu.hideItem('edit_spooler');
+    menu.hideItem('delete_repository');
+    menu.hideItem('delete_site');
+    menu.hideItem('delete_spooler');
+    switch (mygrid.getUserData(id,"type")) {
+        case 'enterprise':
+            menu.showItem('edit_enterprise');
+            menu.showItem('delete_enterprise');
+            break;
+        case 'site':
+            menu.showItem('edit_site');
+            menu.showItem('delete_site');
+            break;
+        case 'database':
+            menu.showItem('edit_repository');
+            menu.showItem('delete_repository');
+            break;
+        case 'spooler':
+            menu.showItem('edit_spooler');
+            menu.showItem('delete_spooler');
+            break;
+        default:
+            break;
+    }
+    return true;
+});
+
+
+function onClick(id){
+    switch (id){
+        case "add_spooler":
+            NewSpooler();
+            break;
+        case "delete_spooler":
+            id = myform.getItemValue("id");
+            DeleteSpooler(id);
+            break;
+        case "save_spooler":
+            if(!myform.validate())
+            {
+                dhtmlx.message({
+                    title:"Error",
+                    type: "error",
+                    lifetime: "60000",
+                    text: "{{ "Please type in all the required fields!" | trans }}"
+                 });
+                return;
+            }
+            dhxLayout.cells("b").progressOn();
+            myform.send("{{ url('xml_Admin_spooler_save') }}","POST",function(loader,response){
+                if(response === "success")
+                {
+                 dhtmlx.message({
+                    title:"Save",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "{{ "Spooler Saved" | trans }}"
+                 });
+                 myform.clear();
+                 // after we create the new spooler, we need to refresh the form to get the select
+                 GridRefresh();
+                 dhxLayout.cells("b").progressOff();
+               }
+               else 
+               {
+                   alert(response);
+                   dhxLayout.cells("b").progressOff();
+               }
+            });
+            break;
+        default:
+            break;
+    }
+}
+
+function onMenuClick(menuitemId, type)
+{
+    var rid = mygrid.contextID.split("_")[0];
+    switch(menuitemId){
+        case "add_spooler":
+            NewSpooler();
+            break;
+        case "edit_spooler":
+            EditSpooler(rid);
+            break;
+        case "delete_spooler":
+            DeleteSpooler(rid);
+            break;
+        case "edit_site":
+            alert(rid);
+            document.location.href = "{{ url('arii_Admin_sites') }}?id="+rid;
+            break;
+        case "add_site":
+            document.location.href = "{{ url('arii_Admin_sites') }}";
+            break;
+        case "edit_repository":
+            alert(rid);
+            document.location.href = "{{ url('arii_Admin_repositories') }}?id="+rid;
+            break;
+        case "add_repository":
+            document.location.href = "{{ url('arii_Admin_repositories') }}";
+            break;
+        default:
+            alert(menuitemId);
+    }
+    return true;
+}
+
+function GridRefresh()
+{
+    mygrid.load("{{ url('xml_Admin_spoolers_treegrid') }}");
+}
+
+function NewSpooler() {
+    myform.clear();
+    tabbar.setTabActive("b1");
+    myform.setItemFocus("scheduler");
+    myform.setItemLabel("fieldset","{{ "New spooler" | trans }}");
+    toolbarb.hideItem("delete_spooler");
+}
+
+function EditSpooler(id) {
+    dhxLayout.cells("a").progressOn();
+    toolbarb.showItem("delete_spooler");
+    myform.setItemLabel("fieldset","{{ "Edit spooler" | trans }}");
+    myform.clear();
+    myform.load("{{ url('xml_Admin_spooler_form') }}?id="+id, function () {
+        tabbar.setTabActive("b1");
+        dhxLayout.cells("a").progressOff();
+    });
+return true;
+}
+
+function DeleteSpooler(id) {
+        dhtmlx.confirm({
+        title: "{{ "Delete spooler" | trans }}",
+        type: "confirm-error",
+        text: "{{ "spooler.message.delete" | trans }}",
+        callback: function(answer) { if (answer) {
+                dhxLayout.cells("a").progressOn();
+                dhtmlxAjax.get("{{ url('xml_Admin_spooler_delete') }}?id="+id,function(loader){
+                    if(loader.xmlDoc.responseText === 'success')
+                    {
+                        dhtmlx.message({
+                            title:"Save",
+                            type: "Notice",
+                            lifetime: "60000",
+                            text: "{{ "Spooler Deleted" | trans }}"
+                         });
+                        GridRefresh();
+                        if(myform.getItemValue("id")===id) // when we are editting the spooler, and we delete the spooler in the grid, we need to clear the form also.
+                        {
+                            myform.clear();
+                        }
+                        dhxLayout.cells("a").progressOff(); 
+                    } else
+                    {
+                        dhtmlx.message({
+                            title:"Error",
+                            type: "error",
+                            lifetime: "60000",
+                            text: loader.xmlDoc.responseText
+                         });
+                        dhxLayout.cells("a").progressOff(); 
+                    }
+                });
+            }
+        },
+        cancel: "{{ "No" | trans }}",
+        ok: "{{ "Yes" | trans }}" });
+}
+
+function GlobalRefresh() {
+}
+</script>
+{% endblock %}

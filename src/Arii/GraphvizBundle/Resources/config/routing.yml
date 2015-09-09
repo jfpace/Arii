@@ -1,0 +1,65 @@
+arii_GVZ_index:
+    pattern:  /
+    defaults: { _controller: AriiGraphvizBundle:Default:index }
+
+xml_GVZ_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiGraphvizBundle:Default:toolbar }
+
+xml_GVZ_legend:
+    pattern:  /legend.xml
+    defaults: { _controller: AriiGraphvizBundle:Default:legend }
+    
+json_GVZ_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiGraphvizBundle:Default:ribbon }
+
+arii_GVZ_generate:
+    pattern:  /generate
+    defaults: { _controller: AriiGraphvizBundle:Graphviz:generate }
+
+arii_GVZ_generate_config:
+    pattern:  /generate_config
+    defaults: { _controller: AriiGraphvizBundle:Graphviz:config }
+
+arii_GVZ_dropzone:
+    pattern:  /dropzone
+    defaults: { _controller: AriiGraphvizBundle:Dropzone:index }
+
+arii_GVZ_upload:
+    pattern:  /upload
+    defaults: { _controller: AriiGraphvizBundle:Dropzone:upload }
+    
+xml_GVZ_tree:
+    pattern:  /tree.xml
+    defaults: { _controller: AriiGraphvizBundle:Folders:tree }
+
+xml_GVZ_tree_remote:
+    pattern:  /remote/tree.xml
+    defaults: { _controller: AriiGraphvizBundle:Folders:tree, path: remote }
+
+
+
+arii_GVZ_audit:
+    pattern:  /audit
+    defaults: { _controller: AriiGraphvizBundle:Audit:index }
+
+arii_GVZ_audit_generate:
+    pattern:  /audit/generate
+    defaults: { _controller: AriiGraphvizBundle:Audit:generate }
+
+json_GVZ_audit_ribbon:
+    pattern:  /audit/ribbon.json
+    defaults: { _controller: AriiGraphvizBundle:Audit:ribbon }
+
+xml_GVZ_audit_comments:
+    pattern:  /audit/comments.xml
+    defaults: { _controller: AriiGraphvizBundle:Audit:comments }
+
+xml_GVZ_audit_toolbar:
+    pattern:  /audit/toolbar.xml
+    defaults: { _controller: AriiGraphvizBundle:Audit:toolbar }
+
+xml_GVZ_audit_menu:
+    pattern:  /audit/menu.xml
+    defaults: { _controller: AriiGraphvizBundle:Audit:menu }

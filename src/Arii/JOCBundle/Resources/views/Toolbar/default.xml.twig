@@ -1,0 +1,8 @@
+<toolbar>
+    <item type="button" id="refresh" text="Refresh" img="refresh.png" action="GlobalRefresh"/>
+
+<item id="sep1" type="separator"/>
+    {% set site = app.session.get('site') %}     
+    <item id="timezone" type="text" img="world.png" text="{{ site.timezone }}"/>
+
+</toolbar>

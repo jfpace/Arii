@@ -1,0 +1,20 @@
+parameters:
+#    arii_jid.example.class: Arii\JOCBundle\Example
+
+services:
+#    arii_jid.example:
+#        class: %arii_jid.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+services:
+    arii_joc.sos:
+        class: Arii\JOCBundle\Service\AriiSOS
+        arguments: ["@arii_core.db", "@arii_core.sql"]
+
+    arii_joc.treegrid:
+        class: Arii\JOCBundle\Service\AriiTreeGrid
+        arguments: []
+
+    arii_joc.state:
+        class: Arii\JOCBundle\Service\AriiState
+        arguments: ["@arii_core.db", "@arii_core.sql", "@arii_core.date"]

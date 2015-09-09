@@ -1,0 +1,315 @@
+{# src/Arii/JOCBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block body %}
+<!--[if !IE]>end section<![endif]-->
+<script language="javascript">
+var max_history = 0; // pas d'historique
+var chained = 0; // que des standalone
+var only_warning = 0; // que les problemes
+var update=30;
+var autorefresh;
+
+var myGridToolbar;
+
+dhtmlxEvent(window,"load",function(){ 
+    var menu = new dhtmlXMenuObject(null);
+    menu.setIconsPath( "{{ asset('bundles/ariicore/images/menu/') }}" );
+    menu.renderAsContextMenu();
+    menu.attachEvent("onClick", onButtonClick);
+    menu.loadStruct("{{ url('arii_JOC_menu_history') }}");
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");
+    globalLayout.cells("a").setWidth(350); 
+    
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOC_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myAccordion = globalLayout.cells("a").attachAccordion();
+    myAccordion.addItem("a1", "{{ "Status" | trans }}");
+    myAccordion.addItem("a2", "{{ "Folders" | trans }}");
+
+    myDonut =  myAccordion.cells("a1").attachChart({
+            view:"donut",
+            container:"pie_chart_container",
+            value:"#JOBS#",
+            label:"",
+            tooltip: "#STATUS#",
+            color: "#COLOR#",
+            border:false,
+            pieInnerText: "#JOBS#",
+            shadow: 0,
+            legend:{
+                  width: 0,
+                  template: "#STATUS#",
+                valign:"top",
+                align:"left"
+            } 
+    });
+    myDonut.load( "{{ url('xml_JOC_jobs_pie') }}?chained="+chained+"&only_warning="+only_warning );
+    
+    var myGridToolbar = globalLayout.cells("b").attachToolbar();
+    myGridToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myGridToolbar.loadStruct("{{ url('xml_JOC_jobs_toolbar') }}");
+
+    myGridToolbar.attachEvent( "onClick", function(id, value) {
+        switch (id) {
+            case "refresh":
+                globalLayout.cells("b").progressOn();
+                update = value;
+   //             dhtmlxAjax.get("{{ url('arii_global_toolbar_update') }}?"+id+"="+value,function(loader){
+                    GlobalRefresh();
+   //             });
+                break;
+            default:
+                alert(id);
+        }
+    });
+    myGridToolbar.attachEvent("onStateChange",function(id,state){
+        switch (id) {
+            case 'comment':
+                myGrid.setColumnHidden(3,!state);  
+                break;
+            case 'show_time':
+                myGrid.setColumnHidden(7,!state);  
+                myGrid.setColumnHidden(8,!state);  
+                break;
+            case 'target':
+                myGrid.setColumnHidden(9,!state);  
+                break;
+            default:
+                alert(id);
+        }
+    });
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("b").hideHeader();
+    globalLayout.cells("c").setHeight(300);
+
+    myGrid = globalLayout.cells("b").attachGrid();
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Spooler" | trans }},{{ "Folder" | trans }},{{ "Job" | trans }},{{ "Title" | trans }},{{ "State" | trans }},{{ "Message" | trans }},{{ "Information" | trans }},{{ "Next start" | trans }},{{ "Schedule" | trans }},{{ "Process class" | trans }}");
+    myGrid.attachHeader("#select_filter,#text_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+    myGrid.setInitWidths("100,*,200,250,150,*,*,200,200,200");
+    myGrid.setColAlign("left,left,left,left,center,left,left,right,left,left");
+    myGrid.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+    myGrid.enableContextMenu(menu);
+    myGrid.enableAlterCss("","");
+    myGrid.init();
+    myGrid.loadXML( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning );
+    myGrid.setColumnHidden(3,true); 
+    myGrid.setColumnHidden(7,true); 
+    myGrid.setColumnHidden(8,true); 
+    myGrid.setColumnHidden(9,true); 
+
+    myTabbar = globalLayout.cells("c").attachTabbar();
+    myTabbar.addTab("job","{{ "Job" | trans }}","120px", null, true);
+    myTabbar.addTab("execution","{{ "Execution" | trans }}","120px");
+/*  myTabbar.addTab("spooler","{{ "Spooler" | trans }}","120px");
+    myTabbar.addTab("target","{{ "Target" | trans }}","120px");
+    myTabbar.addTab("locks","{{ "Locks" | trans }}","120px");
+    myTabbar.addTab("runtimes","{{ "Run times" | trans }}","100px");
+*/   
+    myGrid.attachEvent("onRowDblClicked", JobDetail );
+
+    myDetailLayout = myTabbar.cells("job").attachLayout("2U");
+    myDetailLayout.cells("a").hideHeader(); 
+    myDetailLayout.cells("b").hideHeader(); 
+    myDetailLayout.cells("a").setWidth(700); 
+
+    myForm = myDetailLayout.cells("a").attachForm();
+    myForm.loadStruct("{{ url('json_JOC_jobs_form') }}");
+
+    myDetailToolbar = myDetailLayout.cells("a").attachToolbar();
+    myDetailToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myDetailToolbar.loadStruct( "{{ url('xml_JOC_jobs_form_toolbar') }}" , function(){
+        GBCalendar = new dhtmlXCalendarObject(myDetailToolbar.getInput('ref_date'));
+        GBCalendar.setDateFormat("%Y-%m-%d %H:%i:%s");
+        GBCalendar.setWeekStartDay(1);
+    });
+    
+    var myParametersToolbar = myDetailLayout.cells("b").attachToolbar();
+    myParametersToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myParametersToolbar.loadStruct("{{ url('xml_JOC_job_params_toolbar') }}");
+
+    myParameters = myDetailLayout.cells("b").attachGrid();
+    myParameters.selMultiRows = true;
+    myParameters.setHeader("{{ "Parameter" | trans }},{{ "Value" | trans }}");
+    myParameters.setColTypes("ed,ed");
+    myParameters.setInitWidths("200,*");
+    myParameters.init();
+    
+    myExecution = myTabbar.cells("execution").attachForm();
+    myExecution.loadStruct("{{ url('json_JOC_jobs_execution_form') }}");
+
+//    mySpooler = myTabbar.cells("spooler").attachForm();
+//    mySpooler.loadStruct("{{ url('xml_JOC_job_spooler_form') }}");
+
+//    myTarget = myTabbar.cells("target").attachForm();
+//    myTarget.loadStruct("{{ url('xml_JOC_job_target_form') }}");
+
+    autorefresh = setInterval( "GridRefresh()",update*1000);
+});
+
+function GridRefresh() {
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10){
+    minutes = "0" + minutes;
+    }
+    if (seconds < 10){
+    seconds = "0" + seconds;
+    }
+    myRibbon.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
+    myGrid.loadXML( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning, function () {
+        globalLayout.cells("b").progressOff();
+        myDonut.load( "{{ url('xml_JOC_jobs_pie') }}?chained="+chained+"&only_warning="+only_warning, function () {
+            myDonut.refresh();
+            globalLayout.progressOff();
+        });        
+    });
+}
+
+function GlobalRefresh() {
+    clearInterval( autorefresh );
+    GridRefresh();
+    autorefresh = setInterval( "GridRefresh()", update*1000 );
+}
+
+function JobDetail(id) {
+    myDetailLayout.cells("a").progressOn();
+    myDetailLayout.cells("b").progressOn();
+    myTabbar.cells("execution").progressOn();
+    myForm.load("{{ url('xml_JOC_job_form') }}?id="+id, function () {
+        myDetailLayout.cells("a").progressOff();
+        myParameters.loadXML("{{ url('xml_JOC_job_params') }}?id="+id, function() {           
+            myDetailLayout.cells("b").progressOff();
+            myExecution.load( "{{ url('xml_JOC_job_execution_form') }}?id="+id, function () {
+                    myTabbar.cells("execution").progressOff();
+    /*                mySpooler.loadXML( "{{ url('xml_JOC_job_spooler_form') }}?id="+id, function () {
+                    myTarget.loadXML( "{{ url('xml_JOC_job_target_form') }}?id="+id, function () {
+                    })            
+                })            
+*/            })            
+        });
+    });
+    // mise a jour de la toolbar
+/*    var status = myGrid.cells(id, 3 ).getValue();
+    myDetailToolbar.showItem('unstop_job');
+    myDetailToolbar.showItem('stop_job');
+    myDetailToolbar.showItem('kill_task');
+    if (status== 'STOPPED') {
+        myDetailToolbar.hideItem('stop_job');
+    }
+    else {
+        myDetailToolbar.hideItem('unstop_job');
+    }
+    if (status!= 'RUNNING') {
+        myDetailToolbar.hideItem('kill_task');      
+    }
+*/
+}
+
+/* Gestion du menu contextuel */
+function onButtonClick(menuitemId, type) {
+    var data = myGrid.contextID.split("_");
+    //rowInd_colInd;
+    var rId = data[0];
+    var cInd = data[1];
+//     myGrid.setRowTextStyle(data[0], "color:" + menuitemId.split("_")[1]);
+    // alert("rId "+rId+" cInd "+cInd);
+    switch (menuitemId) {
+ 
+       case "show_info":
+            JobInfo( rId );
+        break;        
+       case "show_history":
+            JobHistory( rId );
+        break;        
+        case "start_task":
+            StartJob( rId );
+        break;
+        case "kill":
+            KillJob( rId );
+        break;
+        case "stop":
+            StopJob( rId );
+        break;
+        case "unstop":
+            UnstopJob( rId );
+        break;
+        default:
+            alert(menuitemId);    
+    }
+    return true;
+}
+
+function onShowMenu(rowId, celInd, grid) {
+    // Cas du spooler
+    if (grid.getUserData(rowId, "type" )=='spooler') {
+        menu.setItemDisabled("start_task");
+        menu.setItemDisabled("show_history");
+        menu.setItemDisabled("stop");
+        menu.setItemDisabled("unstop");
+        menu.setItemDisabled("kill");
+        return true;
+    }
+        
+    var status = grid.cells(rowId, 2 ).getValue();
+    menu.showItem("start_task");
+    menu.showItem("stop");
+    menu.showItem("show_history");
+    menu.setItemDisabled("kill");
+    menu.setItemDisabled("unstop");
+    
+    switch (status) {
+    case 'SUCCESS':
+        menu.setItemEnabled('show_history');
+        menu.setItemEnabled('start_task');
+        menu.setItemEnabled('stop');
+        menu.setItemDisabled('kill');
+        menu.setItemDisabled('unstop');
+        break;
+    case 'FAILURE':
+        break;
+    case 'RUNNING':
+        // rien du tout, c'est instancie
+        return false;
+        break;
+    case '':
+        return false;
+        break;
+    case 'STOPPED':
+        menu.setItemEnabled('show_history');
+        menu.setItemEnabled('start_task');
+        menu.setItemEnabled("unstop");
+        menu.setItemDisabled("stop");
+        break;
+    default:
+        // Cas de l'instance
+        if (grid.getUserData(rowId, "jobtype" )=='instance') {
+            // on ne demarre pas une tache RUNNING
+            menu.setItemDisabled("start_task");
+            menu.setItemEnabled("kill");
+            // Un job running ne peut pas avoir d'historique
+            menu.setItemDisabled("show_history");
+        }
+        break;
+    }
+    // Un job ordonné ne peut être démarré 
+    if (grid.getUserData(rowId, "jobtype" )=='ordered_job') {
+        menu.setItemDisabled("start_task");
+    }
+   
+return true;
+}
+</script>
+
+{% endblock %}

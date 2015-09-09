@@ -1,0 +1,34 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"200" },
+    {   type:"input",    
+            name: "NAME", 
+            label:"{{ "Spooler" | trans}}"
+    },
+    {   type:"input",    
+            name: "STATE", 
+            label:"{{ "State" | trans}}"
+    },
+    {   type:"input",    
+            name: "HOST", 
+            label:"{{ "Host" | trans}}"
+    },
+    {type:"newcolumn"},  
+    {type:"input",    name: "TIME", label:"{{ "Time" | trans}}"},
+    {type:"input",    name: "WAIT_UNTIL", label:"{{ "Wait" | trans}}"}, 
+    {type:"input",    name: "SPOOLER_RUNNING_SINCE", label:"{{ "Start" | trans}}"},
+    {type:"newcolumn"},  
+    {type:"input",    name: "IP_ADDRESS", label:"{{ "IP" | trans}}"},
+    {type:"input",    name: "TCP_PORT", label:"{{ "TCP" | trans}}"}, 
+    {type:"input",    name: "UDP_PORT", label:"{{ "UDP" | trans}}"},
+    {type:"newcolumn"},  
+    {   type:"input",    
+            name: "DB", 
+            label:"{{ "DB" | trans}}",
+            rows: 3
+    },
+    {type:"hidden",    name: "ID" }
+]

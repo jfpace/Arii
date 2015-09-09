@@ -1,0 +1,41 @@
+{
+   "items":
+   [
+      {   "type":"block", 
+          text:"{{ "module.JOE" | trans }}", 
+          "text_pos": "top", 
+          "list":
+          [
+             {   "type": "buttonSelect", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/load.png", 
+                 items:
+                 [ 
+                    { id:"edit", text: "{{ "Edit" | trans }}", img: "edit.png" },
+                    { id:"deploy", text: "{{ "Deploy" | trans }}", img: "deploy.png" }
+                 ]
+              }
+          ]
+      },
+      {   "type":"block", 
+          text:"{{ "Folder" | trans }}", 
+          "text_pos": "bottom", 
+          "list":
+          [
+             {   "type": "button", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/folder.png"
+             },
+            { "type": "button", id:"live", text: "{{ "Live" | trans }}", img: "live.png" },
+            { "type": "buttonSelect", id:"remote", text: "{{ "Remote" | trans }}", img: "remote.png",
+              items: [ { id:"_all", text: "'{{ "All" | trans }}'", img: "all.png"  },
+{% for scheduler in Schedulers %}{ id: "remote_{{ scheduler }}", text: "{{ scheduler }}" }{% if not loop.last %},{% endif %}
+{% endfor %} 
+                    ]
+            }
+         ]
+      }
+   ]
+}

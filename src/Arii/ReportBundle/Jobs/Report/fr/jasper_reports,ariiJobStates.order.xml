@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order >
+    <params >
+        <param  name="report_locale" value="fr"/>
+
+        <param  name="report_filename" value="config/reports/jasper/arii/job_status.jasper"/>
+
+        <param  name="output_filename" value="config/reports/output/FR/Ari'i/Etat des traitements.pdf"/>
+
+        <param  name="settings_filename" value="config/reports/jasper/arii/mysql_settings.ini"/>
+    </params>
+
+    <run_time  schedule="Jasper"/>
+</order>

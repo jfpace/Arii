@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<job  order="yes" stop_on_error="no" title="Envoi du show state">
+    <lock.use  lock="../ARII_DB" exclusive="no"/>
+
+    <params >
+        <param  name="url" value="http://localhost"/>
+
+        <param  name="method" value="POST"/>
+
+        <param  name="user" value="jobscheduler"/>
+
+        <param  name="password" value="jobscheduler"/>
+    </params>
+
+    <script  language="shell">
+        <![CDATA[
+perl Arii/Perl/Url.pl
+        ]]>
+    </script>
+
+    <monitor  name="configuration_monitor" ordering="0">
+        <script  java_class="sos.scheduler.managed.configuration.ConfigurationOrderMonitor" language="java"/>
+    </monitor>
+
+    <run_time />
+</job>

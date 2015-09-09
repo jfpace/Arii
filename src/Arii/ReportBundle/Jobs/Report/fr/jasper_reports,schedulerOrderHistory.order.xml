@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order >
+    <params >
+        <param  name="report_filename" value="config/live/sos/arii/Report/scheduler_order_history.jasper"/>
+
+        <param  name="query_filename" value="config/live/sos/arii/Report/scheduler_order_history.sql"/>
+
+        <param  name="output_filename" value="config/live/sos/arii/Report/scheduler_order_history.html"/>
+    </params>
+
+    <run_time  schedule="Jasper"/>
+</order>

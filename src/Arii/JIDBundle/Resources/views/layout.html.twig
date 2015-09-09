@@ -1,0 +1,484 @@
+{% extends "::base.html.twig" %}
+{% block dhtmlx %}
+{% if arii_pro %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_pro/skins/' ~  skin ~ '/dhtmlx.css') }}" />
+        <script src="{{ asset('dhtmlx_pro/codebase/dhtmlx.js') }}" type="text/javascript"></script>
+{% else %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_gpl/skins/terrace/dhtmlx.css') }}" />
+        <script src="{{ asset('dhtmlx_gpl/codebase/dhtmlx.js') }}" type="text/javascript"></script>
+{% endif %}
+{% endblock dhtmlx %}
+{% block dhtmlx_plus %}
+{% endblock dhtmlx_plus %}
+{% block body %}
+{% endblock body %}
+{% block script %}
+<script>
+function StateRibbon (itemid,state) {
+    switch(itemid) {
+         case 'chained':
+            chained = (state?1:0);
+            globalLayout.progressOn();
+            break;
+         case 'only_warning':
+            only_warning = (state?1:0);
+            globalLayout.progressOn();
+            break;
+        default:
+            alert(itemid);
+    }
+    GlobalRefresh();    
+}
+
+function ClickRibbon (itemid,state) {
+    switch(itemid) {
+    case '-1': case '-2': case '-3': case '-4': case '-5': case '-6':
+    case '-7': case '-14': case '-21': 
+    case '-30': case '-60': case '-90': case '-120':
+    case '-365':
+        dhx4.ajax.get( "{{ url('arii_session_update') }}?ref_past="+itemid, function() {
+            var currentTime = new Date();
+            var newTime = new Date();
+            newTime.setDate(currentTime.getDate() + Number(itemid) );
+            var day = newTime.getDate();
+            var month = newTime.getMonth()+1;
+            var year = newTime.getFullYear();
+            if (day < 10){
+            day = "0" + day;
+            }
+            if (month < 10){
+            month = "0" + month;
+            }
+            myRibbon.setItemText( "ref_past", year + "-" + month + "-" +  day );
+            globalLayout.progressOn();
+            GlobalRefresh();    
+        });
+        break;
+     case '5':
+    case '30':
+    case '60':
+    case '300':
+    case '900':
+    case '1800':
+    case '3600':
+        update = itemid;
+        dhx4.ajax.get( "{{ url('arii_session_update') }}?refresh="+itemid);
+        GlobalRefresh();
+        break;
+    case 'menu_job':
+        window.location = "{{ url('arii_JID_jobs') }}";
+        break;
+    case 'menu_order':
+        window.location = "{{ url('arii_JID_orders') }}";
+        break;
+    case 'menu_spooler':
+        window.location = "{{ url('arii_JID_spoolers') }}";
+        break;
+    case 'menu_messages':
+        window.location = "{{ url('arii_JID_messages') }}";
+        break;
+   case 'filter_edit':
+        window.location = "{{ url('arii_filters') }}";
+        break;
+    case 'filter_all':
+            globalLayout.cells("a").progressOn();
+            globalLayout.cells("b").progressOn();
+            dhx4.ajax.get( "{{ url('arii_session_update') }}?filter=-1"+itemid.substr(7), function(){
+                GridRefresh();
+            });
+        break;
+    default:
+        if (itemid.substr(0,6)=='filter') {
+            globalLayout.cells("a").progressOn();
+            globalLayout.cells("b").progressOn();
+//            this.setItemText( 'filter', this.getListOptionText('filter',itemid));
+            this.setItemText("current_filter",myRibbon.getItemOptionText('Filters',itemid));
+            dhx4.ajax.get( "{{ url('arii_session_update') }}?filter="+itemid.substr(7), function(){
+                GridRefresh();
+            });
+        }
+        else {
+            alert(itemid);
+        }
+    }
+}
+
+
+function Chain(id,command,message,chain)
+{
+    dhtmlx.message({
+        type: "Notice",
+        text: message
+    });
+    dhtmlxAjax.get("{{ url('arii_XML_Command') }}?command="+command+"&id="+id+"&chain="+chain,function(loader){
+        dhtmlx.message({
+        type: "Notice",
+        expire: 10000,
+        width: "500px",
+        text: loader.xmlDoc.responseText
+        });
+        GridRefresh();
+    });
+}
+
+function Node(id,nid,command,message,chain)
+{
+    dhtmlx.message({
+        type: "Notice",
+        text: message
+    });
+    alert("{{ url('arii_XML_Command') }}?command="+command+"&node_id="+nid+"&id="+id);
+    dhtmlxAjax.get("{{ url('arii_XML_Command') }}?command="+command+"&node_id="+nid+"&id="+id+"&chain="+chain,function(loader){
+        dhtmlx.message({
+        type: "Notice",
+        expire: 10000,
+        width: "500px",
+        text: loader.xmlDoc.responseText
+        });
+        GridRefresh();
+    });
+}
+
+var dhxCalendar;
+var msg;
+
+function ShowWhy( id ) { 
+    largeur = 900;
+    msg = dhxWins.createWindow( "msgwin" ,  (document.getElementById("wrapper").offsetWidth-largeur)/2, 50, largeur, 550 );
+    msg.setText("{{ "Diagnostic" | trans }} ");
+
+    winLayout = msg.attachLayout("1C");
+    winLayout.cells("a").hideHeader();
+    winLayout.cells("a").progressOn();
+    
+    toolbar = winLayout.cells("a").attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct("{{ url('arii_JID_toolbar_job_why') }}");
+    toolbar.attachEvent("onClick",function(buttonId){
+        switch (buttonId) {
+            case "cancel":
+                msg.close();
+                break;
+            default:
+                alert(buttonId);
+        }
+        return true;
+    });
+
+    var dhxgrid = winLayout.cells("a").attachGrid();
+    dhxgrid.setHeader("{{ "Name" | trans }},{{ "Value" | trans }}");
+    dhxgrid.setColTypes("tree,ro");
+    dhxgrid.enableTreeGridLines(true);
+    dhxgrid.setInitWidths("400,*");
+    dhxgrid.init();
+    dhxgrid.load("{{ url('arii_XML_Command') }}?command=why_job&job_id="+id, function () {
+        winLayout.cells("a").progressOff();    
+    });
+}
+
+
+function PurgeJob( id ) { 
+    var largeur = 600;
+        msg = dhxWins.createWindow( "msgwin" ,  (document.getElementById("wrapper").offsetWidth-largeur)/2, 200, largeur, 400 );
+        msg.setText("{{ "Purge job" | trans }} "+id);
+
+    var winLayout;
+    winLayout = msg.attachLayout("1C");
+    winLayout.cells("a").hideHeader();
+    winLayout.cells("a").attachURL("{{ url('arii_JID_detail_job') }}?id="+id,true);
+
+    var toolbar;
+    toolbar = winLayout.cells("a").attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct("{{ url('arii_JID_toolbar_purge_job') }}");
+
+    toolbar.attachEvent("onClick",function(itemid){
+        switch (itemid) {
+            case "stop":
+                msg.progressOn();
+                dhtmlx.message({
+                type: "Notice",
+                text: "{{ "Purge job" | trans }} <strong>"+id+"</strong>" });
+                msg.close();
+                dhtmlxAjax.post("{{ url('arii_JID_history_purge') }}","job_id="+id,function(loader,response){
+                    dhtmlx.message({
+                    type: "Notice",
+                    expire: 10000,
+                    width: "500px",
+                    text: loader.xmlDoc.responseText });
+                    GridRefresh();
+                });
+                break;
+            case "cancel":
+                msg.close();
+                break;
+            default: 
+                break;
+        }
+        return true;
+    });
+    
+return true;
+}
+
+function Order( Command, id, Text, Toolbar, Time, chain )
+{
+    var largeur = 640;
+        msg = dhxWins.createWindow( "msgwin" ,  (document.getElementById("wrapper").offsetWidth-largeur)/2, 50, largeur, 400 );
+        msg.setText(Text);
+        
+    var winLayout;
+    winLayout = msg.attachLayout("1C");
+    winLayout.cells("a").hideHeader();
+ 
+    var winbar = winLayout.cells("a").attachTabbar();
+    // tabbar.setImagePath("{{asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/")}}");
+    winbar.setSkin("dhx_skyblue");
+    winbar.addTab("b1","{{ "Detail" | trans }}","100px", null, true);
+    winbar.addTab("b2","{{ "Parameters" | trans }}","100px");
+   
+    var toolbar;
+    toolbar = winLayout.cells('a').attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+
+    toolbar.loadStruct(Toolbar,function(){
+        if (Time) {
+            GBCalendar = new dhtmlXCalendarObject(toolbar.getInput('ref_date'));
+            GBCalendar.setDateFormat("%Y-%m-%d %H:%i:%s");
+            GBCalendar.setWeekStartDay(1);
+        }
+    });
+
+    var toolbar2;
+    toolbar2 = winbar.cells("b2").attachToolbar();
+    toolbar2.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar2.loadStruct("{{ url('xml_JID_order_toolbar_params') }}");
+
+    var dhxgrid = winbar.cells("b2").attachGrid();
+    dhxgrid.selMultiRows = true;
+    dhxgrid.setHeader("{{ "Name" | trans }},{{ "Value" | trans }}");
+    dhxgrid.setColTypes("ed,ed");
+    dhxgrid.setInitWidths("*,*");
+    dhxgrid.init();
+
+    dhxForm = winbar.cells("b1").attachForm();
+    winbar.cells("b1").progressOn();
+    dhxForm.loadStruct("{ { url('json_JID_order_form') }}?id="+id, function(){
+        winbar.cells("b1").progressOff();    
+        dhxgrid.loadXML("{{ url('xml_JID_order_params') }}?id="+id);
+    });
+    
+    toolbar.attachEvent("onClick",function(itemid){
+        switch(itemid) {
+            case "new":
+                dhxgrid.addRow(dhxgrid.getRowsNum()+1,"");
+                break;
+            case "execute":
+                var params = new Array();
+                dhxgrid.forEachRow(function(id){
+                    var param = dhxgrid.cells(id,0).getValue() + "=" + encodeURIComponent(dhxgrid.cells(id,1).getValue());
+                    params.push(param);
+                });
+                var paramsStr = params.join(",");
+                var start_time = '';
+                if (Time)
+                    start_time = toolbar.getValue("ref_date");
+                dhtmlx.message({
+                    type: "Notice",
+                    text: Text 
+                });
+                winLayout.cells("a").progressOn();
+                dhxForm.send("{{ url('arii_XML_Command') }}?command="+Command+"&chain="+chain+"&id="+id+"&paramsStr="+encodeURIComponent(paramsStr),"POST",function(loader,response){
+                    dhtmlx.message({
+                        type: "Notice",
+                        expire: 10000,
+                        width: "500px",
+                        text: loader.xmlDoc.responseText
+                    });
+                    GridRefresh();
+                    winLayout.cells("a").progressOff();
+                    msg.close();
+                });               
+                break;
+            case "cancel":
+                msg.close();
+                break;
+            default:
+                alert(itemid);
+                break;
+        }
+        return true;
+    });
+
+    toolbar2.attachEvent("onClick",function(itemid){
+        switch(itemid) {
+            case "new":
+                dhxgrid.addRow(dhxgrid.getRowsNum()+1,"");
+                break;
+            default:
+                break;
+        }
+        return true;
+    });
+
+    dhtmlXCalendarObject.prototype.langData["fr"] = {
+            monthesFNames: ["Janvier","Février","Маrs","Аvril","Маi","Juin","Juillet","Аoût","Septembre","Оctobre","Novembre","Décembre"],
+            monthesSNames: ["Jan.","Fév.","Маrs","Аvr","Маi","Juin","Jui.","Août","Sep.","Оct.","Nov.","Déc."],
+            daysFNames: ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"],
+            daysSNames: ["Di","Lu","Ma","Me","Je","Ve","Sa"],
+            weekstart: 1
+    };
+    dhxCalendar = new dhtmlXCalendarObject(dhxForm.getInput("at"));
+    dhxCalendar.loadUserLanguage("fr");
+    dhxCalendar.setDateFormat("%Y-%m-%d %H:%i:%s");
+    dhxCalendar.showTime();
+      
+    return true;
+    
+}
+
+function ViewOrder( Command, id, Text, Toolbar, Time ) {
+var largeur = 600;
+
+    msg = dhxWins.createWindow( "msgwin" ,  (document.getElementById("wrapper").offsetWidth-largeur)/2, 50, largeur, 500 );
+    msg.setText(Text+' '+id);
+        
+    var winLayout;
+    winLayout = msg.attachLayout("1C");
+    winLayout.cells("a").hideHeader();
+    winLayout.cells("a").setHeight(300);
+
+     var winbar = winLayout.cells("a").attachTabbar();
+    // tabbar.setImagePath("{{asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/")}}");
+    winbar.setSkin("dhx_skyblue");
+    winbar.addTab("b1","{{ "Detail" | trans }}","100px", null, true);
+    winbar.addTab("b2","{{ "Parameters" | trans }}","100px");
+    winbar.cells("b1").attachURL("{{ url('arii_JID_detail_order') }}?id="+encodeURIComponent(id),true);
+     
+    var toolbar = winLayout.cells("a").attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct(Toolbar ,function(){
+        GBCalendar = new dhtmlXCalendarObject(toolbar.getInput('ref_date'));
+        GBCalendar.setDateFormat("%Y-%m-%d %H:%i:%s");
+        GBCalendar.setWeekStartDay(1);
+    });
+
+    var toolbar2;
+    toolbar2 = winbar.cells("b2").attachToolbar();
+    toolbar2.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar2.loadXML("{{ url('xml_JID_toolbar_order_param') }}");
+
+    toolbar.attachEvent("onClick",function(itemid){
+        switch(itemid) {
+            case "modify_job":
+                msg.progressOn();
+                var params = new Array();
+                dhxgrid.forEachRow(function(id){
+                    var param = dhxgrid.cells(id,0).getValue() + "=" + encodeURIComponent(dhxgrid.cells(id,1).getValue());
+                    params.push(param);
+                });
+                var paramsStr = params.join(",");
+                var start_time = '';
+                if (Time)
+                    start_time = toolbar.getValue("ref_date");
+                dhtmlx.message({
+                type: "Notice",
+                text: "{{ "Start order" | trans }} <strong>"+id+"</strong>" });
+                
+                winLayout.cells("a").progressOn();
+                dhtmlxAjax.post("{{ url('arii_XML_Command') }}","command=start_order&params="+encodeURIComponent(params)+"&time="+start_time+"&plan=yes&order_id="+encodeURIComponent(id),function(loader,response){
+                    dhtmlx.message({
+                    type: "Notice",
+                    expire: 10000,
+                    width: "500px",
+                    text: loader.xmlDoc.responseText });
+                    GridRefresh();
+                    winLayout.cells("a").progressOff();
+                    msg.close();
+                });
+                break;
+            case "cancel":
+                msg.close();
+                break;
+            default:
+                break;
+        }
+        return true;
+    });
+
+    var dhxgrid = winbar.cells("b2").attachGrid();
+    dhxgrid.selMultiRows = true;
+    dhxgrid.setHeader("{{ "Name" | trans }},{{ "Value" | trans }}");
+    dhxgrid.setColTypes("ed,ed");
+    dhxgrid.setInitWidths("*,*");
+    dhxgrid.init();
+    dhxgrid.loadXML("{{ url('xml_JID_start_order_parameters') }}?id="+encodeURIComponent(id));
+    
+    toolbar.attachEvent("onClick",function(itemid){
+        switch(itemid) {
+            case "new":
+                dhxgrid.addRow(dhxgrid.getRowsNum()+1,"");
+                break;
+            default:
+                break;
+        }
+        return true;
+    });
+
+    return true;          
+}
+
+// Fonctions
+function CheckSpooler(rid) 
+{
+    dhx4.ajax.get("{{ url('arii_JID_spooler_update') }}?id="+rid,function(loader,response){
+        dhtmlx.message({
+            type: "Notice",
+            expire: 10000,
+            width: "500px",
+            text: loader.xmlDoc.responseText
+        });
+        GridRefresh();
+    });
+return true;
+}
+
+function Spooler(url,rid)
+{
+    globalLayout.cells("a").progressOn();
+    dhtmlxAjax.get(url+"="+rid,function(loader,response){
+        globalLayout.cells("a").progressOff();
+        dhtmlx.message({
+            type: "Notice",
+            expire: 10000,
+            width: "500px",
+            text: loader.xmlDoc.responseText
+        });
+        CheckSpooler(rid);
+    });
+    return true;
+}
+
+function XMLCommand(id,Command) 
+{
+    alert("command");
+    dhtmlx.message({
+    type: "Notice",
+    text: "{{ "Execution" | trans }} <strong>"+id+"</strong>" });
+    globalLayout.cells("a").progressOn();
+    dhtmlxAjax.get("{{ url('arii_XML_Command') }}?command="+Command+"&id="+id,function(loader,response){
+        dhtmlx.message({
+            type: "Notice",
+            expire: 10000,
+            width: "500px",
+            text: loader.xmlDoc.responseText
+        });
+        GridRefresh();
+        globalLayout.cells("a").progressOff();
+        msg.close();
+    });               
+}
+</script>
+{% endblock script %}
+
+            

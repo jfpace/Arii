@@ -1,0 +1,168 @@
+{# src/Arii/GraphvizBundle/Resources/views/index.html.twig #}
+
+{% extends "AriiGraphvizBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section table_section">
+	<!--[if !IE]>start title wrapper<![endif]-->
+	<div class="title_wrapper">
+		<h2>{{ "Drop zone" | trans }}</h2>
+		
+		<!--[if !IE]>start section menu<![endif]-->
+		<!--[if !IE]>end section menu<![endif]-->
+		
+		
+		<span class="title_wrapper_left"></span>
+		<span class="title_wrapper_right"></span>
+	</div>
+	<!--[if !IE]>end title wrapper<![endif]-->
+<!--[if !IE]>start section content<![endif]-->
+	<div class="section_content">
+		<!--[if !IE]>start section content top<![endif]-->
+		<div class="sct">
+			<div class="sct_left">
+				<div class="sct_right">
+					<div class="sct_left">
+						<div class="sct_right">
+<style type="text/css">
+svg {
+    overflow: hidden; /* Thanks IE9! */
+}
+</style>
+<div id="toolbarObj"></div>
+<div id="chart" width="100%" style="height: 700px;"></div>
+<script type="text/javascript">
+var toolbar;
+var rankdir = 'TB';
+var splines = 'spline';
+var graph_path= 'live';
+var graph_file= '.*';
+var graph_paths = '';
+var show_params = 'n';
+var show_events = 'n';
+
+toolbar = new dhtmlXToolbarObject("toolbarObj");
+toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+toolbar.loadStruct("{{ url('arii_GVZ_toolbar') }}");
+toolbar.attachEvent( "onClick", function(id, value) {
+    switch (id) {
+        case "spline":
+            break;
+        case "polyline":
+        case "ortho":
+        case "curved":
+        case "line":
+        case "none":
+            splines = id;
+            d3.select('svg').remove();
+            DrawGraph();
+        break;
+        case "svg":
+            window.open( GetUrl()+'&output='+id);
+            break; 
+        case "png":
+            window.open( GetUrl()+'&output='+id);
+            break; 
+        case "pdf":
+            window.open( GetUrl()+'&output='+id);
+            break; 
+        default:
+            alert("click "+id);
+    }
+});
+toolbar.attachEvent( "onStateChange", function(id, value) {
+   switch (id) {
+        case 'events':
+            show_events = value;
+            d3.select('svg').remove();
+            DrawGraph();
+            break;
+        case 'parameters':
+            show_params = value;
+            d3.select('svg').remove();
+            DrawGraph();            
+        break;
+  }
+});
+
+function redraw() {
+  vis.attr("transform",
+      "translate(" + d3.event.translate + ")"
+      + " scale(" + d3.event.scale + ")");
+}
+
+DrawGraph();
+function GetUrl() {
+var url = "{{ url('arii_GVZ_generate') }}";
+url += "?path="+encodeURIComponent(graph_path)+'$';
+url += "&file="+encodeURIComponent(graph_file);
+url += "&splines="+encodeURIComponent(splines);
+url += "&paths="+encodeURIComponent(graph_paths);
+url += "&show_params="+encodeURIComponent(show_params);
+url += "&show_events="+encodeURIComponent(show_events);
+return url;
+}
+
+function DrawGraph() {
+//url += "rankdir="+encodeURIComponent(rankdir);
+d3.html( GetUrl(), function(data) {
+var svg = d3.select("#chart")
+   .append("svg:svg")
+/*   .attr("class", "PiYG") */
+   .attr("width", "100%")
+   .attr("height", "100%")
+   .append("svg");
+      
+    var g = svg.append('svg:g')
+     .attr('id', 'viewport');
+ 
+    
+    g.node().appendChild(data); //append the svg      
+    $('svg').svgPan('viewport');
+  
+});
+}
+/*
+function redraw() {
+    svg.attr("transform",
+      "translate(" + d3.event.translate + ")"
+      + " scale(" + d3.event.scale + ")");
+}
+*/
+/*
+$(document).ready(function() {
+
+d3.html("http://localhost/Symfony/web/app_dev.php/fr/GVZ/generate", function(data) {
+var svg = d3.select("#chart")
+   .append("svg")
+   .attr("class", "PiYG")
+   .attr("width", "100%")
+   .attr("height", "100%");
+//var g = d3.select("#chart"); //select the node you want to attach your new svg to.
+  var g = svg.append('g')
+     .attr('id', 'viewport');
+
+  g.node().appendChild(data); //append the svg
+  $('svg').svgPan('viewport');
+        
+})
+});
+*/
+
+    </script>
+                                                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--[if !IE]>end section content top<![endif]-->
+		<!--[if !IE]>start section content bottom<![endif]-->
+		<span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+		<!--[if !IE]>end section content bottom<![endif]-->
+		
+	</div>
+	<!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+
+{% endblock %}

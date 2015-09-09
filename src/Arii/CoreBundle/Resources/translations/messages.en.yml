@@ -1,0 +1,105 @@
+dashboard.Admin: Administration
+dashboard.Event: Event manager
+dashboard.GVZ: Job Map
+dashboard.Home: Home
+dashboard.JID: Dashboard
+dashboard.JOC: Monitoring
+dashboard.JOE: Job Editor
+dashboard.MFT: File transfers
+dashboard.Simile: Simile
+dashboard.Time: Time calculation
+date.reference: date.reference
+day.d: day.d
+DBDRIVER.CHANGE: Database driver indicated in permeter file cannot be used with Arii.
+DBDRIVER.ERROR: Unknown driver
+dow.Friday: dow.Friday
+dow.Monday: dow.Monday
+dow.Saturday: dow.Saturday
+dow.Sunday: dow.Sunday
+dow.Thursday: dow.Thursday
+dow.Tuesday: dow.Tuesday
+dow.Wednesday: dow.Wednesday
+lang.en: English
+lang.fr: French
+module.Admin: Administration
+module.BPM: Process Monitoring
+module.Config: Installation
+module.Event: Event manager
+module.GVZ: Job Map
+module.Home: Home
+module.JID: Monitoring
+module.JOC: Job operations
+module.JOE: Job editor
+module.MFT: File transfers
+module.Report: Report
+module.Simile: Simile
+module.Time: Timecode
+My.account: My account
+repository.db.note:    Please specify a database for this repository
+repository.db.tooltip: Please specify a database for this repository
+repository.description.note:    Please type in the description for this repository
+repository.description.tooltip: Please type in the description for this repository
+repository.message.delete:  Do you really want to delete this repository ?
+repository.message.save:    Repository saved.
+repository.name.note:    Please give a name of the repository
+repository.name.tooltip: Please give a name of the repository
+repository.timezone.note:    Please select the time zone for this repository
+repository.timezone.tooltip: Please select the time zone for this repository
+short_dow.1: Mon
+short_dow.2: Tue
+short_dow.3: Wed
+short_dow.4: Thu
+short_dow.5: Fri
+short_dow.6: Sat
+short_dow.7: Sun
+site.description.note:    Please type in the description for this site
+site.description.tooltip: Please type in the description for this site
+site.message.delete:  Do you really want to delete this site ?
+site.message.save:    Site saved.
+site.name.note:    Please give a name of the site
+site.name.tooltip: Please give a name of the site
+site.timezone.note:    Please select the time zone for this site
+site.timezone.tooltip: Please select the time zone for this site
+size.b: b
+size.Kb: Kb
+size.Mb: Mb
+spooler.all: spooler.all
+spooler.connection.note:    Please specify an access connection for the spooler
+spooler.connection.tooltip: Please specify an access connection for the spooler
+spooler.database.note:    Please specify a database for the spooler
+spooler.event.note:    Check is this spooler is an event manager
+spooler.mail.note:    Please specify a mail server for the spooler
+spooler.message.delete:  Do you really want to delete this connection ?
+spooler.name.note:    Please type a name for the spooler
+spooler.site.note:    Please specify a site for the spooler
+spooler.supervisor.note:    Please choose a supervisor for the spooler
+spooler.transfer.note:    Please specify a connection for file tranferation of the spooler
+spooler.version.note:    Specify the version of this spooler
+Spooler: Spooler
+spooler: spooler
+Standalone server: Standalone server
+Start day: Start day
+Start time: Start time
+Status: Status
+str_month.10: October
+str_month.11: November
+str_month.12: December
+str_month.1: January
+str_month.2: February
+str_month.3: March
+str_month.4: April
+str_month.5: May
+str_month.6: June
+str_month.7: July
+str_month.8: August
+str_month.9: September
+team.description.note:    Please give a short description of this team
+team.message.delete:  Do you really want to delete this team ?
+team.message.save:    Team saved.
+team.title.note:    Please give a title to this team
+user.mail.note:    Enter your validate Email Adress here. This field can not be empty
+user.mail.tooltip: Enter you validate Email here
+user.message.delete:  Do you really want to delete this user ?
+user.message.save:    User saved.
+user.name.note:    Enter your login username here, this field can not be empty.
+user.name.tooltip: Enter your login username here

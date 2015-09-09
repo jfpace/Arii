@@ -1,0 +1,54 @@
+# src/Arii/MFTBundle/Resources/config/routing.yml
+
+arii_MFT_index:
+    pattern:  /
+    defaults: { _controller: AriiMFTBundle:Transfers:index }
+
+xml_MFT_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiMFTBundle:Default:toolbar }
+
+xml_MFT_toolbar_activities:
+    pattern:  /activities/toolbar.xml
+    defaults: { _controller: AriiMFTBundle:Default:toolbar_activities }
+    
+arii_MFT_graph:
+    pattern:  /graph
+    defaults: { _controller: AriiMFTBundle:Transfers:graph }
+
+arii_MFT_history:
+    pattern:  /history
+    defaults: { _controller: AriiMFTBundle:Transfers:index }
+
+arii_MFT_activities:
+    pattern:  /activities
+    defaults: { _controller: AriiMFTBundle:Transfers:activities }
+
+arii_MFT_detail:
+    pattern:  /detail
+    defaults: { _controller: AriiMFTBundle:DB:detail }
+
+xml_MFT_history:
+    pattern:  /history.xml
+    defaults: { _controller: AriiMFTBundle:DB:history }
+
+xml_MFT_activities:
+    pattern:  /activities.xml
+    defaults: { _controller: AriiMFTBundle:DB:activities }
+    
+db_sosftp_history:
+    pattern:  /transfers/db/sosftp_history
+    defaults: { _controller: AriiMFTBundle:DB:sosftp_history }
+
+db_graph_pie_send:
+    pattern:  /transfers/db/graph_pie_send
+    defaults: { _controller: AriiMFTBundle:DBGraph:pie_send }
+    
+arii_MFT_db:
+    pattern:  /db
+    defaults: { _controller: AriiMFTBundle:Edit:index }
+
+arii_MFT_edit:
+    pattern:  /edit
+    defaults: { _controller: AriiMFTBundle:Edit:edit }
+    

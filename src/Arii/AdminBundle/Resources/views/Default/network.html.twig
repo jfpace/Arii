@@ -1,0 +1,105 @@
+{# src/Arii/CoreBundle/Resources/views/index.html.twig #}
+{% extends "AriiAdminBundle::layout.html.twig" %}
+{% block specific %}   
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="{{ asset('network/network.js') }}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var nodesTable = null;
+var linksTable = null;
+var network = null;
+
+var DIR = '{{ asset('arii/images/wa/') }}';
+
+google.load('visualization', '1');
+
+// Set callback to run when API is loaded
+google.setOnLoadCallback(drawVisualization); 
+
+// Called when the Visualization API is loaded.
+function drawVisualization() {
+  // Create a data table with nodes.
+  nodesTable = new google.visualization.DataTable();
+  nodesTable.addColumn('string', 'id');
+  nodesTable.addColumn('string', 'text');   // optional
+  nodesTable.addColumn('string', 'image');  // optional
+  nodesTable.addColumn('string', 'style');   // optional
+
+
+  // Create a data table with links.
+  linksTable = new google.visualization.DataTable();
+  linksTable.addColumn('string', 'from');
+  linksTable.addColumn('string', 'to');
+  linksTable.addColumn('string', 'color');
+  linksTable.addColumn('string', 'style');
+  linksTable.addColumn('number', 'length'); // optional
+  linksTable.addColumn('number', 'width');
+
+  {% for k  in Nodes %}
+    nodesTable.addRow([ '{{ k.id }}', '{{ k.name}}', DIR + '{{ k.image }}.png', 'image' ]);
+  {% endfor %}
+  {% for k  in Links %}
+    linksTable.addRow([ '{{ k.from }}', '{{ k.to}}', '{{ k.color }}', '{{ k.style }}', {{ k.length }}, {{ k.width }} ]);
+  {% endfor %}
+  
+  // specify options
+  var options = {
+    'width': '100%', 
+    'height': '500px',
+    'stabilize': false   // stabilize positions before displaying
+  };
+
+  // Instantiate our graph object.
+  network = new links.Network(document.getElementById('mynetwork'));
+
+  // Draw our graph with the created data and options 
+  network.draw(nodesTable, linksTable, options);
+}
+
+function GlobalRefresh() {}
+</script>
+{% endblock %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Network" | trans }}</h2>
+                <ul  class="section_menu">
+      <li><a href="{{ url('arii_Admin_spoolers') }}" class=""><span><span><img src="{{ asset('arii/images/menu/cog.png') }}"/>&nbsp;{{ "Spoolers" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_repositories') }}" class=""><span><span><img src="{{ asset('arii/images/menu/database.png') }}"/>&nbsp;{{ "Repositories" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_connections') }}" class=""><span><span><img src="{{ asset('arii/images/menu/transmit.png') }}"/>&nbsp;{{ "Connections" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_sites') }}" class=""><span><span><img src="{{ asset('arii/images/menu/world.png') }}"/>&nbsp;{{ "Sites" | trans }}</span></span></a></li>
+            </ul>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                                <div class="sct_right">
+                                                        <!--[if !IE]>start dashboard menu<![endif]-->
+                                                        <div class="dashboard_menu_wrapper">
+<div id="mynetwork" height="500px" width="100%"></div> 
+                                                        </div>
+                                                        <!--[if !IE]>end dashboard menu<![endif]-->
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+{% endblock %}

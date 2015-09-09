@@ -1,0 +1,7 @@
+parameters:
+#    arii_joe.example.class: Arii\JOEBundle\Example
+
+services:
+#    arii_joe.example:
+#        class: %arii_joe.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

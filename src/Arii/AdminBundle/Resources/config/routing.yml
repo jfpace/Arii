@@ -1,0 +1,436 @@
+arii_Admin_index:
+    pattern:  /
+    defaults: { _controller: AriiAdminBundle:Users:index }
+
+arii_Admin_network:
+    pattern:  /network
+    defaults: { _controller: AriiAdminBundle:Default:network }
+    
+json_Admin_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiAdminBundle:Default:ribbon }
+
+xml_Admin_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Toolbar:global }
+
+#============================================================
+# Connections
+#------------------------------------------------------------
+arii_Admin_connections:
+    pattern:  /connections
+    defaults: { _controller: AriiAdminBundle:Connections:index}
+    
+xml_Admin_connections_grid:
+    pattern:  /connections/grid.xml
+    defaults: { _controller: AriiAdminBundle:Connections:grid}
+    
+xml_Admin_connections_menu:
+    pattern:  /connections/menu.xml
+    defaults: { _controller: AriiAdminBundle:Connections:menu}
+
+#------------------------------------------------------------
+# Connection
+#------------------------------------------------------------
+xml_Admin_connection_toolbar:
+    pattern:  /connection/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Connection:toolbar}
+
+xml_Admin_connection_form:
+    pattern:  /connection/form.xml
+    defaults: { _controller: AriiAdminBundle:Connection:form}
+
+xml_Admin_connection_form_structure:
+    pattern:  /connection/form_structure.xml
+    defaults: { _controller: AriiAdminBundle:Connection:form_structure}
+
+xml_Admin_connection_save:
+    pattern:  /connection/save.xml
+    defaults: { _controller: AriiAdminBundle:Connection:save}
+
+xml_Admin_connection_delete:
+    pattern:  /connection/delete.xml
+    defaults: { _controller: AriiAdminBundle:Connection:delete}
+
+#============================================================
+# Repositories
+#------------------------------------------------------------
+arii_Admin_repositories:
+    pattern:  /repositories
+    defaults: { _controller: AriiAdminBundle:Repositories:index}
+
+xml_Admin_repositories_grid:
+    pattern:  /repositories/grid.xml
+    defaults: { _controller: AriiAdminBundle:Repositories:grid}
+
+xml_Admin_repositories_menu:
+    pattern:  /repositories/menu.xml
+    defaults: { _controller: AriiAdminBundle:Repositories:menu}
+
+xml_Admin_repositories_connections:
+    pattern:  /repositories/connections.xml
+    defaults: { _controller: AriiAdminBundle:Repositories:connections}
+    
+#------------------------------------------------------------
+# Repository
+#------------------------------------------------------------
+xml_Admin_repository_toolbar:
+    pattern:  /repository/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Repository:toolbar}
+
+xml_Admin_repository_form:
+    pattern:  /repository/form.xml
+    defaults: { _controller: AriiAdminBundle:Repository:form}
+    
+xml_Admin_repository_save:
+    pattern:  /repository/save
+    defaults: { _controller: AriiAdminBundle:Repository:save}
+
+xml_Admin_repository_delete:
+    pattern:  /repository/delete
+    defaults: { _controller: AriiAdminBundle:Repository:delete}
+    
+xml_Admin_repository_edit:
+    pattern:  /repository/edit
+    defaults: { _controller: AriiAdminBundle:Repository:edit}
+#============================================================
+# Sites
+#------------------------------------------------------------
+arii_Admin_sites:
+    pattern:  /sites
+    defaults: { _controller: AriiAdminBundle:Sites:index}
+
+xml_Admin_sites_grid:
+    pattern:  /sites/grid.xml
+    defaults: { _controller: AriiAdminBundle:Sites:grid}
+
+xml_Admin_sites_show:
+    pattern:  /sites/show.xml
+    defaults: { _controller: AriiAdminBundle:Sites:show}
+
+xml_Admin_sites_menu:
+    pattern:  /sites/menu.xml
+    defaults: { _controller: AriiAdminBundle:Sites:menu}
+
+xml_Admin_sites_connections:
+    pattern:  /sites/connections.xml
+    defaults: { _controller: AriiAdminBundle:Sites:connections}
+#------------------------------------------------------------
+# Repository
+#------------------------------------------------------------
+xml_Admin_site_toolbar:
+    pattern:  /site/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Site:toolbar}
+
+xml_Admin_site_form:
+    pattern:  /site/form.xml
+    defaults: { _controller: AriiAdminBundle:Site:form}
+    
+xml_Admin_site_save:
+    pattern:  /site/save
+    defaults: { _controller: AriiAdminBundle:Site:save}
+
+xml_Admin_site_delete:
+    pattern:  /site/delete
+    defaults: { _controller: AriiAdminBundle:Site:delete}
+    
+#============================================================
+# Spoolers
+#------------------------------------------------------------
+arii_Admin_spoolers:
+    pattern:  /spoolers
+    defaults: { _controller: AriiAdminBundle:Spoolers:index}
+
+xml_Admin_spoolers_treegrid:
+    pattern:  /spoolers/treegrid.xml
+    defaults: { _controller: AriiAdminBundle:Spoolers:treegrid}
+
+xml_Admin_spoolers_menu:
+    pattern:  /spoolers/menu.xml
+    defaults: { _controller: AriiAdminBundle:Spoolers:menu}
+
+#------------------------------------------------------------
+# Spooler
+#------------------------------------------------------------
+xml_Admin_spooler_toolbar:
+    pattern:  /spoolers/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:toolbar}
+
+xml_Admin_spooler_supervisors_select:
+    pattern:  /spooler/supervisors/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:supervisors}
+
+xml_Admin_spooler_sites_select:
+    pattern:  /spooler/sites/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:sites}
+
+xml_Admin_spooler_transfer_select:
+    pattern:  /spooler/transfer/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:transfer}
+
+xml_Admin_spooler_mail_select:
+    pattern:  /spooler/mail/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:mail}
+
+xml_Admin_spooler_backup_select:
+    pattern:  /spooler/backup/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:backup }
+    
+xml_Admin_spooler_repositories_select:
+    pattern:  /spooler/repositories/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:repositories}
+
+xml_Admin_spooler_http_select:
+    pattern:  /spooler/http/select.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:http}
+
+xml_Admin_spooler_form:
+    pattern:  /spooler/form.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:form}
+
+xml_Admin_spooler_save:
+    pattern:  /spooler/save.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:save}
+
+xml_Admin_spooler_delete:
+    pattern:  /spooler/delete.xml
+    defaults: { _controller: AriiAdminBundle:Spooler:delete}
+
+#============================================================
+# Teams
+#------------------------------------------------------------
+xml_Admin_teams_menu:
+    pattern:  /teams/menu.xml
+    defaults: { _controller: AriiAdminBundle:Teams:menu}
+
+#------------------------------------------------------------
+# Team
+#------------------------------------------------------------
+xml_Admin_team_add:
+    pattern:  /team/add
+    defaults: { _controller: AriiAdminBundle:Team:add}
+
+xml_Admin_team_form:
+    pattern:  /team/form.xml
+    defaults: { _controller: AriiAdminBundle:Team:form}
+
+xml_Admin_team_toolbar:
+    pattern:  /team/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Team:toolbar}
+
+xml_Admin_team_save:
+    pattern:  /team/save.xml
+    defaults: { _controller: AriiAdminBundle:Team:save}
+
+xml_Admin_team_delete:
+    pattern:  /team/delete.xml
+    defaults: { _controller: AriiAdminBundle:Team:delete}
+
+#------------------------------------------------------------
+# TeamFilter
+#------------------------------------------------------------
+xml_Admin_teamfilter_menu:
+    pattern:  /teamfilter/menu.xml
+    defaults: { _controller: AriiAdminBundle:TeamFilter:menu}
+    
+xml_Admin_teamfilter_toolbar:
+    pattern:  /teamfilter/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:TeamFilter:toolbar}
+
+arii_Admin_teamfilter_processor:
+    pattern:  /teamfilter/processor
+    defaults: { _controller: AriiAdminBundle:TeamFilter:processor}
+
+
+arii_Admin_team_attachFilter:
+    pattern:  /team/attach_filter
+    defaults: { _controller: AriiAdminBundle:User:attach_filter}
+
+arii_Admin_team_attachFilter_toolbar:
+    pattern:  /team/attach_filter_toolbar
+    defaults: { _controller: AriiAdminBundle:User:attach_filter_toolbar}
+
+arii_Admin_team_ajax_addFilter:
+    pattern:  /team/ajax_addFilter
+    defaults: { _controller: AriiAdminBundle:User:ajax_addFilter}
+
+arii_Admin_team_editFilter:
+    pattern:  /team/edit_filter
+    defaults: { _controller: AriiAdminBundle:User:edit_filter}
+
+arii_Admin_team_deleteFilter:
+    pattern:  /team/delete_filter
+    defaults: { _controller: AriiAdminBundle:User:delete_filter}
+
+arii_Admin_team_saveFilter:
+    pattern:  /team/save_filter
+    defaults: { _controller: AriiAdminBundle:User:save_filter}
+
+
+#============================================================
+# Users
+#------------------------------------------------------------
+arii_Admin_users:
+    pattern:  /users
+    defaults: { _controller: AriiAdminBundle:Users:index }
+
+xml_Admin_users_treegrid:
+    pattern:  /users/treegrid.xml
+    defaults: { _controller: AriiAdminBundle:Users:treegrid }
+    
+xml_Admin_users_menu:
+    pattern:  /users/menu.xml
+    defaults: { _controller: AriiAdminBundle:Users:menu}
+
+xml_Admin_users_toolbar:
+    pattern:  /users/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Users:toolbar}
+
+#------------------------------------------------------------
+# User
+#------------------------------------------------------------
+arii_Admin_user:
+    pattern:  /user
+    defaults: { _controller: AriiAdminBundle:User:index}
+
+xml_Admin_user_toolbar:
+    pattern:  /user/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:User:toolbar}
+
+xml_Admin_user_form:
+    pattern:  /user/form.xml
+    defaults: { _controller: AriiAdminBundle:User:form}
+
+xml_Admin_user_save:
+    pattern:  /user/save.xml
+    defaults: { _controller: AriiAdminBundle:User:save}
+
+xml_Admin_user_drag:
+    pattern:  /user/drag.xml
+    defaults: { _controller: AriiAdminBundle:User:drag}
+
+#============================================================
+
+arii_Admin_user_select_team:
+    pattern:  /user/select_team
+    defaults: { _controller: AriiAdminBundle:User:select_team}
+
+arii_Admin_user_select_enterprise:
+    pattern:  /user/select_enterprise
+    defaults: { _controller: AriiAdminBundle:User:select_enterprise}
+
+arii_Admin_user_delete:
+    pattern:  /user/delete
+    defaults: { _controller: AriiAdminBundle:User:delete}
+
+arii_Admin_user_userProcessor:
+    pattern:  /user/userProcessor
+    defaults: { _controller: AriiAdminBundle:User:userProcessor}
+
+
+#============================================================
+# Rights
+#------------------------------------------------------------
+xml_Admin_rights_toolbar:
+    pattern:  /rights/toolbar.xml
+    defaults: { _controller: AriiAdminBundle:Rights:toolbar }
+
+xml_Admin_rights:
+    pattern:  /rights/list.xml
+    defaults: { _controller: AriiAdminBundle:Rights:rights }
+    
+xml_Admin_team_rights:
+    pattern:  /team/rights.xml
+    defaults: { _controller: AriiAdminBundle:Rights:team_rights }
+
+xml_Admin_rights_form:
+    pattern:  /rights/form.xml
+    defaults: { _controller: AriiAdminBundle:Rights:form }
+    
+xml_Admin_rights_grid:
+    pattern:  /rights/grid.xml
+    defaults: { _controller: AriiAdminBundle:Rights:grid }
+
+xml_Admin_rights_menu:
+    pattern:  /rights/menu.xml
+    defaults: { _controller: AriiAdminBundle:Rights:menu }
+
+#============================================================
+# Autre
+#------------------------------------------------------------
+arii_Admin_show_all:
+    pattern:  /show_all
+    defaults: { _controller: AriiAdminBundle:Users:show_all}
+
+arii_Admin_show_team_filter:
+    pattern:  /show_team_filter
+    defaults: { _controller: AriiAdminBundle:User:show_team_filter}
+
+arii_Admin_server:
+    pattern:  /server
+    defaults: { _controller: AriiAdminBundle:Default:server}
+
+arii_Admin_toolbar_index:
+    pattern:  /toolbar/index
+    defaults: { _controller: AriiAdminBundle:User:toolbar_index}
+
+arii_Admin_toolbar:
+    pattern:  /toolbar/management
+    defaults: { _controller: AriiAdminBundle:User:toolbar}
+
+arii_Admin_toolbar_add:
+    pattern:  /toolbar/management_add
+    defaults: { _controller: AriiAdminBundle:User:toolbar_add}
+
+# Audit Management
+arii_Admin_audit:
+    pattern:  /audit
+    defaults: { _controller: AriiAdminBundle:Audit:index}
+
+arii_Admin_show_audit:
+    pattern:  /audit/show
+    defaults: { _controller: AriiAdminBundle:Audit:show}
+
+# Batch Installation 
+arii_batchinstaller_index:
+    pattern:  /batch_installer
+    defaults: { _controller: AriiAdminBundle:Batch:list }
+
+arii_batchinstaller_list:
+    pattern:  /batch_installer
+    defaults: { _controller: AriiAdminBundle:Batch:list }
+
+arii_batchinstaller_new:
+    pattern:  /batch_installer/new
+    defaults: { _controller: AriiAdminBundle:Batch:installer, mode: new }
+
+arii_Admin_filter_show:
+    pattern:  /batch_installer/edit
+    defaults: { _controller: AriiAdminBundle:Batch:installer, mode: edit }
+
+# DHTMLX
+arii_batchinstaller_grid:
+    pattern:  /batch_installer/grid
+    defaults: { _controller: AriiAdminBundle:Batch:grid }
+
+arii_batchinstaller_contextmenu:
+    pattern:  /batch_installer/contextmenu
+    defaults: { _controller: AriiAdminBundle:Batch:contextmenu }
+
+arii_batchinstaller_form:
+    pattern:  /batch_installer/form
+    defaults: { _controller: AriiAdminBundle:Batch:form }
+
+arii_batchinstaller_toolbar_edit:
+    pattern:  /batch_installer/toolbar_edit
+    defaults: { _controller: AriiAdminBundle:Batch:toolbarEdit }
+
+arii_batchinstaller_toolbar_list:
+    pattern:  /batch_installer/toolbar_list
+    defaults: { _controller: AriiAdminBundle:Batch:toolbarList }
+
+# Sorties externes
+arii_batchinstaller_xml:
+    pattern:  /batch_installer/xml
+    defaults: { _controller: AriiAdminBundle:Batch:xml }
+

@@ -1,0 +1,215 @@
+{# src/Arii/JOCBundle/Resources/views/Spoolers/index.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block body %}
+<script language="javascript">
+var max_history = 0; // pas d'historique
+var chained = 0; // que des standalone
+var only_warning = 1; // que les problemes
+var update=30;
+var autorefresh;
+
+dhtmlxEvent(window,"load",function(){ 
+    
+    var menu = new dhtmlXMenuObject(null);
+    menu.setIconsPath( "{{ asset('bundles/ariicore/images/menu/') }}" );
+    menu.renderAsContextMenu();
+    menu.attachEvent("onClick", onButtonClick);
+    menu.loadStruct("{{ url('xml_JOC_spoolers_menu') }}");
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");
+    globalLayout.cells("a").setWidth(250); 
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOC_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("a").setHeight(300);
+
+    myDonut =  globalLayout.cells("a").attachChart({
+            view:"donut",
+            container:"pie_chart_container",
+            value:"#JOBS#",
+            label:"",
+            tooltip: "#STATUS#",
+            color: "#COLOR#",
+            border:false,
+            pieInnerText: "#JOBS#",
+            shadow: 0,
+            legend:{
+                  width: 0,
+                  template: "#STATUS#",
+                valign:"top",
+                align:"left"
+            } 
+    });
+    myDonut.load( "{{ url('xml_JOC_spoolers_pie') }}" );
+    
+    myGrid = globalLayout.cells("b").hideHeader();
+    myGrid = globalLayout.cells("b").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader( "{{ "Spooler" | trans }},{{ "Status" | trans }},{{ "Version" | trans }},{{ "Host" | trans }},{{ "Ip Adress" | trans }},{{ "Port" | trans }},{{ "Time" | trans }},{{ "Heartbeat" | trans }}" );
+    myGrid.attachHeader("#text_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#text_filter,#numeric_filter");
+    myGrid.setInitWidths( "200,120,100,*,140,80,160,120" );
+    myGrid.setColTypes(   "ro,ro,ro,ro,ro,ro,ro,ro" );
+    myGrid.setColAlign(   "left,center,right,left,right,right,right,right" );
+    myGrid.setColSorting( "str,str,str,str,str,str,date,str" );
+    myGrid.enableContextMenu(menu);
+    myGrid.enableAlterCss("","");
+    myGrid.init();
+    myGrid.loadXML( "{{ url('xml_JOC_spoolers_grid') }}" );
+    myGrid.enableLightMouseNavigation( true );
+    myGrid.attachEvent("onXLE",function(){
+        myGrid.refreshFilters();
+        myGrid.filterByAll();
+    });
+
+//    myTabbar = globalLayout.cells("c").attachTabbar();
+//    myTabbar.addTab("order","{{ "Order" | trans }}","120px", null, true);
+//    myTabbar.addTab("subscribers","{{ "Subscribers" | trans }}","120px");
+
+    globalLayout.cells("c").hideHeader();
+    
+//    myForm = myTabbar.cells("order").attachForm();
+    myForm = globalLayout.cells("c").attachForm();
+    myForm.loadStruct("{{ url('json_JOC_spoolers_form') }}");
+
+//    myDetailToolbar = myTabbar.cells("order").attachToolbar();
+    myDetailToolbar = globalLayout.cells("c").attachToolbar();
+    myDetailToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myDetailToolbar.loadStruct( "{{ url('xml_JOC_spooler_toolbar') }}" , function(){
+    });
+
+    myDetailToolbar.attachEvent("onClick",function(itemid){
+        switch(itemid) {
+            case "delete":
+                url = "{{ url('xml_JOC_spooler_delete') }}?spooler_id="+myForm.getItemValue('ID');
+alert(url);
+                globalLayout.progressOn();
+                dhx4.ajax.get( url, function(loader,response){
+                        dhtmlx.message({
+                        type: "Notice",
+                        expire: 5000,
+                        width: "500px",
+                        text: loader.xmlDoc.responseText });
+                        globalLayout.progressOff();
+                        GlobalRefresh();
+                });
+            break;
+            case "update":
+                url = "{{ url('arii_Cache') }}"+myForm.getItemValue('IP_ADDRESS')+"/"+myForm.getItemValue('TCP_PORT')+"/get";
+                globalLayout.progressOn();
+                dhx4.ajax.get( url, function(loader,response){
+                        dhtmlx.message({
+                        type: "Notice",
+                        expire: 5000,
+                        width: "500px",
+                        text: loader.xmlDoc.responseText });
+                        globalLayout.progressOff();
+                        GlobalRefresh();
+                });
+                break;
+            default:
+                alert(itemid);
+        }
+    });
+/*
+    myRemote = myForm = myTabbar.cells("subscribers").attachGrid();
+    myRemote.selMultiRows = true;
+    myRemote.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myRemote.setHeader( "{{ "Spooler" | trans }},{{ "Hostname" | trans }},{{ "IP Address" | trans }},{{ "Port" | trans }},{{ "Status" | trans }},{{ "Time" | trans }},{{ "Change" | trans }},{{ "Transfer" | trans }},{{ "Error" | trans }}" );
+    myRemote.attachHeader("#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+    myRemote.setInitWidths( "200,150,150,150,150,150,150,150,150" );
+    myRemote.setColTypes(   "ro,ro,ro,ro,ro,ro,ro,ro,ro" );
+    myRemote.setColAlign(   "left,left,left,left,left,left,left,left,left" );
+    myRemote.setColSorting( "str,str,str,str,str,str,str,str,str" );
+    myRemote.enableContextMenu(menu);
+    myRemote.enableAlterCss("","");
+    myRemote.init();
+*/
+    myGrid.attachEvent("onRowDblClicked", function(id){        
+        myForm.load("{{ url('xml_JOC_spooler_form') }}?id="+id);
+/*        myTabbar.cells("order").progressOff();
+        myTabbar.cells("subscribers").progressOn();
+        myRemote.clearAndLoad("{{ url('xml_JOC_subscribers') }}?id="+id, function () {
+            myTabbar.cells("subscribers").progressOff();
+        });
+*/    } );
+    
+    GridRefresh();
+});
+
+// Autorefresh
+function GlobalRefresh() {
+    GridRefresh();
+}
+
+function GridRefresh() {
+    clearInterval( autorefresh );
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10){
+    minutes = "0" + minutes;
+    }
+    if (seconds < 10){
+    seconds = "0" + seconds;
+    }
+    myRibbon.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
+    myGrid.loadXML( "{{ url('xml_JOC_spoolers_grid') }}", function () {
+        globalLayout.cells("b").progressOff();
+        myDonut.load( "{{ url('xml_JOC_spoolers_pie') }}", function () {
+            myDonut.refresh();
+            globalLayout.progressOff();
+            autorefresh = setInterval( "GridRefresh()", update*1000 );
+        });        
+    });
+}
+
+function onButtonClick(menuitemId) {
+    var data = myGrid.contextID.split("_");
+    //rowInd_colInd;
+    var id = data[0];
+    var cInd = data[1];
+    // alert("rId "+rId+" cInd "+cInd);
+    switch (menuitemId) {
+        case "get_info":
+            url = "{{ url('arii_Cache') }}"+myGrid.cells(id,4).getValue()+"/"+myGrid.cells(id,5).getValue()+"/get";
+            globalLayout.progressOn();
+            dhx4.ajax.get( url, function(loader,response){
+                    dhtmlx.message({
+                    type: "Notice",
+                    expire: 5000,
+                    width: "500px",
+                    text: loader.xmlDoc.responseText });
+                    globalLayout.progressOff();
+                    GlobalRefresh();
+            });
+         break;
+        case "show_info":
+            SpoolerDetail(id);
+        break;
+       default:
+            alert(menuitemId);    
+    }
+    return true;
+}
+</script>
+		<!--[if !IE]>end section content top<![endif]-->
+		<!--[if !IE]>start section content bottom<![endif]-->
+		<span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+		<!--[if !IE]>end section content bottom<![endif]-->
+		
+	</div>
+	<!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+{% endblock %}

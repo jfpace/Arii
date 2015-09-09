@@ -1,0 +1,82 @@
+arii_Cache:
+    pattern:  /
+    defaults: { _controller: AriiFocusBundle:Cache:get }
+
+arii_Cache_purge:
+    pattern:  /purge/{spooler_id}
+    defaults: { _controller: AriiFocusBundle:CacheV3:purge }
+
+arii_Cache_post:
+    pattern:  /post
+    defaults: { _controller: AriiFocusBundle:CacheV3:post }
+
+arii_Cache_file:
+    pattern:  /file
+    defaults: { _controller: AriiFocusBundle:CacheV3:file }
+
+arii_Cache_get:
+    pattern:  /{spooler}/{port}/get
+    defaults: { _controller: AriiFocusBundle:CacheV3:get }
+
+arii_Cache_test:
+    pattern:  /{spooler}/{port}/test
+    defaults: { _controller: AriiFocusBundle:CacheV3:test }
+
+arii_Cache2_get:
+    pattern:  /{spooler}/{port}/get2
+    defaults: { _controller: AriiFocusBundle:Cache2:get }
+
+arii_Cache_web:
+    pattern:  /{spooler}/{port}/web
+    defaults: { _controller: AriiFocusBundle:Cache:web }
+
+arii_Cache_db_post:
+    pattern:  /db/{db}/post
+    defaults: { _controller: AriiFocusBundle:CacheDB:post }
+
+arii_Cache_db_tasks_history:
+    pattern:  /db/tasks/history
+    defaults: { _controller: AriiFocusBundle:Aggreg:history }
+
+arii_Cache_db_orders_history:
+    pattern:  /db/orders/history
+    defaults: { _controller: AriiFocusBundle:Aggreg:orderHistory }
+
+arii_Cache_jobs_status:
+    pattern:  /post/jobs/status
+    defaults: { _controller: AriiFocusBundle:CacheDB:status }
+    
+arii_Cache_jobs_runtime:
+    pattern:  /post/jobs/runtime
+    defaults: { _controller: AriiFocusBundle:CacheDB:runtime }
+
+arii_Cache_mft:
+    pattern:  /mft
+    defaults: { _controller: AriiMFTBundle:Background:post }
+    
+#============================
+# Synchronisation SQL
+#============================
+arii_Cache_sql_jobs:
+    pattern:  /db/{db}/jobs/runtimes
+    defaults: { _controller: AriiFocusBundle:CacheSQL:job_runtimes }
+
+arii_Cache_sql_status:
+    pattern:  /db/{db}/jobs/status
+    defaults: { _controller: AriiFocusBundle:CacheSQL:job_status }
+
+arii_Cache_sql_orders:
+    pattern:  /db/{db}/orders/runtimes
+    defaults: { _controller: AriiFocusBundle:CacheSQL:order_runtimes }
+
+arii_Cache_sql_order_status:
+    pattern:  /db/{db}/orders/status
+    defaults: { _controller: AriiFocusBundle:CacheSQL:order_status }
+ 
+arii_Cache_sql_nodes:
+    pattern:  /db/{db}/nodes/runtimes
+    defaults: { _controller: AriiFocusBundle:CacheSQL:node_runtimes }
+
+arii_Cache_sql_node_status:
+    pattern:  /db/{db}/nodes/status
+    defaults: { _controller: AriiFocusBundle:CacheSQL:node_status }

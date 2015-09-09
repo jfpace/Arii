@@ -1,0 +1,517 @@
+JobScheduler: JobScheduler
+-id: -ID
+Operations GUI: Operations GUI
+Build: Build
+Jobs: Jobs
+Job Chains: Job-Ketten
+Orders: Aufträge
+Schedules: Schedules
+Process Classes: Prozess-Klassen
+Locks: Sperren
+Cluster: Cluster
+Remote Schedulers: Remote Scheduler
+Last Activities: Letzte Aktivitäten
+Menu: Menü
+Extras: Extras
+Help: Hilfe
+Hide: Details schließen
+Update: Aktualisieren
+Show log: Protokoll
+Show job dependencies: Job-Abhängigkeiten
+Show job chain dependencies: Job-Ketten-Abhängigkeiten
+Show start times: Start-Intervalle
+Manage filters: Filterverwaltung
+Manage log categories: Protokoll-Kategorien
+Pause: Anhalten
+Continue: Fortsetzen
+Terminate: Beenden
+Terminate within ~$secs: Binnen ~$secs beenden
+Terminate and restart: Beenden mit Neustart
+Terminate and restart within ~$secs: Binnen ~$secs beenden mit Neustart
+Abort immediately: Sofort abbrechen
+Abort immediately and restart: Sofort abbrechen mit Neustart
+Terminate cluster: Cluster beenden
+Terminate cluster within ~$secs: Binnen ~$secs Cluster beenden
+Terminate and restart cluster: Cluster mit Neustart beenden
+Terminate and restart cluster within ~$secs: Binnen ~$secs Cluster mit Neustart beenden
+Terminate fail-safe: Ausfallsicher beenden
+Terminate fail-safe within ~$secs: Binnen ~$secs ausfallsicher beenden
+Documentation: Dokumentation
+Forum: Forum
+Downloads: Downloads
+Follow us on Twitter: Folgen Sie uns auf Twitter
+About: Über
+Settings: Einstellungen
+Monitor: Monitor
+Configuration: Konfiguration
+every $secs: alle $secs
+ID: ID
+State: Status
+Pid: Pid
+Time: Zeit
+jobs: Jobs
+need process: warten auf Prozess
+tasks: Tasks
+orders: Aufträge
+$cnt in cluster: $cnt in Cluster
+Start Time: Startzeit
+starting: startet
+running: gestartet
+paused: angehalten
+stopping: wird gestoppt
+stopping_let_run: wird gestoppt
+stopped: gestoppt
+waiting_for_activation: wartet auf Aktivierung
+unknown: unbekannt
+THIS IS A BACKUP...: DAS IST EIN BACKUP...
+Backup JobScheduler:: Backup JobScheduler:
+JobScheduler is waiting for database ...: JobScheduler wartet auf Datenbank ...
+Waiting for response from JobScheduler ...: Auf Antwort des JobScheduler warten ...
+No connection to JobScheduler: Keine Verbindung zum JobScheduler
+Error at XML answer:: Fehler in XML-Antwort:
+$trial trial (of 5) to (re)connect to JobScheduler: $trial Verbindungsversuch (von 5) mit dem JobScheduler
+First: Erster
+Second: Zweiter
+Third: Dritter
+Fourth: Vierter
+Last: Letzter
+never: nie
+now: jetzt
+days: Tage
+The settings dialog is not available,\nbecause $file is used as settings file.: Der Dialog \'Einstellungen\' steht nicht zur Verfügung,\nda die Datei $file für die Einstellungen benutzt wird.
+You can enable the settings dialog \nvia the _disable_cookie_settings flag in the settings file: Sie können den Dialog durch den _disable_cookie_settings \nSchalter in der obigen Datei aktivieren.
+from: von
+update: Aktualisieren
+last update: letzte Aktualisierung
+Scheduler is running since: Startzeit
+Show tasks: Tasks anzeigen
+All jobs: Alle Jobs
+Standalone jobs: Standalone-Jobs
+Order jobs: Auftrags-Jobs
+with state: im Status
+(all): (alle)
+(other): (andere)
+running or stopped: gestartet oder gestoppt
+and with process class: und der Prozess-Klasse
+Sort jobs by: Jobs sortieren nach
+(unsorted): (unsortiert)
+name in ascending order: Name (aufsteigend)
+name in descending order: Name (absteigend)
+next start time in ascending order: Nächste Startzeit (aufsteigend)
+next start time in descending order: Nächste Startzeit (absteigend)
+state in ascending order: Status (aufsteigend)
+state in descending order: Status (absteigend)
+toggle to: Wechseln zur
+list view: Listen-Ansicht
+tree view: Baum-Ansicht
+open all folders: Alle Ordner öffnen
+close all folders: Alle Ordner schließen
+Filter jobs by: Jobs filtern durch
+(no filtering): (ohne Filter)
+Job: Job
+Steps: Schritte
+Process steps: Prozess-Schritte
+Next start: Nächster Start
+JOB: JOB
+TASK: TASK
+File timestamp: Datei-Datum
+State text: Status-Text
+Error: Fehler
+Error in configuration file: Fehler in Konfigurations-Datei
+Error in changed file: Fehler in geänderter Datei
+(not loaded): (nicht geladen)
+Removing delayed: Löschen verzögert
+Tasks: Tasks
+Run time defined by: Startzeiten gesetzt in
+orders to process: Aufträge in Warteschlange
+Mail subject: Email-Betreff
+To: An
+CC: CC
+BCC: BCC
+From: Von
+SMTP: SMTP
+Last error: Letzter Fehler
+Last warning: Letzte Warnung
+Log level: Log-Level
+mail on error: Email im Fehlerfall
+mail on warning: Email bei Warnungen
+mail on success: Email im Erfolgsfall
+mail on process: Email pro Prozess-Schritt
+start cause: Grund
+waiting for order: wartet auf Auftrag
+Idle since: Im Leerlauf seit
+In process since: In Verarbeitung seit
+Running since: Gestartet seit
+Enqueued at: In Warteschlange seit
+Subprocesses: Sub-Prozesse
+enqueued tasks: Tasks in der Warteschlange
+Id: ID
+Enqueued: Eingereiht
+Start at: Gestartet
+Delete: Löschen
+No tasks in the history: Es sind keine Tasks in der Historie vorhanden
+Started: Gestartet
+Cause: Grund
+Ended: Beendet
+Duration: Dauer
+Start: Gestartet
+Task Queue: Task-Warteschlange
+Task History: Task-Historie
+Order Queue: Auftrags-Warteschlange
+Job menu: Job-Menü
+Show configuration: Konfiguration anzeigen
+Show description: Beschreibung
+Show dependency: Abhängigkeiten
+Start task immediately: Starte Task sofort
+Start task unforced now: Starte Task in nächster Periode
+Start task at: Starte Task um...
+Start task parametrized: Starte Task parametrisiert
+Set run time: Setze Startzeiten
+Stop: Stoppen
+Unstop: Fortsetzen
+Reread: Skript neu laden
+End tasks: Tasks beenden
+Suspend tasks: Tasks suspendieren
+Continue tasks: Tasks fortsetzen
+Delete job: Job löschen
+Do you really want to delete this job?: Wollen Sie wirklich diesen Job löschen?
+Task menu: Task-Menü
+End: Beenden
+Kill immediately: Sofort abbrechen
+show job details: zeige Job-Details
+show task details: zeige Task-Details
+show schedule details: zeige Schedule-Details
+Order is deleted: Auftrag ist gelöscht
+Order is replaced: Auftrag ist ersetzt
+Without start time: ohne Startzeit
+Task: Task
+No jobs found: Es wurden keine Jobs gefunden
+pending: bereit
+loaded: geladen
+initialized: initialisiert
+not_initialized: nicht initialisiert
+disabled: deaktiviert
+none: unbekannt
+read_error: Skript nicht lesbar
+delayed after error: verzögert nach Fehler
+needs process: wartet auf Prozess
+needs lock: gesperrt
+loading: wird geladen
+waiting_for_process: wartet auf Prozess
+opening: gestartet
+opening_waiting_for_locks: gesperrt
+running_process: gestartet
+running_remote_process: gestartet
+running_waiting_for_order: wartet auf Auftrag
+running_waiting_for_locks: gesperrt
+running_delayed: wird verzögert gestartet
+suspended: angehalten
+ending_waiting_for_subprocesses: wartet auf Sub-Prozesse
+ending: endend
+on_success: endend
+on_error: endend
+exit: endend
+error: fehlerhaft
+release: endend
+ended: beendet
+deleting_files: StdIn, StdOut und StdErr werden gelöscht
+closed: beendet
+Replacement is standing by: Ersetzung ist angehalten
+changed file has error: Fehler in geänderter Datei
+is incorrect or missing: fehlt oder ist fehlerhaft
+not an order job: kein Auftrags-Job
+non-excl.: nicht exkl.
+is being replaced: wurde ersetzt
+undefined: undefiniert
+none: undefiniert
+period_once: Neustart
+period_single: Startzeit
+period_repeat: Intervall
+queue: eingereiht
+queue_at: eingereiht
+directory: Verzeichnis
+delay_after_error: Verzögerung
+order: Auftrag
+wake: geweckt
+Job chains containing jobs: Job-Ketten mit Jobs
+Show order history: Auftrags-Historie anzeigen
+Show jobs: Jobs anzeigen
+Show orders: Aufträge anzeigen
+Sort job chains by: Job-Ketten sortieren nach
+Filter job chains by: Job-Ketten filtern durch
+Order state: Auftrags-Status
+Job chain: Job-Kette
+Job state: Job-Status
+JOB CHAIN: JOB-KETTE
+ORDER HISTORY: AUFTRAGS-HISTORIE
+Create job chain: Neue Job-Kette
+Job chain menu: Job-Ketten-Menü
+Job node menu: Job-Knoten-Menü
+Add order: Auftrag hinzufügen
+Add persistent order: Auftrag persistent hinzufügen
+Delete job chain: Job-Kette löschen
+Skip node: Knoten überspringen
+Stop node: Knoten stoppen
+Stop job: Job stoppen
+Unstop job: Job fortsetzen
+Unskip: Einreihen
+Do you really want to delete this job chain?: Wollen Sie wirklich diese Job-Kette löschen?
+show job chain details: zeige Job-Ketten-Details
+under_construction: unvollständig
+finished: beendet
+removing: wird gelöscht
+Node is stopped: Knoten ist gestoppt
+Node is skipped: Knoten wird übersprungen
+No job chains found: Es wurden keine Job-Ketten gefunden
+Web service: Web-Service
+file orders: Datei-Aufträge
+pattern: Muster
+delay: Verzögerung
+repeat: Wiederholung
+blacklist: Blacklist
+Sort orders by: Aufträge sortieren nach
+job chain in ascending order: Job-Kette (aufsteigend)
+job chain in descending order: Job-Kette (absteigend)
+Filter orders by: Aufträge filtern durch
+Order is processed by Scheduler member: Auftrag wird verarbeitet vom Scheduler
+show order details: zeige Auftrags-Details
+This order is a replacement for another order with the same ID: This order is a replacement for another order with the same ID
+ORDER: AUFTRAG
+Order menu: Auftrags-Menü
+Start order now: Starte Auftrag sofort
+Start order at: Starte Auftrag um...
+Start order parametrized: Starte Auftrag parametrisiert
+Set order state: Status setzen
+Suspend order: Auftrag suspendieren
+Resume order: Auftrag fortsetzen
+Reset order: Auftrag zurücksetzen
+Delete order: Auftrag löschen
+Remove setback: Verzögerung löschen
+Do you really want to delete this order?: Wollen Sie wirklich diesen Auftrag löschen?
+No orders found: Es wurden keine Aufträge gefunden
+Processed by: Verarbeitet von
+Order: Auftrag
+Setback: Verzögerung
+deleted: gelöscht
+Replacement: Ersatz
+No orders in the history: Es sind keine Aufträge in der Historie vorhanden
+Process class: Prozess-Klasse
+Operations: Operationen
+Callbacks: Callbacks
+Current operation: Aktuelle Operation
+(default): (default)
+max processes: max. Prozesse
+Remote Scheduler: Remote Scheduler
+No process classes found: Es wurden keine Prozess-Klassen gefunden
+Last heart beat: Letzter Herzschlag
+Detected heart beats: Gezählte Herzschläge
+Backup precedence: Backup-Priorität
+Cluster member menu: Cluster-Menü
+Delete entry: Eintrag löschen
+Restart: Erneut starten
+active Scheduler(s): aktive(r) Scheduler
+exclusive Scheduler(s): exklusive(r) Scheduler
+This Scheduler is active: Dieser Scheduler ist aktiv
+and exclusive: und exclusiv
+Only active JobSchedulers are allowed to start operation.: Nur aktiven JobSchedulern ist es erlaubt Operationen zu startet.
+This Scheduler: Dieser Scheduler
+(was active!): (war aktiv!)
+active: aktiv
+inactive: inaktiv
+distributed orders: verteilte Aufträge
+exclusive: exklusiv
+backup: Backup
+still checking...: wird peprüft...
+dead: tot
+discovered: entdeckt
+after: nach
+Deactivated by: Deaktiviert durch
+ago: vergangen
+IP: IP
+Hostname: Host
+Port: Port
+Connected: Verbunden
+Disconnected: Getrennt
+Version: Version
+Scheduler(s): JobScheduler
+connected: verbunden
+No locks found: Es wurden keine Sperren gefunden
+Lock: Sperre
+non-exclusively locked: nicht exklusiv gesperrt
+locked: gesperrt
+free: frei
+Holders (non-exclusive): Nicht exklusive Eigentümer
+Holders (exclusive): Exklusive Eigentümer
+Waiting jobs (exclusive): Nicht exklusiv wartende Jobs
+Waiting jobs (non-exclusive): Exklusiv wartende Jobs
+Lock is not available, it is locked: Sperre ist nicht verfügbar
+Lock is available: Sperre ist verfügbar
+Show all: Alle anzeigen
+Show only orders: Nur Aufträge anzeigen
+Show only tasks: Nur Tasks anzeigen
+Show only faulty tasks and orders: Nur fehlerhafte Tasks/Aufträge anzeigen
+Show last tasks error: Letzten Task-Fehler anzeigen
+Job name: Job-Name
+Exitcode: Exitcode
+Order ID: Auftrags-ID
+Order state: Auftrags-Status
+Show order log: Auftr.-Protokoll
+Show task log: Job-Protokoll
+No last activities found: Es wurden keine Aktivitäten gefunden
+Create schedule: Neuer Schedule
+Schedule menu: Schedule-Menü
+Substitute menu: Substitut-Menü
+Add substitute: Substitut hinzufügen
+Edit schedule: Schedule bearbeiten
+Delete schedule: Schedule löschen
+Do you really want to delete this scheduler?: Wollen Sie wirklich diesen Schedule löschen?
+Schedule: Schedule
+Valid from: Gültig von
+Valid to: Gültig bis
+Substituted by: Ersetzt durch
+show schedule details: zeige Schedule-Details
+Green: Grün
+marked schedules are currently active: markierte Schedules sind momentan aktiv
+No schedules found: Es wurden keine Schedules gefunden
+Used by jobs: Benutzt von den Jobs
+Used by orders: Benutzt von den Aufträgen
+of job chain: der Job-Kette
+Substituted schedule: Ersetzender Schedule
+incomplete: unvollständig
+SCHEDULE: SCHEDULE
+Valid: Gültig
+LOG CATEGORIES: PROTOKOLL KATEGORIEN
+The default log caregories are marked: Voreingestellte Protokoll-Kategorien sind
+orange: orange
+and they are active after each reset.: markiert und sind nach jedem Zurücksetzen wieder aktiv.
+Current log categories setting: Derzeitige Protokoll-Kategorien-Einstellung
+Set: Setzen
+log categories for a duration of: der Protokoll-Kategorien für einen Zeitraum von
+seconds: Sekunden
+log categories are updated: Protokoll-Kategorien wurden aktualisiert
+reset is executed: Protokoll-Kategorien wurden zurückgesetzt
+reset is executed after: Protokoll-Kategorien wurden zurückgesetzt nach
+Next reset: Nächstes Zurücksetzen
+implicit: implizit
+explicit: explizit
+Category: Kategorie
+Mode: Modus
+Description: Beschreibung
+No log categories found: Es wurden keine Protokoll-Kategorien gefunden
+CALENDAR: KALENDER
+job: Job
+job chain: Job-Kette
+of job chain: der Job-Kette
+all jobs: alle Jobs
+all jobs and orders: alle Jobs und Aufträge
+Start times for: Startzeiten für
+by calling: durch die Abfrage
+with output format: im Ausgabeformat
+at: um
+FILTER ADMINISTRATION: FILTERVERWALTUNG
+close: Schließen
+store: Speichern
+store as ...: Speichern unter ...
+remove: Löschen
+quick check: Schnellauswahl
+regular expression for quick check: Regulärer Ausdruck für Schnellauswahl
+select all: Alle auswählen
+deselect all: Alle abwählen
+new filter: Neuer Filter
+filter was stored: Filter wurde aktualisiert
+new filter was stored: Filter wurde angelegt
+filter was removed: Filter wurde gelöscht
+Filter name must be stated: Bitte geben Sie einen Filter an
+Using\n\n|\n=>\n;\n\nis not allowed: Die Benutzung der Zeichen\n\n|\n=>\n
+A filter "$filter_name" is already defined in the file $file.: Ein Filter "$filter_name" ist bereits in der Datei $file definiert.
+The same filter name "$filter" was already defined\n\nDo you want nevertheless to store it ?: Es ist bereits ein Filter "$filter" definiert\n\nWollen Sie diesen trotzdem speichern?
+source: Datei
+line: Zeile
+column: Spalte
+unknown error: unbekannter Fehler
+submit: Speichern
+cancel: Abbrechen
+new param: Neuer Parameter
+run time editor: Runtime-Editor
+$field must be stated!: $field muss angegeben werden!
+Period from ($field) is invalid date or before 1970-01-01.: Die Periode von ($field) ist ein ungültiges Datum oder ist älter als 01.01.1970.
+Max. hits ($field) is not a positive number.: Die maximale Trefferanzahl ($field) ist keine positive Zahl.
+Please add an existing order job to the job chain nodes.: Bitte fügen den Job-Ketten-Knoten einen existierenden Auftrags-Job hinzu.
+Please select an existing order job on the left hand side.: Bitte wählen Sie links einen existierenden Auftrags-Job.
+Start time: Startzeitpunkt
+Name: Name
+The following values will be stored in a cookie. If no cookies are available the values which are set in <code>./custom.js</code> are used.: Die folgenden Einstellungen werden in einem Cookie gespeichert. Falls keine Cookies zur Verfügung stehen, werden die entsprechenden Werte aus <code>./custom.js</code> herangezogen.
+Onload Values: Einstellungen beim Laden
+periodically every: periodisch alle
+Tabs: Tabs
+Switch to: Am Anfang den Tab
+as the beginning view: anzeigen
+View Mode: Art der Ansicht
+for: für
+Selects, Checkboxes and Radios: Auswahllisten, Checkboxen und Radios
+in the <i>jobs</i> tab: im <i>Jobs</i>-Tab
+in the <i>job chains</i> tab: im <i>Job-Ketten</i>-Tab
+in the job chain details: in den <i>Job-Ketten</i>-Details
+in the <i>last activities</i> tab: im <i>Aktivitäten</i>-Tab
+all orders and tasks: alle Aufträge und Tasks
+only tasks: nur Tasks
+only orders: nur Aufträge
+Runtime Values: Einstellungen zur Laufzeit
+Limits: Beschränkungen
+Max. number of orders per job chain: Max. Anzahl der Aufträge pro Job-Kette
+Max. number of last activities: Max. Anzahl der letzten Aktivitäten
+Max. number of history entries per order: Max. Anzahl der Historien-Einträge pro Auftrag
+Max. number of history entries per task: Max. Anzahl der Historien-Einträge pro Task
+Termintate within: Beenden innerhalb
+Max. seconds within the JobScheduler terminates: Max. Zeitraum (Sekunden) in der sich der JobScheduler beendet
+Dialogs: Dialoge
+Default start time in the &quot;<i>Start task/order at</i> &quot;-Dialog is <i>now</i>: Voreingestellter Startzeitpunkt im &quot
+Debugging of the operations GUI: Debugging der Operations GUI
+Level: Level
+Start task $task: Starte Task $task
+Start order $order: Starte Auftrag $order
+<b>Enter a run time</b> or use the $editor: Für die Startzeiten nutze das Textfeld oder den $editor
+Start enforced:  erzwungender Start
+Change parameters: Parameter ändern
+Declare parameters: Parameter angeben
+Declare new parameters: Neue Parameter angeben
+name: Name
+value: Wert
+Add order to $job_chain: Füge Auftrag hinzu für $job_chain
+Enter an order id: Id des Auftrags
+Enter an order title: Title des Auftrags
+Select an order state: Status des Auftrags
+Select an order end state: Endstatus des Auftrags
+In order to store this order in a hot folder you have to state an order id.\nYour order will only be stored permanently, however, it is valid for\nthe lifetime of this JobScheduler session. Do you want to continue?: Um den Auftrag dem Hot Folder zu übergeben, muss eine Auftrags-ID angegeben\nwerden. Ansonsten hat dieser nur die Lebenszeit der aktuellen JobScheduler Session.\nWollen Sie fortfahren?
+Set order state of $order: Setze Status für $order
+<b>Select a new order state</b>: <b>Wähle einen neuen Auftrags-Status.</b>
+<span class="small">The current order state is $state.</span>: <span class="small">Der aktuelle Status ist $state.</span>
+<b>Select a new order end state</b>: <b>Wähle einen neuen Auftrags-Endstatus.</b>
+<span class="small">The current order end state is $state.</span>: <span class="small">Der aktuelle Endstatus ist $state.</span>
+Set run time of $job: Setze Startzeit für $job setzen
+or choose a schedule: oder wähle einen Schedule
+Add schedule: Neuer Schedule
+Add substitute for $schedule: Neues Substitut für $schedule
+Edit $schedule: Bearbeite $schedule
+Enter a schedule name: Name des Schedules
+Parameterize the start times list: Startzeiten-Abfrage parametrisieren
+<b>Set the period</b>: <b>Bestimme einen Zeitraum</b>
+<span class="small">(Timestamps in ISO format yyyy-mm-dd[ hh:mm:ss])</span>: <span class="small">(Datumsangaben im ISO-Format yyyy-mm-dd[ hh:mm:ss])</span>
+...from: ...von
+...to: ...bis
+Max. hits: Max. Trefferanzahl
+Output format: Ausgabeformat
+Include order start times: Inklusive Auftrags-Startzeiten
+Sorry, but this feature is only supported for\nJobScheduler version 2.0.204.5774 or higher: Leider kann diese Funktion erst für JobScheduler\nab der Version 2.0.204.5774 angeboten werden.
+Modify job chain: Job-Kette ändern
+Now you can modify the job chain by editing the text area content.: Bearbeiten Sie den Textfeld-Inhalt, falls noch Änderungen an der Job-Kette nötig sind.
+Orders are stored in the database (orders_recoverable): Aufträge in die Datenbank speichern (orders_recoverable)
+Existing order jobs: Existierende Auftrags-Jobs
+Job chain nodes: Job-Kette-Knoten
+Enter a folder: Verzeichnis
+Enter a job chain name: Name der Job-Kette
+Enter a job chain title: Title der Job-Kette
+The JobScheduler $scheduler has no jobs with a description.: Der JobScheduler $scheduler hat keine Jobs mit einer Beschreibung.
+Because of a security sanction of your browser you must reload this site!: Wegen einer Sicherheitssanktion Ihres Browsers muss die Seite neu geladen werden!
+Please select a job to display its description.: Wählen Sie einen Job um dessen Beschreibung anzuzeigen.
+Please enter a job name to display its description.: Geben Sie einen Job-Namen an, um dessen Beschreibung anzuzeigen.

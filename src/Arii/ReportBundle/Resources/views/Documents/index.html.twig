@@ -1,0 +1,53 @@
+{# src/Arii/JIDBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiReportBundle::layout.html.twig" %}
+{% block body %}
+<script language="javascript">
+var doc=''; // document courant
+dhtmlxEvent(window,"load",function(){     
+    var globalLayout = new dhtmlXLayoutObject(document.body,"3J");
+
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("a").setWidth(500);
+    globalLayout.cells("b").hideHeader();
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_Report_ribbon') }}");
+    // myRibbon.attachEvent("onStateChange", StateRibbon );
+    // myRibbon.attachEvent("onClick", ClickRibbon );
+
+    globalLayout.cells("b").attachURL('{{ asset('/bundles/ariicore/images/arii.jpg') }}');
+
+    globalLayout.cells("a").setWidth(250);
+    globalLayout.cells("b").hideHeader();
+
+    myTree =globalLayout.cells("a").attachTree();
+    myTree.setImagesPath("{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.loadXML("{{ url('xml_Report_tree') }}");
+    
+    // Information du document
+    globalLayout.cells("c").hideHeader();
+    globalLayout.cells("c").setHeight(110);
+
+    var myForm, formData;
+    formData = [
+            {type:"input", name: 'file', label:'', labelWidth: 0, inputWidth: 240 },
+            {type:"input", name: 'date', label:'{{ 'Date' | trans }}', labelWidth: 100, inputWidth: 140 },
+            {type:"input", name: 'size', label:'{{ 'Size (bytes)' | trans }}', labelWidth: 100, inputWidth: 140 }
+         ];
+    myForm = globalLayout.cells("c").attachForm(formData);
+    myForm.enableLiveValidation(true);
+    
+    myTree.attachEvent("onClick",function(id) {
+        if (myTree.getItemImage(id,0)=='folder.gif') return true;
+        globalLayout.cells("b").attachURL("{{ url('xml_Report_view') }}?doc="+id);  
+        myForm.load("{{ url('xml_Report_form') }}?doc="+id);
+    });
+
+});
+</script>
+{% endblock %}

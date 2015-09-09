@@ -1,0 +1,63 @@
+{
+   "items":
+   [
+      {   "type":"block", 
+          text:"{{ "module.JOE" | trans }}", 
+          "text_pos": "top", 
+          "list":
+          [
+             {   "type": "buttonSelect", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/edit.png", 
+                 items:
+                 [ 
+                    { id:"load", text: "{{ "Load" | trans }}", img: "load.png" },
+                    { id:"edit", text: "{{ "Edit" | trans }}", img: "edit.png" },
+                    { id:"deploy", text: "{{ "Deploy" | trans }}", img: "deploy.png" }
+/*                    { id:"menu_job", text: "{{ "Jobs" | trans }}", img: "job.png" },
+                    { id:"menu_job_chain", text: "{{ "Job chains" | trans }}", img: "job_chain.png" },
+                    { id:"menu_order", text: "{{ "Orders" | trans }}", img: "order.png" },
+                    { id:"menu_schedule", text: "{{ "Schedules" | trans }}", img: "schedule.png" },
+                    { id:"menu_lock", text: "{{ "Locks" | trans }}", img: "lock.png" },
+                    { id:"menu_process_class", text: "{{ "Process classes" | trans }}", img: "process_class.png" },
+                    { id:"menu_process_class", text: "{{ "Calendars" | trans }}", img: "calendar.png" },
+                    { id:"menu_process_class", text: "{{ "Parameters" | trans }}", img: "params.png" }                    
+*/                 ]
+              },
+              {   id: "draft", 
+                  "type":"checkbox", 
+                  text:"{{ "Draft" | trans }}", 
+                  "img": "timeline.png"
+              }
+          ]
+      },
+      {   "type":"block", 
+          text:"{{ "Deploy" | trans }}", 
+          "text_pos": "bottom", 
+          "list":
+          [
+             {   "type": "button", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/folder.png", 
+             },
+              {   id: "live", 
+                  "type":"buttonTwoState", 
+                  text:"", 
+                  "img": "job.png"
+              },
+              {   id: "remote", 
+                  "type":"buttonTwoState", 
+                  text:"", 
+                  "img": "job_chain.png"
+              },
+              {   id: "remote", 
+                  "type":"buttonTwoState", 
+                  text:"", 
+                  "img": "smart.png"
+              }                      
+           ]
+      }
+   ]
+}

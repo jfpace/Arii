@@ -1,0 +1,326 @@
+{# src/Arii/AdminBundle/Resources/views/Default/database.html.twig #}
+{% extends "AriiAdminBundle::layout.html.twig" %}
+{% block specific %}   
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+{% endblock specific %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Sites" | trans }}</h2>
+                <ul  class="section_menu">
+      <li><a href="{{ url('arii_Admin_spoolers') }}" class=""><span><span><img src="{{ asset('arii/images/menu/cog.png') }}"/>&nbsp;{{ "Spoolers" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_repositories') }}" class=""><span><span><img src="{{ asset('arii/images/menu/database.png') }}"/>&nbsp;{{ "Repositories" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_connections') }}" class=""><span><span><img src="{{ asset('arii/images/menu/transmit.png') }}"/>&nbsp;{{ "Connections" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Admin_sites') }}" class="active"><span><span><img src="{{ asset('arii/images/menu/world.png') }}"/>&nbsp;{{ "Sites" | trans }}</span></span></a></li>
+      </ul>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                                <div class="sct_right">
+     <div id="mygrid" style="height:580px;overflow:hidden;width: 100%;position: relative;"></div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+<script language="javascript">
+dhtmlx.skin = "dhx_skyblue";
+
+var menu = new dhtmlXMenuObject();
+menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+menu.renderAsContextMenu();
+menu.attachEvent("onClick", onMenuClick);
+menu.loadXML("{{ url('xml_Admin_sites_menu') }}");
+
+var dhxLayout = new dhtmlXLayoutObject("mygrid","2U");
+dhxLayout.cells("a").hideHeader();
+dhxLayout.cells("b").setWidth(410);
+dhxLayout.cells("b").hideHeader();
+
+var tabbar = dhxLayout.cells("b").attachTabbar();
+tabbar.setImagePath("{{asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/")}}");
+tabbar.setSkin("dhx_skyblue");
+tabbar.addTab("b1","{{ "Data" | trans }}","100px");
+tabbar.addTab("b2","{{ "Map" | trans }}","100px");
+tabbar.setTabActive("b1");
+
+var toolbarb;
+toolbarb = tabbar.cells("b1").attachToolbar();
+toolbarb.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbarb.loadXML("{{ url('xml_Admin_site_toolbar') }}", function () {
+    {%if id == '' %}
+        toolbarb.hideItem("delete_site");
+    {%endif%}
+});
+toolbarb.attachEvent("onClick",onClick);
+
+var mygrid;
+var sb = dhxLayout.cells("a").attachStatusBar();
+sb.setText('<div id="recinfoArea"></div>');
+dhxLayout.cells("a").vs[dhxLayout.cells("a").av].sbHeight = 40;
+
+mygrid = dhxLayout.cells("a").attachGrid();
+mygrid.selMultiRows = true;
+mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+mygrid.enableTreeGridLines(true);
+mygrid.enableTreeCellEdit(false);
+//mygrid.setHeader("{{ "Site"| trans }},{{ "Description"| trans }},{{ "Country"| trans }}");
+//mygrid.setInitWidths("150,*,120");
+//mygrid.setColAlign("left,left,left");
+//mygrid.setColTypes("ro,ro,ro");
+mygrid.enableContextMenu(menu);
+mygrid.enableLightMouseNavigation( true );
+mygrid.enablePaging(true,"25", 3, "recinfoArea");
+mygrid.setPagingSkin("toolbar","dhx_skyblue");
+mygrid.setPagingWTMode(true,true,true,["25"]);
+//mygrid.load("{{ url('xml_Admin_sites_grid') }}");
+mygrid.loadXML("{{ url('xml_Admin_sites_show') }}");
+mygrid.init();
+var mydataprocessor = new dataProcessor("{{ url('xml_Admin_sites_grid') }}"); 
+mydataprocessor.setTransactionMode("POST",true); 
+mydataprocessor.setUpdateMode("off");
+mydataprocessor.init(mygrid);
+
+mygrid.attachEvent("onRowDblClicked", function (rid) {
+    EditSite(rid);
+});
+
+var myform,formData;
+formData = [
+    { type: "settings", position: "label-left", labelWidth: 110, inputWidth: 200,labelAlign: "left",noteWidth: 200 },
+    {    type:"fieldset",
+         name: "fieldset",
+         label:"{{ "Site"| trans}}",
+         width:"auto",
+         list: [
+                 {type: "hidden",name: "id"},         
+                 { type: "input",
+                   name: "name",
+                   label: "{{ "Site Name"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.name.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   rows: 3,
+                   name: "description",
+                   label: "{{ "Description"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.description.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "country_code",
+                   label: "{{ "Country code"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.country_code.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "timezone",
+                   label: "{{ "Timezone"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.timezone.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "latitude",
+                   label: "{{ "Latitude"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.latitude.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "longitude",
+                   label: "{{ "Longitude"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.longitude.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "address",
+                   label: "{{ "Address"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.address.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "zipcode",
+                   label: "{{ "ZIP Code"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.zipcode.note" | trans }}"
+                   }
+                 },
+                 { type: "input",
+                   name: "city",
+                   label: "{{ "City"| trans }}",
+                   required: true,
+                   note: {
+                       text: "{{ "site.city.note" | trans }}"
+                   }
+                 }                     
+               ]
+    }
+];
+myform = tabbar.cells("b1").attachForm(formData);
+myform.setSkin("dhx_skyblue");
+myform.enableLiveValidation(true);
+{%if id != '' %}
+myform.load("{{ url('xml_Admin_repository_form') }}?id="+"{{ id }}" );
+{%endif%}
+
+var customparams = {
+    center: new google.maps.LatLng(40.719837,-73.992348),
+    zoom: 18,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+var GMaps = tabbar.cells("b2").attachMap(customparams);
+
+function onClick(id){
+    switch (id){
+        case "add_site":
+            NewSite();
+            break;
+        case "edit_site":
+            id = myform.getItemValue("id");
+            EditSite(id);
+            break;
+        case "save_site":
+            if(!myform.validate())
+            {
+                dhtmlx.message({
+                    title:"Error",
+                    type: "error",
+                    lifetime: "60000",
+                    text: "{{ "Please type in all the required fields!" | trans }}"
+                 });
+                return;
+            }
+            dhxLayout.cells("b").progressOn();
+            myform.send("{{ url('xml_Admin_site_save') }}","POST",function(loader,response){
+                if(response === "success")
+                {
+                 dhtmlx.message({
+                    title:"Save",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "{{ "site.message.save" | trans }}"
+                 });
+                 GridRefresh();
+                 dhxLayout.cells("b").progressOff();
+               }
+               else 
+               {
+                   alert(response);
+                   dhxLayout.cells("b").progressOff();
+               }
+            });
+            break;
+        default:
+            break;
+    }
+}
+
+function onMenuClick(menuitemId, type)
+{
+    var rid = mygrid.contextID.split("_")[0];
+    switch(menuitemId){
+        case "add_site":
+            NewSite();
+            break;
+        case "edit_site":
+            EditSite(rid);
+            break;
+        case "delete_site":
+            DeleteSite(rid);
+            break;
+        default:
+            alert(menuitemId);
+    }
+    return true;
+}
+
+function GridRefresh()
+{
+    //mygrid.loadXML("{{ url('xml_Admin_sites_grid') }}");
+    mygrid.loadXML("{{ url('xml_Admin_sites_show') }}");
+    // for the grid, which use the connector to render_sql or render_table to init, we can set config in the controller, then the grid can refresh properly!
+}
+
+function NewSite() {
+    myform.clear();
+    myform.setItemFocus("scheduler_id");
+    myform.setItemLabel("fieldset","{{ "New site" | trans }}");
+    toolbarb.hideItem("delete_site");
+}
+
+function EditSite(id) {
+    dhxLayout.cells("a").progressOn();
+    toolbarb.showItem("delete_site");
+    myform.setItemLabel("fieldset","{{ "Edit site" | trans }}");  
+    myform.clear();
+    myform.load("{{ url('xml_Admin_site_form') }}?id="+id, function () {
+        dhxLayout.cells("a").progressOff();
+        RefreshMap( myform.getItemValue("latitude"), myform.getItemValue("longitude"), myform.getItemValue("name"));
+    });
+}
+
+function RefreshMap( Lat, Long, Site) {
+  var latLng = new google.maps.LatLng( Lat, Long); // Correspond au coordonnées de Lille
+ 
+   var marker = new google.maps.Marker({
+    position : latLng,
+    map      : GMaps,
+    title    : Site
+    //icon     : "marker_lille.gif" // Chemin de l'image du marqueur pour surcharger celui par défaut
+  });
+    GMaps.panTo(latLng);   
+}
+
+function DeleteSite(id) {
+        dhtmlx.confirm({
+        title: "{{ "Delete site" | trans }}",
+        type: "confirm-error",
+        text: "{{ "site.message.delete" | trans }}",
+        callback: function(answer) { if (answer) {
+                dhxLayout.cells("a").progressOn();
+                dhtmlxAjax.get("{{ url('xml_Admin_site_delete') }}?id="+id,function(loader){
+                    mygrid.deleteRow(id);
+                }); 
+            }
+        },
+        cancel: "{{ "No" | trans }}",
+        ok: "{{ "Yes" | trans }}" });
+        GridRefresh();
+}
+function GlobalRefresh() {
+}
+</script>
+{% endblock %}

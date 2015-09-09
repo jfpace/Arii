@@ -1,0 +1,83 @@
+{# src/Arii/GraphvizBundle/Resources/views/index.html.twig #}
+{% extends "AriiJOEBundle::layout.html.twig" %}
+{% block body %}
+<script>
+dhtmlxEvent(window,"load",function(){     
+    
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");
+    globalLayout.cells("a").setWidth(300);
+    globalLayout.cells("a").hideHeader();
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOE_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myTree = globalLayout.cells("a").attachTree();
+    myTree.setImagePath("{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.enableSmartXMLParsing(true);
+    myTree.attachEvent( "onDblClick", EditJob );
+    myTree.loadXML( '{{ url('xml_GVZ_tree') }}');
+
+    globalLayout.cells("b").hideHeader();
+    globalLayout.attachEvent("onContentLoaded", function(win){
+        globalLayout.cells("b").progressOff();
+    });
+
+});
+
+function ClickRibbon(id, value) {
+
+    switch (id) {
+        case 'live':
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            path = 'live';            
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}', function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case '_all':
+            path = 'remote/_all';
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        default:
+            if (id.substr(0,7)=='remote_') {
+                path = 'remote/'+id.substr(7);
+                globalLayout.cells("a").progressOn();
+                myTree.deleteChildItems(0);
+                myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                    myAccordion.cells('folders').setText(path);
+                    globalLayout.cells("a").progressOff();                
+                });
+            }
+            else {
+                alert("click "+id);
+            }
+    }
+}
+
+function StateRibbon(id, state) {
+    switch (id) {
+        default:
+            alert("click "+id);
+    }
+}
+
+function EditJob(id) {
+    alert(id);
+}
+
+</script>
+{% endblock %}

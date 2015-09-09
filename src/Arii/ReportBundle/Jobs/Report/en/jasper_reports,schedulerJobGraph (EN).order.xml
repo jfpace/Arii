@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order >
+    <params >
+        <param  name="report_locale" value="en"/>
+
+        <param  name="report_filename" value="config/reports/jasper/scheduler_job_graph.jasper"/>
+
+        <param  name="query_filename" value="config/reports/jasper/scheduler_job_graph.sql"/>
+
+        <param  name="output_filename" value="config/reports/output/EN/History/Run times.pdf"/>
+    </params>
+
+    <run_time  schedule="Jasper"/>
+</order>

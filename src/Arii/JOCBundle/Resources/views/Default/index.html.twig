@@ -1,0 +1,111 @@
+{# src/Arii/JOCBundle/Resources/views/index.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block body %}
+<script>
+var dhxLayout = new dhtmlXLayoutObject(document.body,"2U");
+
+var toolbar = dhxLayout.attachToolbar();
+toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+toolbar.loadStruct("{{ url('arii_JID_toolbar') }}");
+toolbar.attachEvent( "onClick", function(id, value) {
+    switch (id) {
+    case "menu":
+        document.location.href = "{{ url('arii_JOC_index') }}";
+        break;
+    case "menu_history":
+        document.location.href = "{{ url('arii_JOC_jobs') }}";
+        break;
+    case "menu_orders":
+        document.location.href = "{{ url('arii_JOC_orders') }}";
+        break;
+    case "menu_chains":
+        document.location.href = "{{ url('arii_JID_chains') }}";
+        break;
+    case "menu_planned":
+        document.location.href = "{{ url('arii_JID_planned') }}";
+        break;
+    case "menu_spoolers":
+        document.location.href = "{{ url('arii_JOC_spoolers') }}";
+        break;
+    case "menu_ha":
+        document.location.href = "{{ url('arii_JOC_spoolers') }}";
+        break;
+    case "menu_msg":
+        document.location.href = "{{ url('arii_JID_messages') }}";
+        break;
+        case "refresh":
+            GlobalRefresh();
+        break;
+        default:
+            alert(id);
+    }
+});
+
+dhxLayout.cells("a").setText("{{ 'Jobs' | trans }}");
+bar =  dhxLayout.cells("a").attachChart ({
+        view:"donut",
+        value:"#JOBS#",
+        label:"",
+        tooltip: "#JOBS# #STATUS#",
+        color: "#COLOR#",
+        gradient:true,
+        border:false,
+        pieInnerText: "#JOBS#",
+        shadow: 0
+});
+bar.load( "{{ url('xml_JOC_jobs_pie') }}");
+bar.attachEvent("onItemClick",function(id, event){
+    switch (id) {
+        case 'pending':
+            window.location = "{{ url("arii_JOC_jobs") }}"; 
+            break;
+        default:
+            window.location = "{{ url("arii_JOC_jobs") }}?status="+id.toUpperCase(); 
+            break;
+    }
+});
+bar.attachEvent("onMouseMoving",function(e){
+   var target = (e.target||e.srcElement);
+      document.body.style.cursor = (target.tagName == "AREA"?"pointer":"default");
+})
+
+dhxLayout.cells("b").setText("{{ 'Orders' | trans }}");
+bar2 =  dhxLayout.cells("b").attachChart ({
+        view:"donut",
+        value:"#JOBS#",
+        label:"",
+        tooltip: "#JOBS# #STATUS#",
+        color: "#COLOR#",
+        gradient:true,
+        border:false,
+        pieInnerText: "#JOBS#",
+        shadow: 0
+});
+bar2.load( "{{ url('xml_JOC_orders_pie') }}");
+bar2.attachEvent("onItemClick",function(id, event){
+    switch (id) {
+        default:
+            window.location = "{{ url("arii_JOC_orders") }}?status="+id.toUpperCase(); 
+            break;
+    }
+});
+bar2.attachEvent("onMouseMoving",function(e){
+   var target = (e.target||e.srcElement);
+      document.body.style.cursor = (target.tagName == "AREA"?"pointer":"default");
+})
+
+GlobalRefresh();
+function GlobalRefresh() {
+    bar.load( "{{ url('xml_JOC_jobs_pie') }}", function() {
+        var currentTime = new Date();
+        var nextTime = new Date(currentTime.getTime() +(refreshing*1000));
+        toolbar.setItemText( "refresh", FormatTime(nextTime));
+        bar2.load( "{{ url('xml_JOC_orders_pie') }}", function() {
+            var currentTime = new Date();
+            var nextTime = new Date(currentTime.getTime() +(refreshing*1000));
+            toolbar.setItemText( "refresh", FormatTime(nextTime));
+        });
+    });
+}
+</script>
+{% endblock %}

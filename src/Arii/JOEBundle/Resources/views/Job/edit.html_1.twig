@@ -1,0 +1,248 @@
+{# src/Arii/JOEBundle/Resources/views/Job/edit.html.twig #}
+
+{% extends "AriiJOEBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section table_section">
+	<!--[if !IE]>start title wrapper<![endif]-->
+	<div class="title_wrapper">
+		<h2>{{ "Job" | trans }}</h2>
+		<span class="title_wrapper_left"></span>
+		<span class="title_wrapper_right"></span>
+	</div>
+	<!--[if !IE]>end title wrapper<![endif]-->
+<!--[if !IE]>start section content<![endif]-->
+	<div class="section_content">
+		<!--[if !IE]>start section content top<![endif]-->
+		<div class="sct">
+			<div class="sct_left">
+				<div class="sct_right">
+					<div class="sct_left">
+						<div class="sct_right">
+<div id="layout" style="position: relative; height: 700px; padding: 0;"></div>
+<!-- conserver l'arrondi du bas -->
+&nbsp;
+<style>
+.dhtmlx_validation_error {
+background-color: red;
+}
+
+</style>
+                                                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--[if !IE]>end section content top<![endif]-->
+		<!--[if !IE]>start section content bottom<![endif]-->
+		<span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+		<!--[if !IE]>end section content bottom<![endif]-->
+		
+	</div>
+	<!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+<script>
+var id={{ id }}
+var dhxLayout,
+dhxTabbar,
+myForm,
+formData;
+
+// for combo
+dhtmlx.skin = "dhx_skyblue";
+window.dhx_globalImgPath = "{{ asset('bundles/ariicore/dhtmlx/dhtmlxCombo/codebase/imgs/') }}";
+ 
+formData = 
+[
+  {  type: "settings",
+     position: "label-left",
+     labelWidth: 120,
+     inputWidth: 450
+  }, 
+  {  type: "block",
+     inputWidth: "auto",
+     id: "general",
+     list: [ {  type: "hidden",
+                name: "id",
+                value: id
+             }, 
+             {  type: "input",
+                label: "{{ "Name" | trans }}",
+                name: "name",
+                value: "{{ type }}",
+                required: true
+             },
+             {  type: "input",
+                label: "{{ "Title" | trans }}",
+                name: "title",
+                value: ""
+             },
+             {  type: "combo",
+                label: "{{ "Category" | trans }}",
+                name: "category",
+                value: "/",
+                    connector: "{{ url('arii_JOE_queues_combo') }}",
+                    filtering: true
+                },
+                {   type: "button",
+                    value: "{{ "Save" | trans }}",
+                    name: "submit",
+                    labelWidth: 300
+                }
+        ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "settings",
+        list: [ {{ render(controller('AriiJOEBundle:Job:form')) }} ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "parameters",
+        list: [ {% include "AriiJOEBundle:Forms:parameters.html.twig" %} ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "triggers",
+        list: [ {% include "AriiJOEBundle:Forms:triggers.html.twig" %} ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "constraints",
+        list: [ {% include "AriiJOEBundle:Forms:constraints.html.twig" %} ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "execution",
+        list: [ {% include "AriiJOEBundle:Forms:run_options.html.twig" %} ]
+    },
+    {   type: "block",
+        inputWidth: "auto",
+        id: "postprocessing",
+        list: [ {% include "AriiJOEBundle:Forms:postprocessing.html.twig" %} ]
+    },
+    {
+        type: "block",
+        inputWidth: "auto",
+        id: "deploy",
+        list: [ {% include "AriiJOEBundle:Forms:deploy.html.twig" %} ]
+    }
+];
+        
+dhxLayout = new dhtmlXLayoutObject("layout", "2E");
+dhxLayout.setEffect("resize", true);
+dhxLayout.cells("a").setText( "{{"General attributes" | trans }}" );
+dhxLayout.cells("a").setHeight(180);
+
+dhxTabbar = dhxLayout.cells("b").attachTabbar();
+// dhxTabbar.setImagePath("{{ asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/") }}");
+dhxTabbar.setSkin("dhx_skyblue");
+dhxTabbar.addTab("a1", "{{ "Settings" | trans }}", 120);
+dhxTabbar.addTab("a2", "{{ "Parameters" | trans }}", 120);
+dhxTabbar.addTab("a3", "{{ "Triggers" | trans }}", 120);
+dhxTabbar.addTab("a4", "{{ "Constraints" | trans }}", 120);
+dhxTabbar.addTab("a5", "{{ "Execution" | trans }}", 120);
+dhxTabbar.addTab("a6", "{{ "Post-processing" | trans }}", 120);
+dhxTabbar.addTab("a7", "{{ "Documentation" | trans }}", 120);
+dhxTabbar.addTab("a8", "{{ "Deploy" | trans }}", 120);
+
+dhxTabbar.tabs("a1").setActive();
+
+myForm = dhxLayout.cells("a").attachForm(formData);
+myForm.load( "{{ url('arii_JOE_job_edit_form') }}?id="+id );
+myForm.enableLiveValidation(true);
+
+dhxTabbar.cells("a1").attachObject("settings");
+dhxTabbar.cells("a1").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a2").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a3").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a4").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a5").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a6").style.backgroundColor= "#cbe2ed";
+dhxTabbar.cells("a8").style.backgroundColor= "#cbe2ed";
+
+dhxTabbar.cells("a2").attachObject("parameters");
+var mygrid = new dhtmlXGridObject(myForm.getContainer("ParamsGrid"));
+mygrid.entBox.id = "ParamsJob";
+mygrid.setSkin("dhx_skyblue");
+mygrid.setImagePath( "{{ asset('bundles/ariicore/images/') }}");
+mygrid.setHeader("{{ "Name" | trans }},{{ "Value" | trans }}");
+mygrid.setColAlign("left,left");
+mygrid.setColTypes("ed,ed");
+mygrid.loadXML("{{ url('arii_JOE_parameters') }}?id="+id);
+mygrid.submitOnlyChanged(false);
+mygrid.init();
+
+dhxTabbar.cells("a3").attachObject("triggers");
+dhxTabbar.cells("a4").attachObject("constraints");
+dhxTabbar.cells("a5").attachObject("execution");
+dhxTabbar.cells("a6").attachObject("postprocessing");
+dhxTabbar.cells("a8").attachObject("deploy");
+
+function outputResponse(loader) {
+    if (loader.xmlDoc.responseXML != null) {
+//        alert("We Got Response\n\n" + loader.doSerialization());
+    }
+    else {
+        alert("Response contains no XML");
+    }
+}
+
+myForm.attachEvent("onButtonClick", function(name, command){
+    if(name=="submit"){
+        dhxLayout.cells("a").progressOn();
+        // on sauvegarde les parametres
+        var n=0;
+        mygrid.forEachRow(function(i){
+            n++;
+            myForm.setItemValue("var"+n, mygrid.cells(i,0).getValue() );
+            myForm.setItemValue("val"+n, mygrid.cells(i,1).getValue() );
+        });
+//            alert(mygrid.cells(i,0).getValue());
+//            
+        this.send("{{ url('arii_JOE_job_save') }}", "POST", function (xml) {
+            id = xml.xmlDoc.responseText;
+            dhtmlx.message({
+            type: "Notice",
+            lifetime: 60000,
+            text: "{{ "Job saved " | trans }}"+id });
+            if ( myForm.getItemValue("deploy")=='deploy' ) {
+               var loader = dhtmlxAjax.getSync( "{{ url('arii_JOE_job_deploy') }}?id="+id);
+               outputResponse(loader);
+               dhtmlx.message({
+                type: "Notice",
+                text: "{{ "Job deployed " | trans }}"+id });
+            }        
+            dhxLayout.cells("a").progressOff();      
+        });
+//        dhtmlxAjax.get( "{{ url('arii_JOE_job_xml') }}?id="+encodeURI(), outputResponse);
+         
+    }
+    else if (name=="add_params"){
+        var newId = (new Date()).valueOf()
+        mygrid.addRow(newId,"",mygrid.getRowsNum())
+        mygrid.selectRow(mygrid.getRowIndex(newId),false,false,true);
+    }
+    else if (name=="del_params"){
+        var selId = mygrid.getSelectedId()
+        mygrid.deleteRow(selId);
+    }
+});
+
+dhtmlx.image_path =  "{{ asset('bundles/ariicore/dhtmlx/dhtmlxEditor/codebase/imgs/') }}";
+var dhxEditor = dhxTabbar.cells("a7").attachEditor();
+
+myForm.attachEvent("onValidateError", function (input, value, result){
+          dhtmlx.message({
+          title: "{{ "Validate error" | trans }}",
+          type: "confirm-error",
+          text: "{{ "You have to correct the following field: " | trans }}"+input});
+});
+
+function GlobalRefresh() {
+    
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{# src/Arii/JIDBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiReportBundle::layout.html.twig" %}
+{% block body %}
+<script language="javascript">
+dhtmlxEvent(window,"load",function(){     
+    var myGrid;
+    var myForm;
+    var dhxLayout = new dhtmlXLayoutObject(document.body,"2U");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_Report_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    dhxLayout.cells("a").hideHeader();
+    myGrid = dhxLayout.cells("a").attachGrid();
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Spooler" | trans }},{{ "Order" | trans }},{{ "Title" | trans }},{{ "State" | trans }},{{ "State text" | trans }},{{ "Start time" | trans }},{{ "End time" | trans }}");
+    myGrid.attachHeader("#select_filter,#select_filter,#text_filter,#select_filter,#select_filter,#text_filter,#text_filter");
+    myGrid.setInitWidths("120,120,*,80,0,130,130");
+    myGrid.setColAlign("left,left,left,right,right,right,right");
+    myGrid.setColTypes("ro,ro,ro,ro,ro,ro,ro");
+    myGrid.init();
+    myGrid.loadXML( "{{ url('xml_Report_grid') }}" );
+});
+
+function GlobalRefresh() {};
+</script>
+{% endblock %}

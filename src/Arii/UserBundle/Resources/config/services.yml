@@ -1,0 +1,14 @@
+parameters:
+    arii_user.oauth_user_provider.class: Arii\UserBundle\Model\OAuthUserProvider
+    my_user_provider.class: Arii\UserBundle\Security\Core\User\FOSUBUserProvider
+    
+    auth_method: 'ldap'
+    auth_server: 'test'
+    auth_port:   '4444'
+    auth_domain: ''
+    auth_path: 'OU=INFORMATIQUE,OU=CSI-USERS,DC=CSI,DC=COM,DC=LOCAL'
+        
+services:
+    arii_user.oauth_user_provider:
+        class: "%arii_user.oauth_user_provider.class%"
+        

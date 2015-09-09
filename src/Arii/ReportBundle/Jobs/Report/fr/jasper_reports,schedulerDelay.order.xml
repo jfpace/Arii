@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order >
+    <params >
+        <param  name="report_locale" value="fr"/>
+
+        <param  name="report_filename" value="config/reports/jasper/scheduler_jobs_retards_jour.jasper"/>
+
+        <param  name="output_filename" value="config/reports/output/FR/Test/Traitements en retard.pdf"/>
+    </params>
+
+    <run_time  schedule="Jasper"/>
+</order>

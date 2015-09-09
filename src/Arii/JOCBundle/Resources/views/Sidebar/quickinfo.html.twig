@@ -1,0 +1,25 @@
+{# src/Arii/MFTBundle/Resources/views/quickinfo.html.twig #}
+
+<!--[if !IE]>start quick info<![endif]-->
+<div class="quick_info">
+        <div class="quick_info_top">
+                <h2>{{ "Prompt" | trans }}</h2>
+        </div>
+        <div class="quick_info_content">
+            {% for todo in Todo %}
+                <dl {% if loop.last %}class="last"{% endif %}>
+                        <dt><span class="order"><img src="{{ asset('bundles/ariicore/images') }}/{{ todo.type }}.png" ></span> {{ todo.title | trans }}</dt>
+                        <dd>{{ todo.message | trans }}
+                                <ul class="todo_menu">
+                                    {% for action,link in todo.actions %}
+                                        <li><a href="{{link}}">{{ action | trans }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                        </dd>
+                </dl>
+            {% endfor %}
+        </div>
+        <span class="quick_info_bottom"></span>
+</div>
+<br/>
+<!--[if !IE]>end quick info<![endif]-->

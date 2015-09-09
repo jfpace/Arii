@@ -1,0 +1,210 @@
+{# src/Arii/CoreBundle/Resources/views/index.html.twig #}
+{% extends "AriiCoreBundle::layout.html.twig" %}
+{% block body %}
+<style>
+.dhx_dataview {
+	overflow-y: auto !important;
+}
+.dhx_dataview_default_item,
+.dhx_dataview_default_item_selected {
+	position: relative;
+	border-width: 0px !important;
+	background: none !important;
+	cursor: default;
+}
+.dhx_dataview div.dhxdataview_placeholder:first-child {
+	margin-top: 2px;
+}
+.menu_item {
+	position: relative;
+	height: 60px;
+	background-color: #f5f5f5;
+	margin: 3px 2px 0px 5px;
+	border-bottom: 1px dotted #ccc;
+	background-repeat: no-repeat;
+	background-position: 18px 4px;
+	color: #333333;  
+        width: 100%
+}
+.menu_item:hover {
+	background-color: #f0f0f0;
+	border-color: #bbb;
+}
+.dhx_dataview_default_item_selected .menu_item {
+	background-color: #B6BADF;
+	border-color: #aaa;
+	color: #2e2e2e;
+}
+.menu_item_text {
+	position: relative;
+	margin-left: 12px;
+	height: 60px;
+	line-height: 56px;
+	font-family: "Open Sans", sans-serif, Arial;
+	font-weight: 400;
+	font-size: 16px;
+	color: inherit;
+}
+label { display: block; width: 200px; }
+</style>
+<script language="javascript">
+dhtmlxEvent(window,"load",function(){ 
+    var myForm,
+    formData,
+    formData2;
+
+    formData = 
+        [
+            {   type: "settings",
+                position: "label-left",
+                labelWidth: 120,
+                inputWidth: 450
+            }, 
+            {   type: "fieldset", 
+                label: "{{ "About me" | trans }}",
+                width: 700,
+                list: [
+                {   type: "input", 
+                    label: "{{ "First name" | trans }}", 
+                    name: "inputFirstName",
+                    value:  '{{ first_name }}'
+                }, 
+                {   type: "input", 
+                    label: "{{ "Last name" | trans }}", 
+                    name: "inputLastName",
+                    value:  '{{ last_name }}'
+                }, 
+                {   type: "input", 
+                    label: "{{ "Email" | trans }}", 
+                    name: "inputEmail",
+                    value:  '{{ email }}'
+                },
+                {   type: "button",
+                    name: 'profile',
+                    value: "{{ "Save changes" | trans }}"
+                }
+              ]
+           }
+        ];
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");  
+    globalLayout.cells("a").setWidth(330); 
+    globalLayout.cells("a").hideHeader(); 
+    globalLayout.cells("b").hideHeader(); 
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_my_account_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myLinks = globalLayout.cells("a").attachDataView({
+                    type: {
+                            template: "<div width='100%' class='menu_item #id#'>"+
+                                            "<div class='menu_item_text'>#text#</div>"+
+                                    "</div>",
+                            margin: 0,
+                            padding: 0,
+                            height: 50,
+                            width: 320
+                    },
+                    drag: false,
+                    select: true
+            });
+        
+    myLinks.parse([
+                    {id: "profile", text: "{{ "Profile" | trans }}"},
+                    {id: "filters", text: "{{ "Filter" | trans }}"}
+            ], "json");
+
+    myLinks.attachEvent("onSelectChange", function(itemid) {
+        switch (itemid.toString()) {            
+            case 'profile':
+                document.location.href = "{{ url('arii_my_account') }}";
+                break;
+            case 'filters':
+                document.location.href = "{{ url('arii_filters') }}";
+                break;                    
+             default:
+                alert("("+itemid+")");
+        }
+    });
+
+    dhxTabbar = globalLayout.cells("b").attachTabbar();
+    // dhxTabbar.setImagePath("{{ asset("arii/dhtmlx/dhtmlxTabbar/codebase/imgs/") }}");
+    dhxTabbar.addTab("a1", "{{ "Profile" | trans }}", 120);
+    dhxTabbar.addTab("a2", "{{ "Password" | trans }}", 120);
+
+    dhxTabbar.tabs("a1").setActive();
+    // dhxTabbar.cells("a1").style.backgroundColor= "#cbe2ed";
+
+    var toolbar = dhxTabbar.cells("a1").attachToolbar();
+
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct("{{ url('xml_user_toolbar') }}");
+    /* 
+     toolbar.attachEvent( "onClick", function(id, value) {
+    });
+    */
+
+    myForm = dhxTabbar.cells("a1").attachForm(formData);  
+
+    formData2 = 
+        [
+            {   type: "settings",
+                position: "label-left",
+                labelWidth: 120,
+                inputWidth: 450
+            }, 
+            {   type: "fieldset", 
+                label: "{{ "Change password" | trans }}",
+                width: 700,
+                list: [
+                {   type: "password", 
+                    label: "{{ "New password" | trans }}", 
+                    name: "inputPassword",
+                    value:  ''
+                },
+                {   type: "button", 
+                    name: 'password',
+                    value: "{{ "Save new password" | trans }}"
+                }
+              ]
+           }
+        ];
+    myForm.attachEvent("onButtonClick", function(name){
+        globalLayout.cells("a").progressOn();
+        myForm.send("{{ url('arii_my_account_save') }}", "POST", function (xml) {
+            dhtmlx.message({
+                            type: "Notice",
+                            expire: 5000,
+                            width: "500px",
+                            text: xml.xmlDoc.responseText });
+            globalLayout.cells("a").progressOff();
+        });
+
+    });
+
+    var myForm2 = dhxTabbar.cells("a2").attachForm(formData2);                                                        
+    dhxTabbar.cells("a2").style.backgroundColor= "#cbe2ed";
+    myForm2.attachEvent("onButtonClick", function(name){
+        globalLayout.cells("a").progressOn();
+        myForm2.send("{{ url('arii_my_account_password') }}", "POST", function (xml) {
+            dhtmlx.message({
+                            type: "Notice",
+                            expire: 5000,
+                            width: "500px",
+                            text: xml.xmlDoc.responseText });
+            globalLayout.cells("a").progressOff();
+        });
+
+    });
+});
+
+function GlobalRefresh() { };
+</script>
+{% endblock body %}

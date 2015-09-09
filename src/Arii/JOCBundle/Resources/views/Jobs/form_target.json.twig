@@ -1,0 +1,26 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"300" },
+    {   type:"input",    
+            name: "FOLDER", 
+            label:"{{ "Folder" | trans}}"
+    },
+    {   type:"input",    
+            name: "STATE_TEXT", 
+            label:"{{ "Output" | trans}}"
+    },
+    {   type:"input",    
+            name: "TITLE", 
+            label:"{{ "Title" | trans}}",
+            rows: 2
+    },
+    {type:"newcolumn"},  
+    {type:"input",    name: "NAME", label:"{{ "Name" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "STATE", label:"{{ "State" | trans}}", inputWidth:"150"}, 
+    {type:"input",    name: "PROCESS_CLASS_NAME", label:"{{ "Target" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "SCHEDULE_NAME", label:"{{ "Schedule" | trans}}", inputWidth:"150"},    
+    {type:"hidden",    name: "ID" }
+]

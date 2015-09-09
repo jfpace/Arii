@@ -1,0 +1,80 @@
+# src/Arii/MFTBundle/Resources/config/routing.yml
+arii_MFT_index:
+    pattern:  /
+    defaults: { _controller: AriiMFTBundle:Transfers:index }
+
+arii_MFT_readme:
+    pattern:  /
+    defaults: { _controller: AriiMFTBundle:Default:readme }
+
+json_MFT_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiMFTBundle:Default:ribbon }
+
+xml_MFT_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiMFTBundle:Default:toolbar }
+
+xml_MFT_pie:
+    pattern:  /transfers/pie.xml
+    defaults: { _controller: AriiMFTBundle:Transfers:pie }
+
+xml_MFT_grid:
+    pattern:  /transfers/grid.xml
+    defaults: { _controller: AriiMFTBundle:Transfers:grid }
+
+xml_MFT_grid_toolbar:
+    pattern:  /transfers/toolbar.xml
+    defaults: { _controller: AriiMFTBundle:Transfers:toolbar }
+
+xml_MFT_form:
+    pattern:  /transfers/form.xml
+    defaults: { _controller: AriiMFTBundle:Transfers:form }
+
+xml_MFT_transfer_form:
+    pattern:  /transfer/form.xml
+    defaults: { _controller: AriiMFTBundle:Transfer:form }
+
+xml_MFT_transfer_history:
+    pattern:  /transfer/history.xml
+    defaults: { _controller: AriiMFTBundle:Transfer:history }
+
+
+
+
+
+arii_MFT_history:
+    pattern:  /history
+    defaults: { _controller: AriiMFTBundle:Transfers:index }
+
+arii_MFT_activities:
+    pattern:  /activities
+    defaults: { _controller: AriiMFTBundle:Transfers:activities }
+
+arii_MFT_detail:
+    pattern:  /detail
+    defaults: { _controller: AriiMFTBundle:DB:detail }
+
+xml_MFT_history:
+    pattern:  /history.xml
+    defaults: { _controller: AriiMFTBundle:DB:history }
+
+xml_MFT_activities:
+    pattern:  /activities.xml
+    defaults: { _controller: AriiMFTBundle:DB:activities }
+    
+db_sosftp_history:
+    pattern:  /transfers/db/sosftp_history
+    defaults: { _controller: AriiMFTBundle:DB:sosftp_history }
+
+db_graph_pie_send:
+    pattern:  /transfers/db/graph_pie_send
+    defaults: { _controller: AriiMFTBundle:DBGraph:pie_send }
+    
+arii_MFT_db:
+    pattern:  /db
+    defaults: { _controller: AriiMFTBundle:Edit:index }
+
+arii_MFT_edit:
+    pattern:  /edit
+    defaults: { _controller: AriiMFTBundle:Edit:edit }

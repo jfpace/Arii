@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<toolbar>
+    <item id="location" type="buttonInput" value="live" width="340" title="{{ "Path" | trans }}"/>
+    <item id="splines" type="buttonSelect" img="splines.png" title="{{ "Lines" | trans }}">
+                <item type="button" id="polyline"  text="{{ "Poly line" | trans }}" select="true" />
+                <item type="button" id="curved"  text="{{ "Curved" | trans }}" />
+                <item type="button" id="line"  text="{{ "Line" | trans }}" />
+                <item type="button" id="ortho"  text="{{ "Ortho" | trans }}" />
+                <item type="button" id="none"  text="{{ "None" | trans }}" />
+    </item>
+    <item id="sep1" type="separator"/>
+    <item id="chains" type="buttonTwoState" value="yes" img="job_chain.png" title="{{ "Job chains" | trans }}"/>
+    <item id="jobs" type="buttonTwoState" value="yes" img="job.png" title="{{ "Jobs" | trans }}"/>
+    <item id="config" type="buttonTwoState" value="yes" img="config.png" title="{{ "Config" | trans }}"/>
+    <item id="parameters" type="buttonTwoState" value="yes" img="params.png" title="{{ "Parameters" | trans }}"/>
+    <item id="events" type="buttonTwoState" value="yes" img="events.png" title="{{ "Events" | trans }}"/>
+    <item id="sep2" type="separator"/>
+    <item id="picture" type="buttonSelect" img="photo.png" title="{{ "Picture" | trans }}">
+                <item type="button" id="svg"  text="{{ "Vectoriel file (SVG)" | trans }}" img="svg.png" selected="true" />
+<!--                <item type="button" id="pdf"  text="{{ "Portable document (PDF)" | trans }}" img="pdf.png"/>
+-->                <item type="button" id="png"  text="{{ "Bitmap image (PNG)" | trans }}" img="png.png"/>
+    </item>
+ </toolbar>

@@ -1,0 +1,256 @@
+{# src/Arii/AdminBundle/Resources/views/Default/database.html.twig #}
+
+{% extends "AriiAdminBundle::layout.html.twig" %}
+
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Team Management" | trans }}</h2>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                                <div class="sct_right">
+    <div id="toolbarObj"></div>
+
+    <div id="mygrid" style="height:659px;background-color:white;overflow:hidden;position:relative;">TEST</div>
+
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+
+<script language="javascript">
+dhtmlx.skin = "dhx_skyblue";
+
+var dhxLayout;
+dhxLayout = new dhtmlXLayoutObject("mygrid","3J");
+dhxLayout.cells("a").hideHeader();
+dhxLayout.cells("b").hideHeader();
+dhxLayout.cells("c").hideHeader();
+dhxLayout.cells("a").setWidth(400);
+dhxLayout.cells("a").setHeight(420);
+
+var toolbar;
+toolbar  = dhxLayout.cells("c").attachToolbar();
+toolbar.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbar.loadXML("{{ url('arii_Admin_team_attachFilter_toolbar') }}");
+toolbar.attachEvent("onClick",onClick);
+
+
+var myteamgrid,myfiltergrid;
+myteamgrid = dhxLayout.cells("a").attachGrid();
+myteamgrid.setMultiRows = true;
+myteamgrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+myteamgrid.enableTreeCellEdit(false);
+myteamgrid.enableTreeGridLines(true);
+myteamgrid.setHeader("#text_filter,{{ "R" | trans }},{{ "W" | trans }},{{ "X" | trans }}");
+myteamgrid.setInitWidths("*,50,50,50");
+myteamgrid.setColAlign("left,center,center,center");
+myteamgrid.setColTypes("tree,ch,ch,ch");
+myteamgrid.enableDragAndDrop(true);
+myteamgrid.init();
+myteamgrid.loadXML("{{ url('arii_Admin_show_team_filter') }}");
+myteamgrid.setSkin("dhx_skyblue");
+
+myteamgrid.attachEvent("onDrag",onDrag);
+
+
+myteamgrid.attachEvent("onDragIn",onDragIn);
+function onDragIn(did,tid){
+    var ids = tid.split("");
+    if (ids[0]==="T" && ids[1]==="#")
+    {
+        return true;
+    } else
+    {
+        return false;
+    }
+};
+
+myteamgrid.attachEvent("onRowDblClicked",function(rid,cind){
+    var ids = rid.split("");
+    var name = rid.substr(2);
+    if(ids[0]==="F" && ids[1]==="#")
+    {
+        var names = name.split('/');
+        filterform.load("{{ url('arii_Admin_team_editFilter') }}?filter_id="+names[1]+"&id="+names[0]);
+    }
+});
+
+
+myfiltergrid = dhxLayout.cells("b").attachGrid();
+myfiltergrid.setMultiRows = true;
+myfiltergrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+myfiltergrid.setHeader("{{ "Name" | trans }},{{ "Title" | trans }},{{ "Spooler" | trans }},{{ "Job" | trans }},{{ "Job Chain" | trans }},{{ "Order ID" | trans }},{{ "Status" | trans }}");
+myfiltergrid.attachHeader("#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter");
+myfiltergrid.setInitWidths("100,100,80,80,100,100,*");
+myfiltergrid.setColAlign("left,left,left,left,left,left,left");
+myfiltergrid.setColTypes("ro,ro,ro,ro,ro,ro,ro");
+myfiltergrid.setColSorting("str,str,str,str,str,str,str");
+myfiltergrid.enableLightMouseNavigation( true );
+myfiltergrid.enableDragAndDrop(true);
+myfiltergrid.init();
+myfiltergrid.loadXML("{{ url('arii_Admin_show_filter') }}");
+myfiltergrid.setSkin("dhx_skyblue");
+
+myfiltergrid.attachEvent("onDrag",GridRefresh);
+
+
+var filterformData;
+filterformData = [
+    {
+        type: "settings",
+        position: "label-left",
+        labelWidth: 80,
+        inputWidth: 250,
+        noteWidth:  250
+    },
+    {
+        type: "fieldset",
+        name: "editfilter",
+        label: "{{ "Edit Filter" | trans}}",
+        width: "auto",
+        list: [
+                {
+                    type: "hidden",
+                    name: "team_id"
+                },
+                {
+                    type: "hidden",
+                    name: "filter_id"
+                },                
+                {
+                    type: "input",
+                    name: "name",
+                    label: "Name",
+                    note: {
+                        text: "Specify a name for the filter"
+                    }
+                },
+                {
+                    type: "input",
+                    name: "description",
+                    label: "Description",
+                    note: {
+                        text: "Give a short description of the filter"
+                    }
+                },
+                {
+                    type: "block",
+                    width: "auto",
+                    list: [
+                        {
+                            type: "checkbox",
+                            name: "R",
+                            label: "R",
+                            labelWidth: 80,
+                            labelAlign: "right",
+                            value: 1
+                        },
+                        { type: "newcolumn"},
+                        {
+                            type: "checkbox",
+                            name: "W",
+                            label: "W",
+                            labelWidth: 40,
+                            labelAlign: "right",
+                            value: 1
+                        },
+                        { type: "newcolumn"},
+                        {
+                            type: "checkbox",
+                            name: "X",
+                            label: "X",
+                            labelWidth: 40,
+                            labelAlign: "right",
+                            value: 1
+                        }
+                    ]
+                }]
+    }
+    
+];
+var filterform = dhxLayout.cells("c").attachForm(filterformData);
+var dp = new dataProcessor("{{ url('arii_Admin_team_editFilter') }}");
+dp.setUpdateMode("off");
+dp.init(myform);
+
+function onClick(id,value){
+    switch(id){
+        case "save":
+            filterform.send("{{ url('arii_Admin_team_saveFilter') }}","POST",function(loader,response){
+                if(response === "success")
+                {
+                    dhtmlx.message({
+                        title: "Save",
+                        type: "Notice",
+                        lifetime: "60000",
+                        text: "Filter Updated"
+                    });
+                    myteamgrid.loadXML("{{ url('arii_Admin_show_team_filter') }}");
+                }
+            });
+        break;
+        case "reset":
+            
+        break;
+        default:
+            
+    }
+};
+
+function onDrag(sid,tid){
+    myteamgrid.dragContext.mode = "copy";
+    var team = tid.substr(2);
+    dhtmlxAjax.get("{{ url('arii_Admin_team_ajax_addFilter') }}?team="+team+"&filter_id="+sid,function(loader){ 
+        if(loader.xmlDoc.responseText==="success")
+        {
+            dhtmlx.message({
+                title:"New Filter",
+                type: "Notice",
+                lifetime: "60000",
+                text: "New Filter Added"
+            });
+            GridRefresh();
+        } else{
+            dhtmlx.message({
+                title:"Error",
+                type: "Notice",
+                lifetime: "60000",
+                text: "Filter already exit in this team!"
+            });
+            GridRefresh();
+        }
+    });
+    return true;
+}
+
+function GridRefresh()
+{
+    myteamgrid.loadXML("{{ url('arii_Admin_show_team_filter') }}");
+    myfiltergrid.loadXML("{{ url('arii_Admin_show_filter') }}");
+    return true;
+}
+</script>
+{% endblock %}

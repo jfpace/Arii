@@ -1,0 +1,174 @@
+{# src/Arii/CoreBundle/Resources/views/index.html.twig #}
+{% extends "AriiCoreBundle::layout.html.twig" %}
+{% block body %}
+<script>
+dhtmlxEvent(window,"load",function(){ 
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("a").setWidth(400);
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_my_account_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+    
+    myGrid = globalLayout.cells("b").attachGrid();
+    globalLayout.cells("b").hideHeader();
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Filter" | trans }},{{ "Description" | trans }}");
+    myGrid.attachHeader("#text_filter,#text_filter");
+    myGrid.setInitWidths("200,*");
+    myGrid.setColAlign("left,left");
+    myGrid.setColTypes("ro,ro");
+    myGrid.setColSorting("str,str");
+    myGrid.init();
+    myGrid.loadXML( "{{ url('xml_filter_list') }}" );
+    myGrid.attachEvent("onRowDblClicked", function (rid) {
+        EditFilter(rid);
+    });
+
+    globalLayout.cells("c").hideHeader();
+    globalLayout.cells("c").setHeight(230);
+    
+    toolbar = globalLayout.cells("c").attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct("{{ url('xml_filter_toolbar') }}");
+    toolbar.attachEvent("onClick",onClick);
+
+    var myForm, formData;
+    formData = [
+       { type: "settings", position: "label-left", labelWidth: 100, inputWidth: 240, labelAlign: "right", readonly: 1, position: "label-left" },
+             {type:"hidden", name: 'id' },
+            {type:"input", name: 'name', label:'{{ 'Name' | trans }}', required: true },
+            {type:"input", name: 'description', label:'{{ 'Description' | trans }}', rows: 4},
+            {type:"newcolumn"},
+            {type:"input", name: 'spooler', label:'{{ 'Spooler' | trans }}', value: '*' },
+            {type:"input", name: 'job', label:'{{ 'Job' | trans }}', value: '*' },
+            {type:"input", name: 'job_chain', label:'{{ 'Chain' | trans }}', value: '*' },
+            {type:"input", name: 'order_id', label:'{{ 'Order' | trans }}', value: '*' },
+            {type:"input", name: 'status', label:'{{ 'Status' | trans }}', value: '*'}
+        ];
+    myform = globalLayout.cells("c").attachForm(formData);
+    myform.enableLiveValidation(true);
+
+    var dp = new dataProcessor("{{ url('xml_filter_form') }}");
+    dp.init(myform);
+});
+    
+function onClick(id){
+    switch (id){
+        case "add_filter":
+            NewFilter();
+            break;
+        case "delete_filter":
+            id = myform.getItemValue("id");
+            DeleteFilter(id);
+            break;
+        case "save_filter":
+            globalLayout.cells("a").progressOn();
+            if(!myform.validate())
+            {
+                dhtmlx.message({
+                    title:"Error",
+                    type: "error",
+                    lifetime: "60000",
+                    text: "{{ "Please type in all the required fields!" | trans }}"
+                 });
+                return;
+            }
+            myform.send("{{ url('xml_User_filter_save') }}","POST",function(loader,response){
+               if(response === "success")
+               {
+                 dhtmlx.message({
+                    title:"{{ "Save" | trans }}",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "{{ "Filter saved" | trans }}"
+                 });
+                 GridRefresh();
+               }
+               else 
+               {
+                 dhtmlx.message({
+                    title:"{{ "Save" | trans }}",
+                    type: "error",
+                    lifetime: "60000",
+                    text: response
+                 });
+               }
+                globalLayout.cells("a").progressOff();
+            });
+        break;
+        default:
+            break;
+    }
+}
+
+function NewFilter() {
+    myform.clear();
+    myform.setItemFocus("name");
+    myform.setItemLabel("fieldset","{{ "New filter" | trans }}");
+    toolbar.hideItem("delete_filter");
+}
+
+function EditFilter(id) {
+    globalLayout.cells("b").progressOn();
+    toolbar.showItem("delete_filter");
+    myform.setItemLabel("fieldset","{{ "Edit filter" | trans }}");
+    myform.clear();
+    myform.load("{{ url('xml_filter_form') }}?id="+id, function () {
+        globalLayout.cells("b").progressOff();
+    });
+}
+
+function DeleteFilter(id) {
+    globalLayout.cells("a").progressOn();
+    dhtmlx.confirm({
+     title: "{{ "Delete filter" | trans }}",
+     type: "confirm-error",
+     text: '{{ "Do you confirm the suppression ?" | trans }}',
+     callback: function(answer) { if (answer) {
+               myform.send("{{ url('xml_User_filter_delete') }}","POST",function(loader,response){
+               if(response === "success")
+               {
+                 dhtmlx.message({
+                    title:"{{ "Save" | trans }}",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "{{ "Filter deleted" | trans }}"
+                 });
+               }
+               else 
+               {
+                 dhtmlx.message({
+                    title:"{{ "Delete" | trans }}",
+                    type: "error",
+                    lifetime: "60000",
+                    text: response
+                 });
+               }
+                    myGrid.deleteRow(id);
+                    globalLayout.cells("a").progressOff();
+
+                })
+        }
+    },
+     cancel: "{{ "No" | trans }}",
+     ok: "{{ "Yes" | trans }}" });
+ }
+ 
+function GridRefresh()
+{
+    myGrid.clearAll();
+    myGrid.load("{{ url('xml_filter_list') }}");
+}
+
+function GlobalRefresh() {
+}
+</script>
+{% endblock %}

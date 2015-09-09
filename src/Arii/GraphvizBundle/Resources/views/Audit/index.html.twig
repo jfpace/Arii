@@ -1,0 +1,207 @@
+{# src/Arii/GraphvizBundle/Resources/views/index.html.twig #}
+{% extends "AriiGraphvizBundle::layout.html.twig" %}
+{% block body %}
+<script>
+var toolbar;
+var rankdir = 'TB';
+var splines = 'polyline';
+var graph_path= 'live';
+var graph_file= '.*';
+var graph_paths = '';
+var show_params = 'n';
+var show_events = 'n';
+var show_jobs = 'n';
+var show_chains = 'n';
+var show_config = 'n';
+var path= 'live';
+var folder = '';
+
+dhtmlxEvent(window,"load",function(){     
+    
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");
+    globalLayout.cells("a").setWidth(300);
+    globalLayout.cells("a").hideHeader();
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_GVZ_audit_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myAccordion = globalLayout.cells("a").attachAccordion();
+    myAccordion.addItem("folders", "{{ "Live" | trans }}");
+    myAccordion.addItem("legend", "{{ "Legend" | trans }}");
+
+    myTree = myAccordion.cells("folders").attachTree();
+    myTree.setImagePath("{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.enableSmartXMLParsing(true);
+    myTree.attachEvent( "onDblClick", SendPath );
+    myTree.loadXML( '{{ url('xml_GVZ_tree') }}');
+
+    myTabbar = globalLayout.cells("b").attachTabbar();
+    myTabbar.addTab("report","{{ "Report" | trans }}","100px", null, true);
+    myTabbar.addTab("comments","{{ "Comments" | trans }}","100px");
+    
+    myTabbar.cells("report").attachURL('{{ asset('/bundles/ariicore/images/arii.jpg') }}');
+
+    myGridMenu = new dhtmlXMenuObject(null);
+    myGridMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    myGridMenu.renderAsContextMenu();
+    myGridMenu.loadStruct("{{ url('xml_GVZ_audit_menu') }}");
+
+    myGrid = myTabbar.cells("comments").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "File" | trans }},{{ "Type" | trans }},{{ "Comment" | trans }}");
+    myGrid.attachHeader("#text_filter,#select_filter,#text_filter");
+    myGrid.setInitWidths("300,80,*");
+    myGrid.setColAlign("left,left,left");
+    myGrid.setColTypes("ed,ed,ed");
+    myGrid.setColSorting("str,str,str");
+    myGrid.enableContextMenu(myGridMenu);    
+    myGrid.init();
+    myGrid.loadXML( "{{ url('xml_GVZ_audit_comments') }}");
+    myGridMenu.attachEvent('onClick', function (id,value) {
+        switch (id)
+        {
+            case 'new':
+                var newId = (new Date()).valueOf();
+                myGrid.addRow(newId,"");
+                break;
+            case 'delete':
+                dhtmlx.confirm({
+                title: "{{ "Delete" | trans }}",
+                type: "confirm-error",
+                text: "{{ "Do you really want to delete this comment ?" | trans }}",
+                callback: function(answer) 
+                { if (answer) myGrid.deleteSelectedItem(); }
+            });
+                break;
+            default:
+                alert(id);
+         }
+    });
+    myGridToolbar = myTabbar.cells("comments").attachToolbar();
+    myGridToolbar.setIconsPath("{{ asset('bundles/ariicore/images/menu/') }}");
+    myGridToolbar.loadStruct( "{{ url('xml_GVZ_audit_toolbar') }}");
+    myGridToolbar.attachEvent("onClick",function(id){
+        switch (id) {
+            case "new":
+                var newId = (new Date()).valueOf();
+                myGrid.addRow(newId,"");
+                break;
+            default:
+              alert("click "+id);
+        }
+    });
+                
+    CommentProcessor = new dataProcessor("{{ url('xml_GVZ_audit_comments')}}"); 
+    CommentProcessor.setTransactionMode("POST",true); 
+    CommentProcessor.setUpdateMode("cell"); 
+    CommentProcessor.init(myGrid);
+
+    myLegend = myAccordion.cells("legend").attachGrid();
+    myLegend.setImagePath( "{{ asset('bundles/ariicore/images/wa/') }}");
+    myLegend.setHeader("{{ "Ico." | trans }},{{ "Description" | trans }}");
+    myLegend.setNoHeader(true);
+    myLegend.setInitWidths("50,*");
+    myLegend.setColAlign("right,left");
+    myLegend.setColTypes("img,ro");
+    myLegend.init();
+    myLegend.loadXML( "{{ url('xml_GVZ_legend') }}");
+
+    globalLayout.cells("b").hideHeader();
+    globalLayout.attachEvent("onContentLoaded", function(win){
+        globalLayout.cells("b").progressOff();
+    });
+
+});
+
+function SendPath(id) {
+//    globalLayout.cells("b").progressOn();
+//    dhtmlxAjax.get( "{{ url('arii_session_update') }}?current_dir="+id, function () {
+        folder = id;
+        DrawJobs();
+//        globalLayout.cells("b").progressOff();
+//    });
+}
+
+function DrawJobs() {
+    url = GetUrl();
+    myTabbar.progressOn();
+    myTabbar.attachEvent("onContentLoaded", function() {
+        myTabbar.progressOff();    
+    });
+    myTabbar.cells("report").attachURL(url);
+    
+}
+
+function GetUrl() {
+    var url = "{{ url('arii_GVZ_audit_generate') }}";
+    url += "?path="+encodeURIComponent(folder);
+    url += "&splines="+encodeURIComponent(splines);
+    url += "&paths="+encodeURIComponent(graph_paths);
+    url += "&show_params="+encodeURIComponent(show_params);
+    url += "&show_events="+encodeURIComponent(show_events);
+    url += "&show_chains="+encodeURIComponent(show_chains);
+    url += "&show_jobs="+encodeURIComponent(show_jobs);
+    url += "&show_config="+encodeURIComponent(show_config);
+return url;
+}
+
+function ClickRibbon(id, value) {
+
+    switch (id) {
+        case 'live':
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            path = 'live';            
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}', function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case '_all':
+            path = 'remote/_all';
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case 'map':
+            window.location.href = "{{ url('arii_GVZ_index') }}";
+            break;
+        case 'audit':
+            window.location.href = "{{ url('arii_GVZ_audit') }}";
+            break;
+        default:
+            if (id.substr(0,7)=='remote_') {
+                path = 'remote/'+id.substr(7);
+                globalLayout.cells("a").progressOn();
+                myTree.deleteChildItems(0);
+                myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                    myAccordion.cells('folders').setText(path);
+                    globalLayout.cells("a").progressOff();                
+                });
+            }
+            else {
+                alert("click "+id);
+            }
+    }
+}
+
+function StateRibbon(id, state) {
+    switch (id) {
+        default:
+            alert("click "+id);
+    }
+}
+
+</script>
+{% endblock %}

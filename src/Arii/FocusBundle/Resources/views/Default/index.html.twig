@@ -1,0 +1,138 @@
+{# src/Arii/FocusBundle/Resources/views/index.html.twig #}
+
+{% extends "AriiFocusBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section table_section">
+	<!--[if !IE]>start title wrapper<![endif]-->
+	<div class="title_wrapper">
+		<h2>{{ "Dashboard" | trans }}</h2>
+		<span class="title_wrapper_left"></span>
+		<span class="title_wrapper_right"></span>
+	</div>
+	<!--[if !IE]>end title wrapper<![endif]-->
+<!--[if !IE]>start section content<![endif]-->
+	<div class="section_content">
+		<!--[if !IE]>start section content top<![endif]-->
+		<div class="sct">
+			<div class="sct_left">
+				<div class="sct_right">
+					<div class="sct_left">
+						<div class="sct_right">
+<div id="toolbarObj"></div>
+<table width="100%" align="center">
+<tr align="center"><th><a href="{{ url('arii_Focus_history') }}">{{ "Job status" | trans }}</a></th>
+    <th><a href="{{ url('arii_Focus_orders') }}">{{ "Order status" | trans }}</a></th>
+    <th><a href="{{ url('arii_Focus_planned') }}">{{ "Planned schedule" | trans }}</a></th>
+<tr align="center" valign="top">
+<td width="33%"><div id="jobstatus" style="height:400px;"></div></td>
+<td width="33%"><div id="orderstatus" style="height:400px;"></div></td>
+<td width="33%"><div id="planned" style="height:400px;"></div></td>
+</tr>
+<tr>
+</table>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--[if !IE]>end section content top<![endif]-->
+		<!--[if !IE]>start section content bottom<![endif]-->
+		<span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+		<!--[if !IE]>end section content bottom<![endif]-->
+		
+	</div>
+	<!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+<script>
+var toolbar;
+toolbar = new dhtmlXToolbarObject("toolbarObj");
+toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+toolbar.loadStruct("{{ url('arii_Focus_toolbar_history') }}");
+toolbar.attachEvent( "onClick", function(id, value) {
+    switch (id) {
+        case "refresh":
+            GlobalRefresh();
+        break;
+        default:
+            alert(id);
+    }
+});
+
+barChart =  new dhtmlXChart({
+        view:"donut",
+        container:"jobstatus",
+        value:"#JOBS#",
+        label:"",
+        tooltip: "#JOBS# {{ "Jobs" | trans }} #STATUS#",
+        color: "#COLOR#",
+        gradient:true,
+        border:false,
+        pieInnerText: "#JOBS#",
+        shadow: 0,
+        legend:{
+	             width: 0,
+                     template: "#STATUS#"
+        }
+})
+barChart.load( "{{ url('arii_Focus_pie_history') }}" );
+barChart.attachEvent("onItemClick",function(id, value){
+var status;
+    if (id == 1)
+        status='SUCCESS';
+    else if (id == 2)
+        status='FAILURE';
+    else if (id == 3)
+        status='RUNNING';
+    dhtmlxAjax.get( "{{ url('arii_global_toolbar_update') }}?"+status+'=true' , function(loader){
+        window.location = "{{ url("arii_Focus_history_list") }}"; 
+    });    
+});
+barChart2 =  new dhtmlXChart({
+        view:"donut",
+        container:"orderstatus",
+        value:"#JOBS#",
+        label:"",
+        tooltip: "#STATUS#",
+        color: "#COLOR#",
+        gradient:true,
+        border:false,
+        pieInnerText: "#JOBS#",
+        shadow: 0,
+        legend:{
+            width: 0,
+            template: "#STATUS#"
+        }
+})
+barChart2.load( "{{ url('arii_Focus_pie_orders') }}" );
+
+barChart3 =  new dhtmlXChart({
+        view:"donut",
+        container:"planned",
+        value:"#JOBS#",
+        label:"",
+        tooltip: "#STATUS#",
+        color: "#COLOR#",
+        gradient:true,
+        border:false,
+        pieInnerText: "#JOBS#",
+        shadow: 0,
+        legend:{
+	             width: 0,
+                     template: "#STATUS#"
+        }
+})
+barChart3.load( "{{ url('arii_Focus_pie_planned') }}" );
+
+function GlobalRefresh() {
+    toolbar.setItemText( "refresh", "{{ "Refreshing" | trans }}..." );
+    barChart.load( "{{ url('arii_Focus_pie_history') }}" );
+    barChart2.load( "{{ url('arii_Focus_pie_orders') }}" );
+    barChart3.load( "{{ url('arii_Focus_pie_planned') }}" );
+    var currentTime = new Date()
+    var nextTime = new Date(currentTime.getTime() +(refreshing*1000));
+    toolbar.setItemText( "refresh", FormatTime(nextTime));
+}
+</script>
+{% endblock %}

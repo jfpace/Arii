@@ -1,0 +1,105 @@
+digraph OSJS {
+fontname=arial
+fontsize=8
+splines=polyline
+randkir=TB
+node [shape=plaintext,fontname=arial,fontsize=8]
+edge [shape=plaintext,fontname=arial,fontsize=8,decorate=true,compound=true]
+bgcolor=transparent
+"LOCK//CPAM//DB" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="yellow" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/lock_open.png"/></td><td align="left" colspan="5">DB</td><td align="left" PORT="1">1</td></tr>
+</TABLE>>]
+"MAC//CPAM//Ma file" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="cyan" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/flag_green.png"/></td><td align="left" colspan="6"  PORT="2">Ma file</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/application_cascade.png"/></td><td align="left" colspan="6"  PORT="3">10</td></tr>
+</TABLE>>]
+"SCHED//Tous les jours a 14H" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="blue" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/calendar.png"/></td><td align="left" colspan="6"  PORT="4">Tous les jours a 14H</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/clock.png"/></td><td align="left" colspan="6"  PORT="5">14:00</td></tr>
+</TABLE>>]
+"SCHED//Tous les jours à 18H" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="blue" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/calendar.png"/></td><td align="left" colspan="6"  PORT="6">Tous les jours à 18H</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/clock.png"/></td><td align="left" colspan="6"  PORT="7">18:00</td></tr>
+</TABLE>>]
+"CPAM//job1" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="#ffffb3">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/link_break.png"/></td><td align="left" colspan="6"  PORT="8">CPAM//job1</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/application_osx_terminal.png"/></td><td align="left" colspan="6"  PORT="9">shell</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/lock_open.png"/></td><td align="left" colspan="6"  PORT="10">DB</td></tr>
+</TABLE>>]
+"CPAM//job2" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="#ffffb3">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/link_break.png"/></td><td align="left" colspan="6"  PORT="11">CPAM//job2</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/comment.png"/></td><td align="left" colspan="6"  PORT="12">test</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/clock.png"/></td><td align="left" colspan="6"  PORT="13">12:00</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/application_osx_terminal.png"/></td><td align="left" colspan="6"  PORT="14">shell</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/flag_green.png"/></td><td align="left" colspan="6"  PORT="15">Ma file</td></tr>
+
+</TABLE>>]
+"CPAM//ping,Mon TEST/Mon TEST/ping" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/lightning.png"/></td><td align="left" colspan="6"  PORT="16">Mon TEST</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/comment.png"/></td><td align="left" colspan="6"  PORT="17">Mon ordre a moi</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/calendar.png"/></td><td align="left" colspan="6"  PORT="18">Tous les jours a 14H</td></tr>
+</TABLE>>]
+"CPAM//ping,Mon TEST/Mon TEST/ping" -> "CPAM//ping/HEAD"  [style=dashed]
+"CFG//ping" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="purple" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/wrench.png"/></td><td align="left" colspan="6"  PORT="19">ping</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/sitemap.png"/></td><td align="left" colspan="6"  PORT="20">REPRISE</td></tr>
+</TABLE>>]
+"CPAM//ping" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="#bebada">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/link.png"/></td><td align="left" colspan="6"  PORT="21">CPAM//ping</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/application_osx_terminal.png"/></td><td align="left" colspan="6"  PORT="22">shell</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/flag_green.png"/></td><td align="left" colspan="6"  PORT="23">Ma file</td></tr>
+
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/plugin.png"/></td><td align="left" colspan="6"  PORT="24">configuration_monitor</td></tr>
+<tr><td></td><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/cog.png"/></td><td align="left" colspan="5"  PORT="25">java</td></tr>
+<tr><td></td><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/script_gear.png"/></td><td align="left" colspan="5"  PORT="26">sos.scheduler.managed.configuration.ConfigurationOrderMonitor</td></tr>
+</TABLE>>]
+subgraph "clusterCPAM//pingping" {
+style=filled;
+color=lightgrey;
+label="CPAM//ping"
+"CPAM//ping/HEAD" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/chart_organisation.png"/></td><td align="left" colspan="6"  PORT="27">ping</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/database.png"/></td><td align="left" colspan="6"  PORT="28">yes</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/eye.png"/></td><td align="left" colspan="6"  PORT="29">yes</td></tr>
+</TABLE>>]
+"CPAM//ping/DEBUT"
+"CPAM//ping/DEBUT" -> "CPAM//ping/AUTRE" [color=green,style=dashed]
+"CPAM//ping/DEBUT" -> "CPAM//ping/REPRISE" [color=red,style=dashed]
+"CPAM//ping/DEBUT" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/sitemap.png"/></td><td align="left" colspan="6"  PORT="30">DEBUT</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/script_code.png"/></td><td align="left" colspan="6"  PORT="31">ping</td></tr>
+</TABLE>>]
+"CPAM//ping/REPRISE"
+"CPAM//ping/REPRISE" -> "CPAM//ping/AUTRE" [color=green,style=dashed]
+"CPAM//ping/REPRISE" -> "CPAM//ping/!ERROR" [color=red,style=dashed]
+"CPAM//ping/REPRISE" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/sitemap.png"/></td><td align="left" colspan="6"  PORT="32">REPRISE</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/script_code.png"/></td><td align="left" colspan="6"  PORT="33">ping</td></tr>
+</TABLE>>]
+"CPAM//ping/AUTRE"
+"CPAM//ping/AUTRE" -> "CPAM//ping/AUTRE" [color=red,dir=back]
+"CPAM//ping/AUTRE" -> "CPAM//ping/SUCCESS" [color=green,style=dashed]
+"CPAM//ping/AUTRE" -> "CPAM//ping/!ERROR" [color=red,style=dashed]
+"CPAM//ping/AUTRE" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/sitemap.png"/></td><td align="left" colspan="6"  PORT="34">AUTRE</td></tr>
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/script_code.png"/></td><td align="left" colspan="6"  PORT="35">ping</td></tr>
+</TABLE>>]
+"CPAM//ping/SUCCESS"
+"CPAM//ping/SUCCESS" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/control_end.png"/></td><td align="left" colspan="6"  PORT="36">SUCCESS</td></tr>
+</TABLE>>]
+"CPAM//ping/!ERROR"
+"CPAM//ping/!ERROR" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="grey" BGCOLOR="white">
+<tr><td bgcolor="red"><IMG SRC="D:/www/arii/app/../web/bundles/ariigraphviz/images/silk/control_end.png"/></td><td align="left" colspan="6"  PORT="37" bgcolor="red">ERROR</td></tr>
+</TABLE>>]
+}
+"CPAM//job1":10 -> "LOCK//CPAM//DB" [color=yellow,style=dotted]
+"CPAM//job2":15 -> "MAC//Ma file"  [color=cyan,style=dotted]
+"SCHED//Tous les jours a 14H" -> "CPAM//ping,Mon TEST/Mon TEST/ping":18 [color=blue,style=dashed]
+"CPAM//ping/HEAD" -> "CFG//ping" [style=dotted,color=purple]
+"CFG//ping":20 -> "CPAM//ping/REPRISE" [style=dotted,color=purple]
+"CPAM//ping":23 -> "MAC//Ma file"  [color=cyan,style=dotted]
+"CPAM//ping/DEBUT":31 -> "CPAM//ping" [style=dotted]
+"CPAM//ping/REPRISE":33 -> "CPAM//ping" [style=dotted]
+"CPAM//ping/AUTRE":35 -> "CPAM//ping" [style=dotted]
+}

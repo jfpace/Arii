@@ -1,0 +1,81 @@
+_connection:
+    title:
+        note:    Please give a title to this connection
+    description:
+        note:    Please give a short description of this connection
+    host:
+        note:    Specify the host name of this connection
+    category:
+        note:    Specify the category of this connection
+    message:
+        delete:  Do you really want to delete this connection ?
+        save:    Connection saved.
+team:
+    title:
+        note:    Please give a title to this team
+    description:
+        note:    Please give a short description of this team
+    message:
+        delete:  Do you really want to delete this team ?
+        save:    Team saved.
+user:
+    name: 
+        tooltip: Enter your login username here
+        note:    Enter your login username here, this field can not be empty.
+    mail:
+        tooltip: Enter you validate Email here
+        note:    Enter your validate Email Adress here. This field can not be empty
+    message:
+        delete:  Do you really want to delete this user ?
+        save:    User saved.
+repository:
+    db:
+        tooltip: Please specify a database for this repository
+        note:    Please specify a database for this repository
+    description:
+        tooltip: Please type in the description for this repository
+        note:    Please type in the description for this repository
+    name: 
+        tooltip: Please give a name of the repository
+        note:    Please give a name of the repository
+    timezone:
+        tooltip: Please select the time zone for this repository
+        note:    Please select the time zone for this repository
+    message:
+        delete:  Do you really want to delete this repository ?
+        save:    Repository saved.
+site:
+    description:
+        tooltip: Please type in the description for this site
+        note:    Please type in the description for this site
+    name: 
+        tooltip: Please give a name of the site
+        note:    Please give a name of the site
+    timezone:
+        tooltip: Please select the time zone for this site
+        note:    Please select the time zone for this site
+    message:
+        delete:  Do you really want to delete this site ?
+        save:    Site saved.
+spooler:
+    connection:
+        tooltip: Please specify an access connection for the spooler
+        note:    Please specify an access connection for the spooler
+    database:
+        note:    Please specify a database for the spooler
+    mail:
+        note:    Please specify a mail server for the spooler
+    name:
+        note:    Please type a name for the spooler
+    site:
+        note:    Please specify a site for the spooler
+    supervisor:
+        note:    Please choose a supervisor for the spooler
+    transfer:
+        note:    Please specify a connection for file tranferation of the spooler
+    event:
+        note:    Check is this spooler is an event manager
+    version:
+        note:    Specify the version of this spooler
+    message:
+        delete:  Do you really want to delete this connection ?

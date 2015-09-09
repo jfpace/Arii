@@ -1,0 +1,99 @@
+{% extends "::base.html.twig" %}
+{% block dhtmlx %}
+{% if arii_pro %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_pro/skins/' ~  skin ~ '/dhtmlx.css') }}" />
+        <script src="{{ asset('dhtmlx_pro/codebase/dhtmlx.js') }}" type="text/javascript"></script>
+{% else %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_gpl/skins/terrace/dhtmlx.css') }}" />
+        <script src="{{ asset('dhtmlx_gpl/codebase/dhtmlx.js') }}" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_scheduler/codebase/dhtmlxscheduler.css') }}" />
+        <script src="{{ asset('dhtmlx_scheduler/codebase/dhtmlxscheduler.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_agenda_view.js') }}" type="text/javascript"></script>
+{% endif %}
+{% endblock dhtmlx %}
+{% block body %}
+{% endblock body %}
+{% block script %}
+<script>
+function StateRibbon (itemid,state) {
+    switch(itemid) {
+         case 'chained':
+            chained = (state?1:0);
+            globalLayout.progressOn();
+            break;
+        default:
+            alert(itemid);
+    }
+}
+
+function ClickRibbon (itemid,state) {
+    switch(itemid) {
+        case 'live':
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            path = 'live';            
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}', function () {
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case '_all':
+            path = 'remote/_all';
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+    case '3600':
+        update = itemid;
+        dhx4.ajax.get( "{{ url('arii_session_update') }}?refresh="+itemid);
+        GlobalRefresh();
+        break;
+    case 'deploy':
+        window.location = "{{ url('arii_JOE_deploy') }}";
+        break;
+    case 'edit':
+        window.location = "{{ url('arii_JOE_index') }}";
+        break;
+    case 'load':
+        window.location = "{{ url('arii_JOE_load') }}";
+        break;
+        default:
+            if (id.substr(0,7)=='remote_') {
+                path = 'remote/'+id.substr(7);
+                globalLayout.cells("a").progressOn();
+                myTree.deleteChildItems(0);
+                myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                    myAccordion.cells('folders').setText(path);
+                    globalLayout.cells("a").progressOff();                
+                });
+            }
+            else {
+                alert("click "+id);
+            }
+    }
+}
+
+function XMLCommand(id,Command) 
+{
+    alert("command");
+    dhtmlx.message({
+    type: "Notice",
+    text: "{{ "Execution" | trans }} <strong>"+id+"</strong>" });
+    dhxLayout.cells("a").progressOn();
+    dhtmlxAjax.get("{{ url('arii_XML_Command') }}?command="+Command+"&id="+id,function(loader,response){
+        dhtmlx.message({
+            type: "Notice",
+            expire: 10000,
+            width: "500px",
+            text: loader.xmlDoc.responseText
+        });
+        GridRefresh();
+        dhxLayout.cells("a").progressOff();
+        msg.close();
+    });               
+}
+</script>
+{% endblock script %}
+
+            

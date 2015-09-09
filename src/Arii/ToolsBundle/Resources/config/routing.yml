@@ -1,0 +1,148 @@
+arii_Tools_index:
+    pattern:  /
+    defaults: { _controller: AriiToolsBundle:Default:index }
+
+arii_Tools_readme:
+    pattern:  /
+    defaults: { _controller: AriiToolsBundle:Default:readme }
+
+json_Tools_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiToolsBundle:Default:ribbon }
+
+#--------------------------------------------------------------------
+# Installation silencieuse
+#--------------------------------------------------------------------
+arii_Tools_silent:
+    pattern:  /silent
+    defaults: { _controller: AriiToolsBundle:Silent:index }
+
+xml_Tools_silent_toolbar:
+    pattern:  /silent/toolbar.xml
+    defaults: { _controller: AriiToolsBundle:Silent:toolbar }
+
+json_Tools_silent_ribbon:
+    pattern:  /silent/ribbon.json
+    defaults: { _controller: AriiToolsBundle:Silent:ribbon }
+
+arii_Tools_silent_generate:
+    pattern:  /silent/generate
+    defaults: { _controller: AriiToolsBundle:Silent:generate }
+
+arii_Tools_silent_generate_direct:
+    pattern:  /silent/direct
+    defaults: { _controller: AriiToolsBundle:Silent:direct }
+
+arii_Tools_silent_files:
+    pattern:  /silent/files
+    defaults: { _controller: AriiToolsBundle:Silent:files }
+
+arii_Tools_get_file:
+    pattern:  /get/file
+    defaults: { _controller: AriiToolsBundle:Default:getfile }
+
+#--------------------------------------------------------------------
+# Audit & Errors
+#--------------------------------------------------------------------
+arii_Tools_audit:
+    pattern:  /audit
+    defaults: { _controller: AriiToolsBundle:Audit:list }
+
+xml_Tools_audit_toolbar:
+    pattern:  /audit/toolbar.xml
+    defaults: { _controller: AriiToolsBundle:Audit:toolbar }
+
+xml_Tools_audit_list:
+    pattern:  /audit/list.xml
+    defaults: { _controller: AriiToolsBundle:Audit:xml }
+
+arii_Tools_errors:
+    pattern:  /errors
+    defaults: { _controller: AriiToolsBundle:Errors:list }
+
+xml_Tools_errors_toolbar:
+    pattern:  /audit/toolbar.xml
+    defaults: { _controller: AriiToolsBundle:Errors:toolbar }
+
+xml_Tools_errors_list:
+    pattern:  /errors/list.xml
+    defaults: { _controller: AriiToolsBundle:Errors:xml }
+
+xml_arii_audit_detail:
+    pattern:  /audit/detail
+    defaults: { _controller:  AriiToolsBundle:Audit:detail }
+
+#--------------------------------------------------------------------
+# Monitoring
+#--------------------------------------------------------------------
+arii_Tools_monitoring:
+    pattern:  /monitoring
+    defaults: { _controller: AriiToolsBundle:Monitoring:index }
+
+#--------------------------------------------------------------------
+# Cron converter
+#--------------------------------------------------------------------
+arii_Tools_cron:
+    pattern:  /cron
+    defaults: { _controller: AriiToolsBundle:Cron:index }
+
+arii_Tools_cron_convert:
+    pattern:  /cron/convert
+    defaults: { _controller: AriiToolsBundle:Cron:convert }
+
+xml_Tools_cron_dirlist:
+    pattern:  /cron/dirlist.xml
+    defaults: { _controller: AriiToolsBundle:Cron:dirlist }
+
+xml_Tools_cron_job_view:
+    pattern:  /cron/job/view
+    defaults: { _controller: AriiToolsBundle:Cron:job_view }
+
+json_Tools_cron_upload:
+    pattern:  /cron/upload
+    defaults: { _controller: AriiToolsBundle:Cron:upload }
+
+arii_Tools_cron_form:
+    pattern:  /cron/form
+    defaults: { _controller: AriiToolsBundle:Cron:form }
+
+json_Tools_cron_ribbon:
+    pattern:  /cron/ribbon.json
+    defaults: { _controller: AriiToolsBundle:Cron:ribbon }
+
+arii_Tools_task:
+    pattern:  /task_scheduler
+    defaults: { _controller: AriiToolsBundle:Cron:task_scheduler }
+
+
+#--------------------------------------------------------------------
+# Log analyzer
+#--------------------------------------------------------------------
+xml_Tools_log_server:
+    pattern:  /log_server.xml
+    defaults: { _controller: AriiToolsBundle:Spooler:log_analyzer }
+
+arii_Tools_log_toolbar:
+    pattern:  /log_server/toolbar.xml
+    defaults: { _controller: AriiToolsBundle:Spooler:toolbar }
+
+arii_Tools_log_server:
+    pattern:  /log_server
+    defaults: { _controller: AriiToolsBundle:Spooler:log }
+
+xml_Tools_log_dirlist:
+    pattern:  /log_server/dirlist.xml
+    defaults: { _controller: AriiToolsBundle:Spooler:dirlist }
+    
+json_Tools_log_upload:
+    pattern:  /log_server/upload.json
+    defaults: { _controller: AriiToolsBundle:Spooler:upload }
+
+arii_Tools_log_scheduler:
+    pattern:  /log_scheduler
+    defaults: { _controller: AriiToolsBundle:Spooler:log_scheduler }
+
+xml_Tools_log_server_chart:
+    pattern:  /log_chart.xml
+    defaults: { _controller: AriiToolsBundle:Spooler:log_chart }
+    

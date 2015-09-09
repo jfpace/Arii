@@ -1,0 +1,210 @@
+{# src/Arii/JOEBundle/Resources/views/Job/edit.html.twig #}
+{% extends "AriiJOEBundle::layout.html.twig" %}
+{% block body %}
+<script>
+var id={{ id }}
+var dhxLayout,
+dhxTabbar,
+dhxForm,
+dhxFormData;
+
+dhtmlxEvent(window,"load",function(){     
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");
+    globalLayout.cells("a").setWidth(300);
+    globalLayout.cells("a").hideHeader();
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOE_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myTree = globalLayout.cells("a").attachTree();
+    myTree.setImagePath("{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.enableSmartXMLParsing(true);
+    myTree.attachEvent( "onDblClick", EditJob );
+    myTree.loadXML( '{{ url('xml_GVZ_tree') }}');
+
+    globalLayout.cells("b").hideHeader();
+    globalLayout.attachEvent("onContentLoaded", function(win){
+        globalLayout.cells("b").progressOff();
+    });
+
+    dhxFormData = 
+    [
+      {  type: "settings",
+         position: "label-left",
+         labelWidth: 120,
+         inputWidth: 450
+      }, 
+      {  type: "block",
+         inputWidth: "auto",
+         id: "general",
+         list: [ {  type: "hidden",
+                    name: "id",
+                    value: id
+                 }, 
+                 {  type: "input",
+                    label: "{{ "Path" | trans }}",
+                    name: "path",
+                    value: "{{ path }}",
+                    required: true
+                 },
+                 {  type: "input",
+                    label: "{{ "Name" | trans }}",
+                    name: "name",
+                    value: "{{ name }}",
+                    required: true
+                 },
+                 {  type: "input",
+                    label: "{{ "Title" | trans }}",
+                    name: "{{ title }}",
+                    value: ""
+                 },
+    /*             {  type: "combo",
+                    label: "{{ "Category" | trans }}",
+                    name: "category",
+                    value: "/",
+                        connector: "{ { url('arii_JOE_queues_combo') }}",
+                        filtering: true
+                    },
+    */
+        ]
+        },
+        {   type: "block",
+            inputWidth: "auto",
+            id: "settings",
+            list: [ {{ render(controller('AriiJOEBundle:Job:form')) }} ]
+        },
+        {   type: "block",
+            inputWidth: "auto",
+            id: "parameters",
+            list: [ {% include "AriiJOEBundle:Forms:parameters.html.twig" %} ]
+        }
+    ];
+
+    dhxLayout = globalLayout.cells("b").attachLayout("2E");
+    dhxToolbar = dhxLayout.cells("a").attachToolbar();
+    dhxToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+
+    dhxToolbar.loadStruct("{{ url('xml_JOE_job_edit_toolbar') }}");
+    dhxToolbar.attachEvent( "onClick", function(id, value) {
+        switch (id) {
+            case "save":
+                dhxForm.send("{{ url('arii_JOE_job_save') }}", function(loader, response){
+                    dhtmlx.message({
+                        type: "Notice",
+                        expire: 10000,
+                        width: "500px",
+                        text: loader.xmlDoc.responseText
+                    });
+                });           // GlobalRefresh();
+            break;
+            default:
+                alert(id);
+        }
+    });
+
+    dhxLayout.cells("a").hideHeader();
+    dhxLayout.cells("a").setHeight(180);
+
+    dhxTabbar = dhxLayout.cells("b").attachTabbar();
+    dhxTabbar.addTab("a1", "{{ "Settings" | trans }}", 120);
+    dhxTabbar.addTab("a2", "{{ "Parameters" | trans }}", 120);
+
+    dhxTabbar.tabs("a1").setActive();
+
+    dhxForm = dhxLayout.cells("a").attachForm(dhxFormData);
+    dhxForm.load( "{ { url('arii_JOE_job_edit_form') }}?id="+id );
+    dhxForm.enableLiveValidation(true);
+
+    dhxTabbar.cells("a1").attachObject("settings");
+    /*
+    dhxTabbar.cells("a1").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a2").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a3").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a4").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a5").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a6").style.backgroundColor= "#cbe2ed";
+    dhxTabbar.cells("a8").style.backgroundColor= "#cbe2ed";
+    */
+    dhxTabbar.cells("a2").attachObject("parameters");
+    var paramsGrid = new dhtmlXGridObject(dhxForm.getContainer("ParamsGrid"));
+    paramsGrid.entBox.id = "ParamsJob";
+    paramsGrid.setHeader("{{ "Name" | trans }},{{ "Value" | trans }}");
+    paramsGrid.setColAlign("left,left");
+    paramsGrid.setColTypes("ed,ed");
+    paramsGrid.loadXML("{{ url('arii_JOE_parameters') }}?id="+id);
+    // paramsGrid.submitOnlyChanged(false);
+    paramsGrid.init();
+
+    function outputResponse(loader) {
+        if (loader.xmlDoc.responseXML != null) {
+    //        alert("We Got Response\n\n" + loader.doSerialization());
+        }
+        else {
+            alert("Response contains no XML");
+        }
+    }
+
+    dhxForm.attachEvent("onButtonClick", function(name, command){
+        if(name=="submit"){
+            dhxLayout.cells("a").progressOn();
+            // on sauvegarde les parametres
+            var n=0;
+            paramsGrid.forEachRow(function(i){
+                n++;
+                dhxForm.setItemValue("var"+n, paramsGrid.cells(i,0).getValue() );
+                dhxForm.setItemValue("val"+n, paramsGrid.cells(i,1).getValue() );
+            });
+    //            alert(paramsGrid.cells(i,0).getValue());
+    //            
+            this.send("{{ url('arii_JOE_job_save') }}", "POST", function (xml) {
+                id = xml.xmlDoc.responseText;
+                dhtmlx.message({
+                type: "Notice",
+                lifetime: 60000,
+                text: "{{ "Job saved " | trans }}"+id });
+                if ( dhxForm.getItemValue("deploy")=='deploy' ) {
+                   var loader = dhtmlxAjax.getSync( "{ { url('arii_JOE_job_deploy') }}?id="+id);
+                   outputResponse(loader);
+                   dhtmlx.message({
+                    type: "Notice",
+                    text: "{{ "Job deployed " | trans }}"+id });
+                }        
+                dhxLayout.cells("a").progressOff();      
+            });
+    //        dhtmlxAjax.get( "{ { url('arii_JOE_job_xml') }}?id="+encodeURI(), outputResponse);
+
+        }
+        else if (name=="add_params"){
+            var newId = (new Date()).valueOf()
+            paramsGrid.addRow(newId,"",paramsGrid.getRowsNum())
+            paramsGrid.selectRow(paramsGrid.getRowIndex(newId),false,false,true);
+        }
+        else if (name=="del_params"){
+            var selId = paramsGrid.getSelectedId()
+            paramsGrid.deleteRow(selId);
+        }
+    });
+
+    dhtmlx.image_path =  "{{ asset('bundles/ariicore/dhtmlx/dhtmlxEditor/codebase/imgs/') }}";
+    // var dhxEditor = dhxTabbar.cells("a7").attachEditor();
+
+    dhxForm.attachEvent("onValidateError", function (input, value, result){
+              dhtmlx.message({
+              title: "{{ "Validate error" | trans }}",
+              type: "confirm-error",
+              text: "{{ "You have to correct the following field: " | trans }}"+input});
+    });
+});
+
+function EditJob() {
+}
+</script>
+{% endblock %}

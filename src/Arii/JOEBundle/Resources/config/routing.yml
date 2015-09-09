@@ -1,0 +1,321 @@
+arii_JOE_index:
+    pattern:  /
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_readme:
+    pattern:  /
+    defaults: { _controller: AriiJOEBundle:Default:readme }
+
+json_JOE_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiJOEBundle:Default:ribbon }
+
+xml_JOE_menu:
+    pattern:  /menu.xml
+    defaults: { _controller: AriiJOEBundle:Default:menu }
+    
+xml_JOE_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Default:toolbar }
+
+xml_JOE_tree:
+    pattern:  /tree.xml
+    defaults: { _controller: AriiJOEBundle:Default:tree }
+
+# ===============================================================================
+# Load
+# -------------------------------------------------------------------------------
+arii_JOE_load:
+    pattern:  /load
+    defaults: { _controller: AriiJOEBundle:Load:index }
+
+json_JOE_load_ribbon:
+    pattern:  /load/ribbon.json
+    defaults: { _controller: AriiJOEBundle:Load:ribbon }
+
+xml_JOE_load_menu:
+    pattern:  /load/menu.xml
+    defaults: { _controller: AriiJOEBundle:Load:menu }
+    
+xml_JOE_load_toolbar:
+    pattern:  /load/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Load:toolbar }
+
+xml_JOE_load_tree:
+    pattern:  /load/tree.xml
+    defaults: { _controller: AriiJOEBundle:Load:tree }
+
+xml_JOE_load_grid:
+    pattern:  /load/grid.xml
+    defaults: { _controller: AriiJOEBundle:Load:gridCheck }
+
+arii_JOE_load_sync:
+    pattern:  /load/sync
+    defaults: { _controller: AriiJOEBundle:Load:sync }
+# ===============================================================================
+# Deploy
+# -------------------------------------------------------------------------------
+arii_JOE_deploy:
+    pattern:  /deploy
+    defaults: { _controller: AriiJOEBundle:Load:index }
+
+json_JOE_deploy_ribbon:
+    pattern:  /deploy/ribbon.json
+    defaults: { _controller: AriiJOEBundle:Load:ribbon }
+
+xml_JOE_deploy_menu:
+    pattern:  /deploy/menu.xml
+    defaults: { _controller: AriiJOEBundle:Load:menu }
+    
+xml_JOE_deploy_toolbar:
+    pattern:  /deploy/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Load:toolbar }
+
+xml_JOE_deploy_tree:
+    pattern:  /deploy/tree.xml
+    defaults: { _controller: AriiJOEBundle:Load:tree }
+
+xml_JOE_load_grid:
+    pattern:  /deploy/grid.xml
+    defaults: { _controller: AriiJOEBundle:Load:gridCheck }
+
+arii_JOE_deploy_sync:
+    pattern:  /deploy/sync
+    defaults: { _controller: AriiJOEBundle:Load:sync }
+# ===============================================================================
+# Layout
+# -------------------------------------------------------------------------------
+xml_JOE_folder_tree:
+    pattern:  /folder/tree.xml
+    defaults: { _controller: AriiJOEBundle:Folder:tree }
+
+xml_JOE_folder_menu:
+    pattern:  /folder/menu.xml
+    defaults: { _controller: AriiJOEBundle:Folder:menu }
+
+# ===============================================================================
+# Job
+# -------------------------------------------------------------------------------
+arii_JOE_job:
+    pattern:  /job
+    defaults: { _controller: AriiJOEBundle:Job:index }
+
+arii_JOE_job_edit:
+    pattern:  /job/edit
+    defaults: { _controller: AriiJOEBundle:Job:edit }
+
+arii_JOE_job_save:
+    pattern:  /job/save
+    defaults: { _controller: AriiJOEBundle:Job:save }
+    
+xml_JOE_job_edit_toolbar:
+    pattern:  /job/edit/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Job:toolbar }
+
+arii_JOE_job_create:
+    pattern:  /job/create
+    defaults: { _controller: AriiJOEBundle:Job:create }
+
+xml_JOE_job_edit_toolbar:
+    pattern:  /job/edit/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Job:edit_toolbar }
+    
+# ===============================================================================
+# Chain
+# -------------------------------------------------------------------------------
+arii_JOE_chain:
+    pattern:  /chain
+    defaults: { _controller: AriiJOEBundle:Chain:index }
+
+arii_JOE_chain_edit:
+    pattern:  /chain/edit
+    defaults: { _controller: AriiJOEBundle:Chain:edit }
+
+# ===============================================================================
+# Order
+# -------------------------------------------------------------------------------
+arii_JOE_order:
+    pattern:  /order
+    defaults: { _controller: AriiJOEBundle:Order:index }
+
+arii_JOE_order_edit:
+    pattern:  /order/edit
+    defaults: { _controller: AriiJOEBundle:Order:edit }
+
+
+
+xml_JOE_menu_tree:
+    pattern:  /menutree.xml
+    defaults: { _controller: AriiJOEBundle:Default:menutree }
+
+ajax_JOE_folder_sync:
+    pattern:  /folder_sync
+    defaults: { _controller: AriiJOEBundle:Folder:sync }
+    
+xml_JOE_folder_live:
+    pattern:  /folder.xml
+    defaults: { _controller: AriiJOEBundle:Folder:publish }
+
+xml_JOE_hot_folders:
+    pattern:  /hot_folders.xml
+    defaults: { _controller: AriiJOEBundle:Folder:hot_folders }
+
+xml_JOE_toolbar_folders:
+    pattern:  /hot_folders/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Folder:toolbar }
+
+arii_JOE_file_view:
+    pattern:  /file/view
+    defaults: { _controller: AriiJOEBundle:Folder:file_view }
+    
+# ===============================================================================
+# Jobs
+# -------------------------------------------------------------------------------
+arii_JOE_jobs:
+    pattern:  /jobs
+    defaults: { _controller: AriiJOEBundle:Jobs:index }
+
+xml_JOE_jobs:
+    pattern:  /jobs/list.xml
+    defaults: { _controller: AriiJOEBundle:Jobs:treegrid }
+
+# ===============================================================================
+# Tasks
+# -------------------------------------------------------------------------------
+arii_JOE_tasks:
+    pattern:  /tasks
+    defaults: { _controller: AriiJOEBundle:Tasks:index }
+
+arii_JOE_windows_edit:
+    pattern:  /windows/edit
+    defaults: { _controller: AriiJOEBundle:Command:windows_shell }
+    
+# ===============================================================================
+# Task
+# -------------------------------------------------------------------------------
+arii_JOE_task:
+    pattern:  /task
+    defaults: { _controller: AriiJOEBundle:Task:index }
+
+arii_JOE_task_edit:
+    pattern:  /task/edit
+    defaults: { _controller: AriiJOEBundle:Task:edit }
+    
+# ===============================================================================
+# Chains
+# -------------------------------------------------------------------------------
+arii_JOE_chains:
+    pattern:  /chains
+    defaults: { _controller: AriiJOEBundle:Chains:index }
+
+# ===============================================================================
+# Chain
+# -------------------------------------------------------------------------------
+arii_JOE_chain:
+    pattern:  /chain
+    defaults: { _controller: AriiJOEBundle:Chain:index }
+
+xml_JOE_chain_toolbar:
+    pattern:  /chain/toolbar.xml
+    defaults: { _controller: AriiJOEBundle:Chain:toolbar }
+
+arii_JOE_globalmenu:
+    pattern:  /globalmenu
+    defaults: { _controller: AriiJOEBundle:Default:globalmenu }
+
+arii_JOE_contextmenu:
+    pattern:  /contextmenu
+    defaults: { _controller: AriiJOEBundle:Default:contextmenu }
+        
+arii_JOE_schedules:
+    pattern:  /schedules
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_resources:
+    pattern:  /locks
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_agents:
+    pattern:  /process_classes
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_notifications:
+    pattern:  /notifications
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_connection:
+    pattern:  /connections/server/{mode}
+    defaults: { _controller: AriiJOEBundle:Connection:edit, mode: new }
+    requirements:
+        mode: new|edit
+
+arii_JOE_connections:
+    pattern:  /connections
+    defaults: { _controller: AriiJOEBundle:Connection:index }
+
+arii_JOE_database:
+    pattern:  /connections/database/{mode}
+    defaults: { _controller: AriiJOEBundle:Database:edit, mode: new }
+    requirements:
+        mode: new|edit
+
+arii_JOE_mail:
+    pattern:  /connections/mail/{mode}
+    defaults: { _controller: AriiJOEBundle:Mail:edit, mode: new }
+    requirements:
+        mode: new|edit
+
+arii_JOE_jobtypes:
+    pattern:  /jobtypes
+    defaults: { _controller: AriiJOEBundle:Default:treemenu }
+
+arii_JOE_job_chains:
+    pattern:  /job_chains
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_orders:
+    pattern:  /orders
+    defaults: { _controller: AriiJOEBundle:Default:index }
+
+arii_JOE_form:
+    pattern:  /form
+    defaults: { _controller: AriiJOEBundle:Form:form }
+
+db_joe_jobs:
+    pattern:  /db/jobs
+    defaults: { _controller: AriiJOEBundle:DB:jobs }
+
+db_joe_connections_grid:
+    pattern:  /connections/grid
+    defaults: { _controller: AriiJOEBundle:DB:connections_grid }
+
+db_joe_connection_form:
+    pattern:  /connection/form
+    defaults: { _controller: AriiJOEBundle:DB:connections_form }
+
+arii_joe_toolbar_list:
+    pattern:  /toolbar/list
+    defaults: { _controller: AriiJOEBundle:Toolbar:list }
+
+arii_JOE_XML_job:
+    pattern:  /xml/job/{id}
+    defaults: { _controller: AriiJOEBundle:XML:job }
+
+db_joe_queues_select:
+    pattern:  /queues/tree
+    defaults: { _controller: AriiJOEBundle:DB:queues_tree }
+        
+# ===============================================================================
+# Parameters
+# -------------------------------------------------------------------------------
+arii_JOE_parameters:
+    pattern:  /params
+    defaults: { _controller: AriiJOEBundle:Params:grid  }
+
+# ===============================================================================
+# Queues
+# -------------------------------------------------------------------------------
+arii_JOE_queues:
+    pattern:  /queues
+    defaults: { _controller: AriiJOEBundle:Queues:index }
+

@@ -1,0 +1,237 @@
+New: __New
+scheduler_id: __scheduler_id
+cluster_options: __cluster_options
+licence: __licence
+install_path: __install_path
+user_path: __user_path
+events: __events
+os_target: __os_target
+version: __version
+install_date: __install_date
+status: __status
+status_date: __status_date
+Edit: __Edit
+Delete: __Delete
+Update: __Update
+Add: __Add
+PDF: __PDF
+XLS: __XLS
+List: __List
+Save: __Save
+Spooler: __Spooler
+Spoolers: __Spoolers
+Location: __Location
+Supervisor: __Supervisor
+HOST: __HOST
+Events: __Events
+Version: __Version
+Status: __Status
+IP Adress: __IP Adress
+Spooler Name: __Spooler Name
+Site: __Site
+File Transfer: __File Transfer
+Mail Connection: __Mail Connection
+Database Connection: __Database Connection
+Connection: __Connection
+Jetty Http Connection: __Jetty Http Connection
+Delete Connection: __Delete Connection
+Do you really want to delete this connection ?: __Do you really want to delete this connection ?
+No: __No
+Yes: __Yes
+Add site on Company: __Add site on Company
+New Site: __New Site
+Site Name: __Site Name
+Country Code: __Country Code
+Timezone: __Timezone
+Description: __Description
+Add Site: __Add Site
+Saved: __Saved
+Audit: __Audit
+Users: __Users
+Log Time: __Log Time
+User Name: __User Name
+IP: __IP
+Module: __Module
+Action: __Action
+XML Export: __XML Export
+Batch Installer: __Batch Installer
+Package: __Package
+Name: __Name
+Title: __Title
+Licence: __Licence
+GPL: __GPL
+Commercial: __Commercial
+Network: __Network
+Id: __Id
+Type: __Type
+Standalone server: __Standalone server
+Primary server: __Primary server
+Backup server: __Backup server
+Load balancing: __Load balancing
+Host: __Host
+Port: __Port
+Allowed Host: __Allowed Host
+Job events: __Job events
+Installation: __Installation
+Operating System: __Operating System
+Install path: __Install path
+User path: __User path
+Cron adapter: __Cron adapter
+Path: __Path
+Timeout (s): __Timeout (s)
+Cron System: __Cron System
+User change: __User change
+Custom: __Custom
+Change command: __Change command
+Base de données: __Base de données
+No database: __No database
+Schema: __Schema
+User: __User
+Password: __Password
+Connector: __Connector
+JDBC driver: __JDBC driver
+Notifications: __Notifications
+Mail on Error: __Mail on Error
+Mail on Warning: __Mail on Warning
+Mail on Success: __Mail on Success
+Mail Server: __Mail Server
+Mail from: __Mail from
+Mail to: __Mail to
+Mail Cc: __Mail Cc
+Mail Bcc: __Mail Bcc
+Authentication: __Authentication
+Account: __Account
+Traitements: __Traitements
+Check for update: __Check for update
+Start day: __Start day
+dow.Monday: __dow.Monday
+dow.Tuesday: __dow.Tuesday
+dow.Wednesday: __dow.Wednesday
+dow.Thursday: __dow.Thursday
+dow.Friday: __dow.Friday
+dow.Saturday: __dow.Saturday
+dow.Sunday: __dow.Sunday
+Start time: __Start time
+Packages: __Packages
+Record deleted: __Record deleted
+Record updated: __Record updated
+Delete package: __Delete package
+Do you really want to delete this queue ?: __Do you really want to delete this queue ?
+New package: __New package
+Connections: __Connections
+Repositories: __Repositories
+Sites: __Sites
+Category: __Category
+New connection: __New connection
+connection.title.note: __connection.title.note
+connection.description.note: __connection.description.note
+connection.host.note: __connection.host.note
+connection.category.note: __connection.category.note
+Edit connection: __Edit connection
+connection.message.delete: __connection.message.delete
+Delete connection: __Delete connection
+Add connection: __Add connection
+Databases: __Databases
+Administration: __Administration
+User Management: __User Management
+Job: __Job
+Job chain: __Job chain
+Order: __Order
+Filters: __Filters
+Refreshing: __Refreshing
+Refresh: __Refresh
+Delete Filter: __Delete Filter
+Do you really want to delete this filter ?: __Do you really want to delete this filter ?
+Database: __Database
+Repository: __Repository
+repository.name.note: __repository.name.note
+repository.db.note: __repository.db.note
+Time Zone: __Time Zone
+repository.timezone.note: __repository.timezone.note
+repository.description.note: __repository.description.note
+New repository: __New repository
+Edit repository: __Edit repository
+Delete Repository: __Delete Repository
+repository.message.delete: __repository.message.delete
+Delete repository: __Delete repository
+Add repository: __Add repository
+Menu: __Menu
+Users management: __Users management
+Servers management: __Servers management
+Management: __Management
+Security: __Security
+Organisation: __Organisation
+Data: __Data
+Map: __Map
+Country: __Country
+site.name.note: __site.name.note
+site.description.note: __site.description.note
+Country code: __Country code
+site.country_code.note: __site.country_code.note
+site.timezone.note: __site.timezone.note
+Latitude: __Latitude
+site.latitude.note: __site.latitude.note
+Longitude: __Longitude
+site.longitude.note: __site.longitude.note
+site.message.save: __site.message.save
+New site: __New site
+Edit site: __Edit site
+Delete site: __Delete site
+site.message.delete: __site.message.delete
+Add site: __Add site
+EM: __EM
+spooler.name.note: __spooler.name.note
+spooler.connection.note: __spooler.connection.note
+spooler.database.note: __spooler.database.note
+spooler.supervisor.note: __spooler.supervisor.note
+Mail: __Mail
+spooler.mail.note: __spooler.mail.note
+spooler.site.note: __spooler.site.note
+spooler.events.note: __spooler.events.note
+Spooler Saved: __Spooler Saved
+New spooler: __New spooler
+Edit spooler: __Edit spooler
+Delete spooler: __Delete spooler
+spooler.message.delete: __spooler.message.delete
+Add spooler: __Add spooler
+New right: __New right
+Edit right: __Edit right
+Delete right: __Delete right
+Delete team: __Delete team
+spooler.all: __spooler.all
+Team Management: __Team Management
+R: __R
+W: __W
+X: __X
+Job Chain: __Job Chain
+Order ID: __Order ID
+Edit Filter: __Edit Filter
+Servers: __Servers
+Team: __Team
+Email: __Email
+Last Login: __Last Login
+Username: __Username
+user.name.tooltip: __user.name.tooltip
+user.name.note: __user.name.note
+user.mail.tooltipe: __user.mail.tooltipe
+user.mail.note: __user.mail.note
+ROLE_ADMIN: __ROLE_ADMIN
+ROLE_DEVELOPER: __ROLE_DEVELOPER
+ROLE_OPERATOR: __ROLE_OPERATOR
+ROLE_USER: __ROLE_USER
+First Name: __First Name
+Last Name: __Last Name
+Team Name: __Team Name
+Delete User: __Delete User
+Do you really want to delete this user ?: __Do you really want to delete this user ?
+Delete Team: __Delete Team
+Do you really want to delete this team ?: __Do you really want to delete this team ?
+Attach Filter on Team: __Attach Filter on Team
+Remove Filter: __Remove Filter
+on this team ?: __on this team ?
+Edit team: __Edit team
+Edit user: __Edit user
+Edit rights: __Edit rights
+Add User: __Add User
+Add Team: __Add Team
+Delete user: __Delete user

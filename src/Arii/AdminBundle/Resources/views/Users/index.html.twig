@@ -1,0 +1,702 @@
+{# src/Arii/AdminBundle/Resources/views/User/user.html.twig #}
+{% extends "AriiAdminBundle::layout.html.twig" %}
+{% block body %}
+<body>
+<script language="javascript">
+dhtmlxEvent(window,"load",function(){  
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");  
+    globalLayout.cells("a").setWidth(350); 
+    globalLayout.cells("a").hideHeader(); 
+    globalLayout.cells("b").hideHeader(); 
+    globalLayout.cells("c").hideHeader(); 
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('/bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_Admin_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );    
+    
+    menu = new dhtmlXMenuObject();
+    menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+    menu.renderAsContextMenu();
+    menu.loadStruct("{{ url('xml_Admin_users_menu') }}");
+    menu.attachEvent("onClick", onMenuClick);
+
+    var tabbar = globalLayout.cells("b").attachTabbar();
+    tabbar.addTab("b1","{{ "User" | trans }}","120px",null,true);
+    tabbar.addTab("b2","{{ "Team" | trans }}","120px");
+
+    var toolbarb1 = tabbar.cells("b1").attachToolbar();
+    toolbarb1.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+    toolbarb1.loadStruct("{{ url('xml_Admin_user_toolbar') }}");
+    toolbarb1.attachEvent("onClick",onClickToolbar1);
+
+    var toolbarb2 = tabbar.cells("b2").attachToolbar();
+    toolbarb2.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+    toolbarb2.loadStruct("{{ url('xml_Admin_team_toolbar') }}");
+    toolbarb2.attachEvent("onClick",onClickToolbar2);
+
+    mygrid = globalLayout.cells("a").attachGrid();
+    mygrid.setMultiRows = true;
+    mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+    mygrid.setHeader("{{ "Location" | trans }},{{ "First name" | trans }},{{ "Last name" | trans }},{{ "Email" | trans }},{{ "Last Login" | trans }},{{ "Role"  | trans }}");
+    mygrid.attachHeader("#text_filter,#text_filter,#text_filter,#text_filter,#text_filter,#select_filter");
+    mygrid.setInitWidths("*,140,140,140,140,100");
+    mygrid.setColAlign("left,left,left,left,right,left");
+    mygrid.setColTypes("ro,ro,ro,ro,ro,ro");
+    mygrid.setColSorting("str,str,str,str,date,str");
+    mygrid.enableDragAndDrop(true);
+    mygrid.enableContextMenu(menu);
+    mygrid.init();
+    mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}");
+    mygrid.setSkin("dhx_skyblue");
+
+    mygrid.attachEvent("onDragIn",function(did,tid,sObj,tObj){
+        var did_type = mygrid.getUserData(did,"type");
+        var tid_type = mygrid.getUserData(tid,"type");
+        if(did_type === "user"){
+            if(tid_type === "team")
+            {
+                return true;
+            } 
+        }
+    });
+
+    mygrid.attachEvent("onDrag",function(sid,tid,sObj,tObj,sInd,tInd){
+        var team_id = tid.substr(2);
+        var user_id = sid.substr(2);
+        globalLayout.cells("a").progressOn();
+        dhtmlxAjax.get("{{ url('xml_Admin_user_drag') }}?team_id="+team_id+"&user_id="+user_id,function(loader){
+            mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}" );
+            globalLayout.cells("a").progressOff();
+        });
+    });
+
+    mygrid.attachEvent("onBeforeContextMenu",showMenu);
+
+    var myform,formData;
+    formData = [
+        { type: "settings", position: "label-left", labelWidth: 80, inputWidth: 250, noteWidth: 250},
+        {    type:"fieldset",
+             name: "user",
+             label:"{{ "User"| trans }}",
+             width: "auto",
+             // className: "fieldset",
+             list: [ {
+                       type: "hidden",
+                       name: "id"
+                     },
+
+                           { type: "input",
+                             name: "username",
+                             label: "{{ "Username" | trans }}",
+    /*                         tooltip: "{{ "user.name.tooltip" | trans }}",
+                             info: true,
+    */                         required: true,
+    /*                         note: {
+                               text: "{{ "user.name.note" | trans }}"
+                             }
+    */                       },
+
+                          { type: "input",
+                            name: "email",
+                            label: "{{ "Email"| trans }}",
+                            validate: "ValidEmail",
+    /*                        tooltip: "{{ "user.mail.tooltipe" | trans }}",
+                            info: true,
+    */                        required: true,
+    /*                        note: {
+                               text: "{{ "user.mail.note" | trans }}"
+                            }
+    */                      },
+                           {
+                             type: "select",
+                             name: "role",
+                             label: "{{ "Roles" | trans }}",
+    /*                         tooltip: "{{ "user.roles.tooltip" | trans }}",
+                             note: {
+                                text: "{{"user.roles.note" | trans }}"
+                             },
+    */                         options: [
+                                { text: "{{ "ROLE_USER" | trans }}", value: "ROLE_USER" },
+                                { text: "{{ "ROLE_OPERATOR" | trans }}", value: "ROLE_OPERATOR" },
+                                { text: "{{ "ROLE_DEVELOPER" | trans }}", value: "ROLE_DEVELOPER" },
+                                { text: "{{ "ROLE_ADMIN" |trans }}", value: "ROLE_ADMIN" }
+                             ]
+                           },
+                          { type: "input",
+                            name: "first_name",
+                            label: "{{ "First Name"| trans }}",
+    /*                        note: {
+                               text: "{{"user.first_name.note" | trans }}"
+                            }
+    */                      },
+                          { type: "input",
+                            name: "last_name",
+                            label: "{{ "Last Name"| trans }}",
+    /*                        note: {
+                               text: "{{"user.last_name.note"| trans }}"
+                            }
+    */                      },
+                          { type: "hidden",
+                            name: "roles" }
+                       ]
+                     }
+
+    ];
+    myform = tabbar.cells("b1").attachForm(formData);
+    myform.setSkin("dhx_skyblue");
+    myform.enableLiveValidation(true);
+    var dp = new dataProcessor("{{ url('xml_Admin_user_save') }}");
+    dp.setUpdateMode("off");
+    dp.init(myform);
+
+    myform.attachEvent('onXLE', function (){
+        var opts = myform.getOptions("role");
+        var role  =  myform.getItemValue("roles");
+        if (role.indexOf("USER")>0) r=0
+        else if (role.indexOf("OPERATOR")>0) r=1
+        else if (role.indexOf("DEVELOPER")>0) r=2
+        else if (role.indexOf("ADMIN")>0) r=3
+        else r=0;
+        opts['selectedIndex'] = r;
+    });
+
+    var teamForm,teamFormData;
+    teamFormData = [
+        { type: "settings", position: "label-left", labelWidth: 100, inputWidth: 230,noteWidth:230 },
+        {    type:"fieldset",
+             name: "connection",
+             label:"{{ "Team"| trans}}",
+             width: "auto",
+             list: [ {
+                       type: "hidden",
+                       name: "id"
+                     },
+                           { type: "input",
+                             name: "name",
+                             label: "{{ "Team Name"| trans }}",
+                             required: true,
+    /*                         note: {
+                                text: "{{"team.name.note"| trans }}"
+                             }
+    */                       },
+                        { type: "input",
+                          rows: 5,
+                          name: "description",
+                          label: "{{ "Description"| trans }}",
+    /*                      note: {
+                              text: "{{"team.description.note"| trans }}"
+                          }
+    */                    }
+                   ]
+        }
+    ];
+    teamForm = tabbar.cells("b2").attachForm(teamFormData);
+    teamForm.setSkin("dhx_skyblue");
+    teamForm.enableLiveValidation(true);
+    var dp = new dataProcessor("{{ url('xml_Admin_team_save') }}");
+    dp.init(teamForm);
+
+    // Permissions
+    var menurights = new dhtmlXMenuObject();
+    menurights.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+    menurights.renderAsContextMenu();
+    menurights.loadXML("{{ url('xml_Admin_rights_menu') }}");
+    menurights.attachEvent("onClick", onMenuClick2);
+
+    globalLayout.cells("c").hideHeader();
+    rightgrid = globalLayout.cells("c").attachGrid();
+
+    rightgrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+    rightgrid.setHeader("team_id,{{ "Title" | trans }},desc,{{ "path" | trans }},{{ "Job" | trans }},{{ "Job chain" | trans }},{{ "Order" | trans }},{{ "Spooler" | trans }},{{ "Repository" | trans }},R,W,X");
+    rightgrid.attachHeader("&nbsp,#text_filter,&nbsp,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#select_filter,#master_checkbox,#master_checkbox,#master_checkbox");
+    rightgrid.setInitWidths("0,*,0,150,150,150,150,150,0,40,40,40");
+    rightgrid.setColAlign("left,left,left,left,left,left,left,left,left,center,center,center");
+    rightgrid.setColTypes("ro,ed,ro,ed,ed,ed,ed,ed,ed,ch,ch,ch");
+    rightgrid.setColSorting("str,str,str,str,str,str,str,str,str,str,str,str");
+    rightgrid.enableContextMenu(menurights);
+    rightgrid.enableLightMouseNavigation( true );
+    rightgrid.enablePaging(true, "25", 3, "recinfoArea");
+    rightgrid.init();
+    rightgrid.setSkin("dhx_skyblue");
+
+    var dp = new dataProcessor("{{ url('xml_Admin_rights_grid') }}"); 
+    dp.setTransactionMode("POST",true); 
+    dp.setUpdateMode("cell");
+    dp.init(rightgrid);
+
+    mygrid.attachEvent("onRowDblClicked",function(rid,cind){
+        var ids = rid.split('');
+        if (mygrid.getUserData(rid,"type")==="user")
+        {
+            var id = rid.substr(2);
+            tabbar.setTabActive("b1");
+            globalLayout.cells("b").progressOn();
+            globalLayout.cells("c").progressOn();
+             myform.load("{{ url('xml_Admin_user_form') }}?id="+rid.substr(2), function () {
+                globalLayout.cells("b").progressOff();
+                rightgrid.clearAll();
+                rightgrid.load("{{ url('xml_Admin_rights') }}?team_id="+mygrid.getParentId(rid).substr(2), function () {
+                    globalLayout.cells("c").progressOff();
+                });
+            });
+        }
+        if (mygrid.getUserData(rid,"type")==="team")
+        {
+            var tid = rid.substr(2);
+            tabbar.setTabActive("b2");
+            globalLayout.cells("b").progressOn();
+            globalLayout.cells("c").progressOn();
+            teamForm.load("{{ url('xml_Admin_team_form') }}?id="+tid, function () {
+                globalLayout.cells("b").progressOff();
+                rightgrid.clearAll();
+                rightgrid.load("{{ url('xml_Admin_rights') }}?team_id="+tid, function () {
+                    globalLayout.cells("c").progressOff();
+                });
+            });
+        }
+
+    });
+});    
+    
+function GridRefresh()
+{
+    mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}");
+}
+
+function showMenu(id)
+{
+    menu.showItem('delete_user');
+    menu.showItem('delete_team');
+    menu.showItem('add_right');
+    menu.showItem('edit_user');
+    menu.showItem('edit_team');
+    menu.showItem('add_user');
+    menu.showItem('add_team');
+    menu.showItem('sep');
+    switch (mygrid.getUserData(id,"type")) {
+        case 'user':
+            menu.hideItem('delete_team');
+            menu.hideItem('edit_team');
+            menu.hideItem('add_team');
+            menu.hideItem('sep');
+            menu.hideItem('add_right');
+            break;
+        case 'team':
+            menu.hideItem('delete_user');
+            menu.hideItem('edit_user');
+            break;
+        case 'enterprise':
+            menu.hideItem('delete_team');
+            menu.hideItem('delete_user');
+            menu.hideItem('add_right');
+            menu.hideItem('edit_user');
+            menu.hideItem('edit_team');
+            menu.hideItem('sep');
+            break;
+        default:
+            alert(id);
+            break;
+    }    
+    return true;
+}
+
+function onMenuClick(menuitemId)
+{
+    var rid = mygrid.contextID.split("_")[0];
+    var ids = rid.split("");
+    switch (menuitemId)
+    {
+        case "delete_user":
+            var uid = rid.substr(2);
+            dhtmlx.confirm({
+                title: "{{ "Delete User" | trans }}",
+                type: "confirm-error",
+                text: "{{ "Do you really want to delete this user ?" | trans }}",
+                callback: function(answer) { 
+                          if (answer){
+                                globalLayout.cells("a").progressOn();
+                                dhtmlxAjax.get("{{ url('arii_Admin_user_delete') }}?id="+uid,function(loader){ 
+                                GridRefresh();
+                                globalLayout.cells("a").progressOff();
+                            });
+                          }
+                      },
+                cancel: "{{ "No" | trans }}",
+                ok: "{{ "Yes" | trans }}" });
+        
+        break;
+        case "delete_team":
+            var tid = rid.substr(2);
+            if (mygrid.hasChildren(rid)===0)
+            {
+                dhtmlx.confirm({
+                    title: "{{ "Delete Team" | trans }}",
+                    type: "confirm-error",
+                    text: "{{ "Do you really want to delete this team ?" | trans }}",
+                    callback: function(answer) { 
+                        if (answer){
+                            globalLayout.cells("a").progressOn();
+                            dhtmlxAjax.get("{{ url('xml_Admin_team_delete') }}?id="+tid,function(loader){
+                                GridRefresh();
+                                myform.unload();
+                                myform = tabbar.cells("b1").attachForm(formData);
+                                globalLayout.cells("a").progressOff();
+                            });
+                        }
+                    },
+                    cancel: "{{ "No" | trans }}",
+                    ok: "{{ "Yes" | trans }}" });
+            } else
+            {
+                alert("{{ "Team must be empty!" | trans }}");
+            }
+            
+            break;
+        case "add_right":
+            if (mygrid.getUserData(rid,"type")==="user")
+            {
+                return false;
+            } else if (mygrid.getUserData(rid,"type")==="team")
+            {
+                var team_id = rid.substr(2);
+                var tname = mygrid.cells(rid,0).getValue();
+                addRight(team_id,"{{ "Add permission for" | trans }} "+tname,-1 );
+            }
+            break;
+        case "add_user":
+            var team_id = rid.substr(2);
+            tabbar.setTabActive("b1");
+            myform.clear();
+            myform.setItemFocus('username');
+            myform.setItemValue('team_id',team_id);
+            break;
+        case "add_team":
+            tabbar.setTabActive("b2");
+            teamForm.clear();
+            teamForm.setItemFocus('name');
+            break;
+        case "edit_user":
+            var id = rid.substr(2);
+            tabbar.setTabActive("b1");
+            globalLayout.cells("a").progressOn();
+            myform.load("{{ url('xml_Admin_user_form') }}?id="+id, function () {
+                globalLayout.cells("a").progressOff();
+            });
+        break;
+        case "edit_team":
+            var tid = rid.substr(2);
+            tabbar.setTabActive("b2");
+            globalLayout.cells("a").progressOn();
+            teamForm.load("{{ url('xml_Admin_team_form') }}?id="+tid, function () {
+                globalLayout.cells("a").progressOff();
+            });
+        break;
+        default:
+            alert(id);
+        break;
+    }
+   
+    return true;
+}
+
+function onMenuClick2(menuitemId)
+{
+    var rid = rightgrid.contextID.split("_")[0];
+    var tid = rightgrid.cells(rid,0).getValue();
+    switch (menuitemId)
+    {
+        case "edit":
+            addRight(tid,"{{ "Edit permission" | trans }}",rid);
+        break;
+        case "add":
+            addRight(tid,"{{ "Add permission" | trans }}",-1);
+        break;
+        case "delete":
+            rightgrid.deleteRow(rid);
+        break;
+        default:
+            alert(menuitemId);
+        break;
+    }   
+    return true;
+}
+
+var dhxWins = new dhtmlXWindows();
+dhxWins.attachViewportTo(document.body);
+
+function attachUserFilter(uid)
+{
+    alert(uid);
+}
+
+function addRight(tid,tname,id)
+{
+    var largeur = 720;  
+    
+    var msg = dhxWins.createWindow( "attachTeamFilter" ,(document.getElementById("wrapper").offsetWidth-700)/2, 200, largeur, 480 ); 
+    if (id>-1) {
+        msg.setText(tname);
+    }
+    else {
+        msg.setText("{{ "Edit permission" | trans }}");
+    }
+    var winLayout = msg.attachLayout("1C");
+    winLayout.cells("a").hideHeader();
+//    winLayout.cells("b").hideHeader();
+    winLayout.cells("a").setHeight(300);
+    
+    var toolbar;
+    toolbar = winLayout.cells("a").attachToolbar();
+    toolbar.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+    toolbar.loadXML("{{ url('xml_Admin_teamfilter_toolbar') }}");
+
+    var formDataWin,myFormWin;
+    formDataWin = [
+       { type: "settings", position: "label-left", labelWidth: 120, inputWidth: 500, noteWidth: 300, offsetLeft: 10 },
+       { type: "fieldset", name: "permission", label: "{{ "Permission" | trans }}", inputWidth: "auto", 
+           list:[
+            {type:"hidden", 
+                name: 'id', 
+                value: id
+            },
+            {type:"hidden", 
+                name: 'team_id', 
+                value: tid
+            },
+            {type:"input", 
+                name: 'name', 
+                label:'{{ 'Title' | trans }}', 
+                required: true,
+                value: ""
+            },
+            {type:"input", 
+                name: 'description', 
+                label:'{{ 'Description' | trans }}', 
+                rows: 2,
+                value: ""
+            }
+            ] },
+       { type: "fieldset", name: "location", label: "{{ "Location" | trans }}", inputWidth: "auto", 
+       list:[
+            {type:"input", 
+                name: 'path', 
+                label:'{{ 'Path' | trans }}', 
+                value: "*"
+            },
+            {type:"input", 
+                name: 'spooler', 
+                label: '{{ 'Spooler' | trans }}', 
+                value: "*"
+            },
+            {type:"input", 
+                name: 'repository', 
+                label: '{{ 'Repository' | trans }}', 
+                value: "*"
+            }
+            ] },            
+       { type: "fieldset", name: "objects", label: "{{ "Objects" | trans }}", inputWidth: "auto", 
+       list:[
+            {type:"input", 
+                name: 'job', 
+                label:'{{ 'Job' | trans }}', 
+                value: "*"
+            },
+            {type:"input", 
+                name: 'job_chain', 
+                label: '{{ 'Job chain' | trans }}', 
+                value: "*"
+            },
+            {type:"input", 
+                name: 'order_id', 
+                label:'{{ 'Order' | trans }}', 
+                value: "*"
+            }
+            ] },
+        { type: "fieldset", name: "rights", label: "{{ "Rights" | trans }}", inputWidth: "auto", 
+        list:[
+            {type: "newcolumn"},
+            {type:"checkbox", 
+                offsetLeft: 150,
+                name: 'read', 
+                label: '{{ 'Right_R' | trans }}', 
+                position: "label-right",
+                checked: false
+            },
+            {type: "newcolumn"},
+            {type: "checkbox", 
+                name: 'write', 
+                label: '{{ 'Right_W' | trans }}', 
+                position: "label-right",
+                checked: false
+            },
+            {type: "newcolumn"},
+            {type:"checkbox", 
+                name: 'execute', 
+                label: '{{ 'Right_X' | trans }}', 
+                position: "label-right",
+                checked: false
+            },
+            // bug checkbox
+            { type: "hidden", name: 'R', value: 0 },
+            { type: "hidden", name: 'W', value: 0 },
+            { type: "hidden", name: 'X', value: 0 }
+            ] }
+        ];
+    // bug checkbox
+    myFormWin = winLayout.cells("a").attachForm(formDataWin);
+    myFormWin.setSkin("dhx_skyblue");
+    myFormWin.enableLiveValidation(true);
+    if (id>-1) {
+        myFormWin.load("{{ url('xml_Admin_rights_form') }}?id="+id );
+    }
+    
+    myFormWin.attachEvent("onXLE", function(){
+        if (myFormWin.getItemValue("R")>0) 
+            myFormWin.checkItem("read");
+        if (myFormWin.getItemValue("W")>0) 
+            myFormWin.checkItem("write");
+        if (myFormWin.getItemValue("X")>0) 
+            myFormWin.checkItem("execute");
+    });
+    
+    var dpWin = new dataProcessor( "{{ url('xml_Admin_rights_form') }}" );
+    dpWin.setUpdateMode("off");
+    dpWin.init(myFormWin);
+
+    dpWin.attachEvent("onAfterUpdate", function(){        
+        rightgrid.clearAll();
+        rightgrid.load("{{ url('xml_Admin_rights') }}?team_id="+tid );
+        msg.close();
+    });
+
+    toolbar.attachEvent("onClick",function(buttonId){
+        switch(buttonId){
+        case "save_right":
+            // probleme de checkbox
+            if (myFormWin.isItemChecked("read")) 
+                myFormWin.setItemValue("R",1);
+            else 
+                myFormWin.setItemValue("R",0);
+            if (myFormWin.isItemChecked("write"))
+                myFormWin.setItemValue("W",1);
+            else 
+                myFormWin.setItemValue("W",0);
+            if (myFormWin.isItemChecked("execute"))            
+                myFormWin.setItemValue("X",1);
+            else 
+                myFormWin.setItemValue("X",0);
+            dpWin.sendData();
+        break;
+        default:
+            alert(buttonId);
+            break;
+        }
+        return true;
+    });
+/*    
+    var filtergrid = winLayout.cells("b").attachGrid();
+    filtergrid.setHeader("{{ "Title" | trans }},{{ "Job" | trans }},{{ "Job chain" | trans }},{{ "Order" | trans }}");
+    filtergrid.attachHeader("#text_filter,#text_filter,#text_filter,#text_filter");
+    filtergrid.setInitWidths("*,160,160,160");
+    filtergrid.setColAlign("left,left,left,left");
+    filtergrid.setColTypes("ro,ro,ro,ro");
+    filtergrid.setColSorting("str,str,str,str");
+    filtergrid.init();
+    filtergrid.load("{{ url('xml_Admin_rights') }}");
+*/
+    return true;
+}
+
+
+function onClickToolbar2(id,value)
+{
+    switch (id)
+    {
+       case "save_team":
+           globalLayout.cells("b").progressOn();
+           teamForm.send("{{ url('xml_Admin_team_save') }}","POST",function(loader,response){
+               if(response === "success")
+               {
+                 dhtmlx.message({
+                    title:"Save",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "Team saved"
+                 });
+                 teamForm.clear();
+                 teamForm.setItemFocus("name");
+                 mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}");
+                 myform.unload();
+                 myform = tabbar.cells("b1").attachForm(formData);
+                 globalLayout.cells("b").progressOff();
+               } else
+               {
+                   globalLayout.cells("b").progressOff();
+                   alert(response);
+               }
+           });
+           
+       break;
+       case "add_team":
+           teamForm.clear();
+           teamForm.setItemFocus("name");
+           //teamForm.setItemValue("enterprise","{{ app.session.get('enterprise') }}");
+       break;
+       case "delete_team":
+       break;
+       default:
+           break;
+    }
+}
+
+function onClickToolbar1(id,value)
+{
+    switch (id) {
+        case "save_user":
+            if(myform.validate()){
+                globalLayout.cells("a").progressOn();
+                myform.send("{{ url('xml_Admin_user_save') }}","POST",function(loader,response){
+                if(response === "success")
+                    {
+                        dhtmlx.message({
+                            title:"Save",
+                            type: "Notice",
+                            lifetime: "60000",
+                            text: "{{ "User saved" | trans }}"
+                        });
+                        myform.clear();
+                        myform.setItemFocus('username');
+                        mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}");
+                        globalLayout.cells("a").progressOff();
+                    } else
+                    {
+                        globalLayout.cells("a").progressOff();
+                        alert(response);
+                    }
+                });
+            }
+        break;
+        case "add_user":
+            myform.clear();
+            myform.setItemFocus('username');
+            //myform.setItemValue('enterprise',"{{ app.session.get('enterprise') }}");
+        break;
+        case "delete_user":
+        break;
+        default:
+            break;
+    }
+}
+
+function GlobalRefresh() {
+    GridRefresh();
+};
+</script>
+
+{% endblock %}

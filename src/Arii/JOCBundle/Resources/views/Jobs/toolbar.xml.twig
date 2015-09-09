@@ -1,0 +1,34 @@
+<toolbar>
+    <item type="buttonTwoState" id="comment" img="comment.png"/>
+    <item type="buttonTwoState" id="show_time" img="show_time.png"/>
+    <item type="buttonTwoState" id="target" img="server.png"/>
+<!--
+    <item type="buttonSelect" id="history" img="timeline.png">
+        <item type="button" id="history_0" text="0"/>
+        <item type="button" id="history_5" text="5"/>
+        <item type="button" id="history_10" text="10" />
+        <item type="button" id="history_20" text="20"/>
+        <item type="button" id="history_50" text="50"/>
+    </item>
+-->
+<!--
+<item id="sep1" type="separator"/>
+<item type="buttonSelect" id="selected" text="{{ "Selected jobs" | trans }}" img="tick.png">
+    <item type="button" id="start_jobs" text="{{ "Start jobs" | trans }}" img="start_task.png"/>
+    <item type="button" id="stop_jobs" text="{{ "Stop jobs" | trans }}" img="stop.png"/>
+    <item type="button" id="unstop_jobs" text="{{ "Unstop jobs" | trans }}" img="unstop.png"/>
+</item>
+<item id="sep2" type="separator"/>
+    {% set site = app.session.get('site') %}     
+    <item id="timezone" type="text" img="world.png" text="{ { site.timezone }}"/>
+-->
+<item id="sepl" type="separator"/>
+    <item type="button" id="print" img="printer.png"/>
+<!--    <item type="button" id="rss" img="feed.png"/>
+    <item type="buttonSelect" id="report" img="reporting.png">
+    <item type="button" id="report_jobs" text="{{ "Jobs" | trans }}"/>
+    </item>
+-->    
+<item id="sepr" type="separator"/>
+    <item type="button" id="refresh" img="refresh.png"/>
+</toolbar>

@@ -1,0 +1,26 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"300" },
+    {   type:"input",    
+            name: "START_TIME", 
+            label:"{{ "Start" | trans}}"
+    },
+    {   type:"input",    
+            name: "END_TIME", 
+            label:"{{ "End" | trans}}"
+    },
+    {   type:"input",    
+            name: "ERROR_TEXT", 
+            label:"{{ "Error" | trans}}",
+            rows: 2
+    },
+    {type:"newcolumn"},  
+    {type:"input",    name: "CAUSE", label:"{{ "Cause" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "EXIT_CODE", label:"{{ "Exit" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "PID", label:"{{ "PID" | trans}}", inputWidth:"150"},    
+    {type:"input",    name: "HSTORY_ID", label:"{{ "History" | trans}}", inputWidth:"150"},    
+    {type:"hidden",    name: "ID" }
+]

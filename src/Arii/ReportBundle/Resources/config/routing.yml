@@ -1,0 +1,60 @@
+arii_Report_index:
+    pattern:  /
+    defaults: { _controller: AriiReportBundle:Documents:index }
+
+arii_Report_readme:
+    pattern:  /
+    defaults: { _controller: AriiReportBundle:Default:readme }
+
+xml_Report_tree:
+    pattern:  /tree.xml
+    defaults: { _controller: AriiReportBundle:Default:tree }
+
+xml_Report_form:
+    pattern:  /form.xml
+    defaults: { _controller: AriiReportBundle:Default:info }
+
+xml_Report_view:
+    pattern:  /view.xml
+    defaults: { _controller: AriiReportBundle:Default:doc }
+    
+json_Report_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiReportBundle:Default:ribbon }
+
+arii_Report_documents:
+    pattern:  /documents
+    defaults: { _controller: AriiReportBundle:Documents:index }
+
+xml_Report_documents_toolbar:
+    pattern:  /documents/toolbar.xml
+    defaults: { _controller: AriiReportBundle:Documents:toolbar }
+
+arii_Report_document:
+    pattern:  /document
+    defaults: { _controller: AriiReportBundle:Document:doc }
+
+arii_Report_document_get:
+    pattern:  /document/get
+    defaults: { _controller: AriiReportBundle:Document:get }
+
+xml_Report_document_toolbar:
+    pattern:  /document/toolbar.xml
+    defaults: { _controller: AriiReportBundle:Document:toolbar }
+
+arii_Report_status:
+    pattern:  /status
+    defaults: { _controller: AriiReportBundle:Default:status }
+    
+arii_Report_history:
+    pattern:  /history
+    defaults: { _controller: AriiReportBundle:Default:history }
+
+xml_Report_grid:
+    pattern:  /grid.xml
+    defaults: { _controller: AriiReportBundle:Orders:grid }
+
+xml_Report_docs:
+    pattern:  /documents/grid.xml
+    defaults: { _controller: AriiReportBundle:Documents:grid }
+

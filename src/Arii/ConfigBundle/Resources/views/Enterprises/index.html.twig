@@ -1,0 +1,248 @@
+{# src/Arii/AdminBundle/Resources/views/User/list.html.twig #}
+{% extends "AriiConfigBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Enterprise" | trans }}</h2>
+                <ul  class="section_menu">
+      <li><a href="{{ url('arii_Config_enterprises') }}" class="active"><span><span><img src="{{ asset('arii/images/menu/building.png') }}"/>&nbsp;{{ "Enterprises" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Config_enterprise_new') }}" class=""><span><span><img src="{{ asset('arii/images/menu/building_add.png') }}"/>&nbsp;{{ "New" | trans }}</span></span></a></li>
+                </ul>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                              <div class="sct_right">
+    <div id="mygrid" style="height:780px;background-color:white;overflow:hidden;position:relative;">TEST</div>
+                                              </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+
+<script language="javascript">
+dhtmlx.skin = "dhx_{{ skin }}";
+
+var menu = new dhtmlXMenuObject();
+menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+menu.renderAsContextMenu();
+menu.attachEvent("onClick", onMenuClick);
+menu.loadXML("{{ url('xml_Config_enterprises_menu') }}");
+
+var mygrid,dhxLayout,toolbar;
+dhxLayout = new dhtmlXLayoutObject("mygrid","2U");
+dhxLayout.cells("a").hideHeader();
+dhxLayout.cells("b").setWidth(480);
+dhxLayout.cells("b").hideHeader();
+/*
+var toolbara;
+toolbara = dhxLayout.cells("a").attachToolbar();
+toolbara.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbara.loadXML("{{ url('xml_Config_enterprises_toolbar') }}");
+toolbara.attachEvent("onClick",onClick);
+*/
+var toolbarb;
+toolbarb = dhxLayout.cells("b").attachToolbar();
+toolbarb.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbarb.loadXML("{{ url('xml_Config_enterprise_toolbar') }}");
+toolbarb.attachEvent("onClick",onClick);
+
+var sb = dhxLayout.cells("a").attachStatusBar();
+sb.setText('<div id="recinfoArea"></div>');
+dhxLayout.cells("a").vs[dhxLayout.cells("a").av].sbHeight = 40;
+mygrid = dhxLayout.cells("a").attachGrid();
+mygrid.setMultiRows = true;
+mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+mygrid.setHeader("{{ "Enterprise" | trans }},{{ "Modules" | trans }}");
+mygrid.attachHeader("#select_filter,#text_filter");
+mygrid.setInitWidths("300,*");
+mygrid.setColAlign("left,left");
+mygrid.setColTypes("ro,ro");
+mygrid.setColSorting("str,str");
+mygrid.enableContextMenu(menu);
+mygrid.enablePaging(true, 20, 5, "recinfoArea");
+mygrid.setPagingSkin("toolbar","dhx_skyblue");
+mygrid.setPagingWTMode(true,true,true,["20"]);
+mygrid.init();
+mygrid.loadXML("{{ url('xml_Config_enterprises_grid') }}");
+mygrid.setSkin("dhx_{{ skin }}");
+mygrid.attachEvent("onRowDblClicked", function (rid) {
+    EditEnterprise(rid);
+});
+
+var myform,formData;
+formData = [
+    { type: "settings", position: "label-left", labelWidth: 120, inputWidth: 300, noteWidth: 300},
+    {    type:"fieldset",
+         name: "fieldset",
+         label:"{{ "Enterprise"| trans}}",
+         width: "auto",
+         list: [   {
+                     type: "hidden",
+                     name: "id"
+                   },
+                   { type: "input",
+                     name: "enterprise",
+                     label: "{{ "Enterprise Name"| trans }}",
+                     required: true,
+                     note: {
+                       text: "Enter your Enterprise Name here. This field can not be empty"
+                     }
+                   },
+                  { type: "input",
+                    name: "modules",
+                    label: "{{ "Modules"| trans }}",
+                    labelAlign: "center",
+                    required: true,
+                    note: {
+                       text: "Type modules for the enterprise"
+                    }
+                  }
+               ]
+    }
+];
+
+myform = dhxLayout.cells("b").attachForm(formData);
+myform.enableLiveValidation(true);
+{%if id != '' %}
+myform.load("{{ url('xml_Config_repository_form') }}?id="+{{ id }} );
+{%endif%}
+    
+function onClick(id,value){
+    switch (id)
+    {
+        case "add_enterprise":
+            NewEnterprise();
+            break;
+        case "delete_enterprise":
+            id = myform.getItemValue("id");
+            DeleteEnterprise(id);
+            break;
+       case "save_enterprise":
+           myform.send("{{ url('xml_Config_enterprise_save') }}","POST",function(loader,response){
+               if(response === "success")
+               {
+                 dhtmlx.message({
+                    title:"Save",
+                    type: "Notice",
+                    lifetime: "60000",
+                    text: "{{ "Enterprise saved" | trans }}"
+                 });
+                 myform.clear();
+                 myform.setItemFocus("enterprise");
+                 mygrid.loadXML("{{ url('xml_Config_enterprises_grid') }}");
+               }
+           });
+           
+       break;
+       default:
+           break;
+    }
+};
+
+function onMenuClick(menuitemId,value)
+{
+    var rid = mygrid.contextID.split("_")[0];
+    switch (menuitemId)
+    {
+        case "add_enterprise":
+            NewEnterprise();
+            break;
+        case "edit_enterprise":
+            EditEnterprise(rid);
+            break;
+        case "delete_enterprise":
+            DeleteEnterprise(rid);
+            break;
+        default:
+            break;
+    }
+    return true;
+}
+
+function GridRefresh()
+{
+    mygrid.clear();
+    mygrid.loadXML("{{ url('xml_Config_enterprises_grid') }}");
+}
+
+function NewEnterprise() {
+    window.location = "{{ url('arii_Config_enterprise_new') }}";
+}
+
+function EditEnterprise(id) {
+    dhxLayout.cells("a").progressOn();
+    myform.setItemLabel("fieldset","{{ "Edit enterprise" | trans }}");
+    myform.clear();
+    myform.load("{{ url('xml_Config_enterprise_form') }}?id="+id, function () {
+        dhxLayout.cells("a").progressOff();
+    });
+}
+
+function DeleteEnterprise(id) {
+    dhtmlx.confirm({
+     title: "{{ "Delete enterprise" | trans }}",
+     type: "confirm-error",
+     text: "{{ "enterprise.message.delete" | trans }}",
+     callback: function(answer) { if (answer) {
+            dhtmlx.confirm({
+            title: "{{ "Delete Enterprise" | trans }}",
+            type: "confirm-error",
+            text: "{{ "Do you really want to delete this Enterprise ?" | trans }}",
+            callback: function(answer) { 
+                if (answer){
+                    dhtmlxAjax.get("{{ url('xml_Config_enterprise_delete') }}?id="+rid,"POST",function(loader,response){
+                       if(response === "success")
+                       {
+                         dhtmlx.message({
+                            title:"{{ "Delete" | trans }}",
+                            type: "Notice",
+                            lifetime: "60000",
+                            text: "{{ "Enterprise deleted" | trans }}"
+                         });
+                         myform.clear();
+                         myform.setItemFocus("enterprise");
+                         mygrid.loadXML("{{ url('xml_Config_enterprises_grid') }}");
+                       }
+                       else {
+                         dhtmlx.message({
+                            title:"{{ "Delete" | trans }}",
+                            type: "Error",
+                            lifetime: "60000",
+                            text: response
+                         });
+                       }
+                   });
+                }
+            },
+            cancel: "{{ "Cancel" | trans }}",
+            ok: "{{ "Yes" | trans }}" });
+        }
+    },
+     cancel: "{{ "No" | trans }}",
+     ok: "{{ "Yes" | trans }}" });
+ }
+ 
+function GlobalRefresh() { }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order  title="Send Show State">
+    <params >
+        <param  name="JS_HOST" value="localhost"/>
+
+        <param  name="JS_PORT" value="4444"/>
+
+        <include  live_file="../arii.params.xml" node=""/>
+    </params>
+
+    <run_time  let_run="no">
+        <period  absolute_repeat="00:00:30" begin="00:00" end="24:00"/>
+    </run_time>
+</order>

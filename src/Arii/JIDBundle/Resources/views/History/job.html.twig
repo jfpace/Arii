@@ -1,0 +1,95 @@
+{# src/Arii/JIDBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiJIDBundle::layout.html.twig" %}
+{% block body %}
+<body>
+<script language="javascript">
+var max_history = 0; // pas d'historique
+var chained = 0; // que des standalone
+var only_warning = 0; // que les problemes
+
+dhtmlxEvent(window,"load",function(){ 
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");  
+    globalLayout.cells("a").setWidth(430); 
+    globalLayout.cells("a").hideHeader(); 
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JID_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+    
+//    globalLayout.cells("b").setText( "[{{spooler}}] {{ job }}" );
+    globalLayout.cells("b").hideHeader();
+    myToolbar = globalLayout.cells("b").attachToolbar(); 
+    myToolbar.setIconsPath( "{{ asset('/bundles/ariicore/images/toolbar/') }}" )
+    myToolbar.addButton('spooler', 1, "{{ spooler }}", "spooler.png");
+    myToolbar.addButton('chain', 2, "{{ job }}", "job.png");
+
+    HistoryGrid = globalLayout.cells("b").attachGrid();
+    HistoryGrid.setHeader("{{ "Start time" | trans }},{{ "End time" | trans }},{{ "Duration" | trans }},{{ "Error" | trans }},{{ "Exit" | trans }},{{ "Message" | trans }}");
+    HistoryGrid.attachHeader("#text_filter,#text_filter,#text_filter,#select_filter,#select_filter,#text_filter");
+    HistoryGrid.setInitWidths("130,130,100,60,70,*");
+    HistoryGrid.setColAlign("right,right,right,right,right,left");
+    HistoryGrid.setColTypes("ro,ro,ro,ro,ro,ro");
+    HistoryGrid.setColSorting("date,date,str,int,int,str");
+    HistoryGrid.loadXML( "{{ url('arii_JID_grid_history_job') }}?id={{ id }}" );
+    HistoryGrid.enableAlterCss("even_row","odd_row");
+    HistoryGrid.init();
+    HistoryGrid.attachEvent("onRowDblClicked", function(id){
+        globalLayout.cells("c").progressOn();
+        JobLogGrid.loadXML( "{{ url('xml_JID_job_log') }}?id="+id, function () {
+            globalLayout.cells("c").progressOff();
+        });
+
+    });
+
+    globalLayout.cells("a").setText( "{{"Graph" | trans }}" );
+    var BarChart = globalLayout.cells("a").attachChart( {
+        view: "scatter",
+        xValue: "#START#",
+        yValue: "#DURATION#",
+        color: "#COLOR#",
+        item:{
+            label: "",
+            borderColor: "#COLOR#" ,
+            color: "#COLOR#",
+            type: 'r'
+        },
+        yAxis:{
+            title: "{{ "Duration" | trans }} (s)"
+        },
+        xAxis:{
+            title: "{{ "Start time" | trans }}",
+            template: ""
+        }
+       });
+
+    BarChart.attachEvent("onItemClick", function(id){
+        HistoryGrid.selectRowById(id);
+        globalLayout.cells("c").progressOn();
+        JobLogGrid.loadXML( "{{ url('xml_JID_job_log') }}?id="+id, function () {
+            globalLayout.cells("c").progressOff();
+        });
+    });
+    BarChart.load( "{{ url('arii_JID_chart_history_job') }}?spooler={{ spooler }}&job={{ job }}", "xml" );
+
+    globalLayout.cells("c").setText( "{{"Log" | trans }}" );
+    globalLayout.cells("c").hideHeader();
+    JobLogGrid = globalLayout.cells("c").attachGrid();
+    JobLogGrid.setHeader("{{ "Date" | trans }},{{ "Type" | trans }},{{ "Message" | trans }},{{ "Code" | trans }}");
+    JobLogGrid.attachHeader("#text_filter,#select_filter,#text_filter,#select_filter");
+    JobLogGrid.setInitWidths("160,40,*,60");
+    JobLogGrid.setColAlign("right,left,left,right");
+    JobLogGrid.setColTypes("ro,ro,ro,ro");
+    JobLogGrid.setColSorting("date,str,str,int");
+    JobLogGrid.loadXML( "{{ url('xml_JID_job_log') }}?id={{ id }}" );
+    JobLogGrid.enableAlterCss("even_row","odd_row");
+    JobLogGrid.init();
+});
+</script>
+</body>
+{% endblock %}

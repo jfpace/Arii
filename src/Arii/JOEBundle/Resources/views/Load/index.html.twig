@@ -1,0 +1,150 @@
+{# src/Arii/JOCBundle/Resources/views/index.html.twig #}
+{% extends "AriiJOEBundle::layout.html.twig" %}
+{% block body %}
+<!--[if !IE]>start section<![endif]-->	
+<script>
+dhtmlxEvent(window,"load",function(){     
+
+    globalLayout = new dhtmlXLayoutObject(document.body, "2U");
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("b").hideHeader();
+    globalLayout.cells("a").setWidth(350);
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOE_load_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", LoadStateRibbon );
+    myRibbon.attachEvent("onClick", LoadClickRibbon );
+
+    myAccordion = globalLayout.cells("a").attachAccordion();
+    myAccordion.addItem("folders", "{{ "Live" | trans }}");
+
+    myTree = myAccordion.cells("folders").attachTree();
+    myTree.setImagePath( "{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.enableSmartXMLParsing(true);
+    myTree.attachEvent( "onDblClick", Synchro );
+    
+    globalLayout.cells("a").progressOn();
+
+    myToolbar = globalLayout.cells("b").attachToolbar();
+    myToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myToolbar.loadStruct("{{ url('xml_JOE_load_toolbar') }}");
+    myToolbar.attachEvent( "onClick", function(id, value) {
+        switch (id) {
+            case "synchro":                
+                // alert("{{ url('ajax_JOE_folder_sync') }}?path="+myToolbar.getValue('path'));
+                var path = myToolbar.getValue('path');
+                dhx4.ajax.get( "{{ url('arii_JOE_load_sync') }}?path="+path, function () {
+                    Synchro(path);
+                });
+            break;
+            default:
+                alert(id);
+        }
+    });
+
+    myGrid = globalLayout.cells("b").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Folder" | trans }},{{ "Path" | trans }},{{ "File" | trans }},{{ "Action" | trans }},{{ "Size" | trans }},{{ "Time" | trans }}");
+    myGrid.attachHeader("#select_filter,#text_filter,#text_filter,#select_filter,#numeric_filter,#text_filter");
+    myGrid.setInitWidths("140,*,250,100,100,200");
+    myGrid.setColAlign("left,left,left,left,right,left");
+    myGrid.setColTypes("ro,ro,ro,ro,ro,ro");
+    myGrid.setColSorting("str,str,str,str,int,date");
+    myGrid.enableAlterCss("","");	
+    myGrid.init();
+    
+
+    myTree.loadXML( "{{ url('xml_JOE_load_tree') }}", function() {
+        globalLayout.cells("a").progressOff();
+    });
+    myTree.attachEvent( "onRowDblClicked", function(id) {
+        alert(id);
+    });
+    
+    globalLayout.cells("b").hideHeader();
+});
+
+function Synchro(id) {
+    globalLayout.cells("b").progressOn();
+    myToolbar.setValue('path',id);
+    myGrid.loadXML( "{{ url('xml_JOE_load_grid') }}?path="+id, function () {
+        globalLayout.cells("b").progressOff();        
+    });
+    
+/*    
+    dhtmlx.confirm({
+        title: "{{ "Synchronize" | trans }}",
+        type: "confirm",
+        text: "{{ "Do you really want to synchronize this folder ?" | trans }} "+id,
+        callback: function(answer) {
+            if (answer) alert(id);
+        },
+        cancel: "{{ "No" | trans }}",
+        ok: "{{ "Yes" | trans }}" });
+*/
+}
+
+function LoadStateRibbon (itemid,state) {
+    switch(itemid) {
+         case 'chained':
+            chained = (state?1:0);
+            globalLayout.progressOn();
+            break;
+        default:
+            alert(itemid);
+    }
+}
+
+function LoadClickRibbon (itemid,state) {
+    switch(itemid) {
+        case 'live':
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            path = 'live';            
+            myTree.loadXML( '{{ url('xml_JOE_load_tree') }}', function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case '_all':
+            path = 'remote/_all';
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            myTree.loadXML( '{{ url('xml_JOE_load_tree') }}?path='+path, function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case 'deploy':
+            window.location = "{{ url('arii_JOE_deploy') }}";
+            break;
+        case 'edit':
+            window.location = "{{ url('arii_JOE_index') }}";
+            break;
+        case 'load':
+            window.location = "{{ url('arii_JOE_load') }}";
+            break;
+        default:
+            if (id.substr(0,7)=='remote_') {
+                path = 'remote/'+id.substr(7);
+                globalLayout.cells("a").progressOn();
+                myTree.deleteChildItems(0);
+                myTree.loadXML( '{{ url('xml_JOE_load_tree') }}?path='+path, function () {
+                    myAccordion.cells('folders').setText(path);
+                    globalLayout.cells("a").progressOff();                
+                });
+            }
+            else {
+                alert("click "+id);
+            }
+    }
+}
+
+</script>
+{% endblock %}

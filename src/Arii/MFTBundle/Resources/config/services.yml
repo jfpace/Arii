@@ -1,0 +1,11 @@
+parameters:
+#    arii_mft.example.class: Arii\MFTBundle\Example
+
+services:
+#    arii_mft.example:
+#        class: %arii_mft.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    arii_mft.history:
+        class: Arii\MFTBundle\Service\AriiHistory
+        arguments: ["@arii_core.dhtmlx", "@arii_core.sql", "@arii_core.date", "@arii_core.tools"]

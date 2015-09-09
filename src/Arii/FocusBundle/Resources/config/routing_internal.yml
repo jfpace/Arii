@@ -1,0 +1,7 @@
+arii_Focus_get:
+    pattern:  /{spooler}/{port}/get
+    defaults: { _controller: AriiFocusBundle:CacheV3:get }
+
+arii_Focus_refresh:
+    pattern:  /refresh
+    defaults: { _controller: AriiFocusBundle:CacheV3:refresh }

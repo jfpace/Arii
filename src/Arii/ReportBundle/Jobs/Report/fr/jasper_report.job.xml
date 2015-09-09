@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<job  title="Create JasperReport" order="yes" stop_on_error="no" java_options="-Djava.awt.headless=true">
+    <!-- E-Mail mit den generierten Reports erzwingen. Empfänger/sender -&gt; siehe factory.ini -->
+    <settings >
+        <log_level ><![CDATA[debug9]]></log_level>
+    </settings>
+
+    <params >
+        <param  name="mail_it" value="false"/>
+
+        <param  name="suspend_attachment" value="true"/>
+
+        <param  name="mail_to" value=""/>
+
+        <param  name="mail_cc" value=""/>
+
+        <param  name="mail_bcc" value=""/>
+
+        <param  name="mail_body" value=""/>
+
+        <param  name="output_type" value="pdf"/>
+
+        <param  name="report_locale" value="fr"/>
+    </params>
+
+    <script  java_class="com.sos.jitl.jasperreports.JobSchedulerJasperReportJob" language="java" java_class_path="config/reports/jasper/localreport_fr.properties"/>
+
+    <run_time />
+</job>

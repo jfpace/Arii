@@ -1,0 +1,65 @@
+arii_Config_index:
+    pattern:  /
+    defaults: { _controller: AriiConfigBundle:Default:index }
+
+xml_Config_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiConfigBundle:Toolbar:global }
+
+arii_Config_index:
+    pattern:  /network
+    defaults: { _controller: AriiConfigBundle:Network:network }
+
+#============================================================
+# Enterprises
+#------------------------------------------------------------
+arii_Config_enterprises:
+    pattern:  /enterprises
+    defaults: { _controller: AriiConfigBundle:Enterprises:index}
+
+xml_Config_enterprises_toolbar:
+    pattern:  /enterprises/toolbar.xml
+    defaults: { _controller: AriiConfigBundle:Enterprises:toolbar}
+
+xml_Config_enterprises_grid:
+    pattern:  /enterprises/grid.xml
+    defaults: { _controller: AriiConfigBundle:Enterprises:grid}
+
+xml_Config_enterprises_menu:
+    pattern:  /enterprises/menu.xml
+    defaults: { _controller: AriiConfigBundle:Enterprises:menu}
+
+#============================================================
+# Enterprise
+#------------------------------------------------------------
+arii_Config_enterprise_new:
+    pattern:  /enterprise/new
+    defaults: { _controller: AriiConfigBundle:Enterprise:new}
+
+xml_Config_enterprise_toolbar:
+    pattern:  /enterprise/toolbar.xml
+    defaults: { _controller: AriiConfigBundle:Enterprise:toolbar}
+
+xml_Config_enterprise_form:
+    pattern:  /enterprise/form.xml
+    defaults: { _controller: AriiConfigBundle:Enterprise:form }
+
+xml_Config_enterprise_delete:
+    pattern:  /enterprise/delete
+    defaults: { _controller: AriiConfigBundle:Enterprise:delete }
+
+xml_Config_enterprise_save:
+    pattern:  /enterprise/save
+    defaults: { _controller: AriiConfigBundle:Enterprise:save }
+
+arii_Config_enterprise_create:
+    pattern:  /enterprise/create
+    defaults: { _controller: AriiConfigBundle:Enterprise:create }
+
+#============================================================
+# Web server
+#------------------------------------------------------------
+arii_Config_web_server:
+    pattern:  /webserver
+    defaults: { _controller: AriiConfigBundle:Webserver:index }
+

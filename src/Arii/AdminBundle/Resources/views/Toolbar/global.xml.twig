@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolbar>
+    <item id="sep1" type="separator"/>
+    {% set site = app.session.get('site') %}     
+    <item id="site" type="buttonSelect" img="world.png" text="{{ site.name }}">
+        {% set Sites = app.session.get('Sites') %}               
+        {% for k,v in Sites %}
+            <item img="../flags/{{ v.iso }}.png" type="button" id="site_{{ v.id }}" text="{{ v.name }}"/>
+        {% endfor %}
+    </item>
+    <item id="sep8" type="separator"/>
+    <item type="buttonTwoState" id="layout_header"  text="" img="layout_header.png" />
+</toolbar>

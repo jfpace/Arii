@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<order >
+    <params >
+        <param  name="report_locale" value="fr_FR"/>
+		
+        <param  name="report_filename" value="config/live/sos/arii/Report/scheduler_job_graph.jasper"/>
+
+        <param  name="query_filename" value="config/live/sos/arii/Report/scheduler_job_graph.sql"/>
+
+        <param  name="output_filename" value="config/live/sos/arii/Report/FR/scheduler_job_graph.html"/>
+    </params>
+
+    <run_time  let_run="no">
+        <period  single_start="18:00"/>
+    </run_time>
+</order>

@@ -1,0 +1,517 @@
+JobScheduler: JobScheduler
+-id: -ID
+Operations GUI: Operations GUI
+Build: Build
+Jobs: Tâches
+Job Chains: Chaînes des Tâches
+Orders: Ordres
+Schedules: Programmations
+Process Classes: Classes des Processus
+Locks: Verrous
+Cluster: Cluster
+Remote Schedulers: Ordonnanceurs Distants
+Last Activities: Activités Récentes
+Menu: Menu
+Extras: Extras
+Help: Aide
+Hide: Cacher détails
+Update: Mettre à jour
+Show log: Visualiser log
+Show job dependencies: Visualiser dépendances des tâches
+Show job chain dependencies: Visualiser dépendances des chaînes des tâches
+Show start times: Visualiser dates de démarrage
+Manage filters: Gérer les filtres
+Manage log categories: Gérer les catégories de log
+Pause: Mettre en pause
+Continue: Continuer
+Terminate: Arrêter
+Terminate within ~$secs: Arrêter dans $secs
+Terminate and restart: Arrêter et redémarrer
+Terminate and restart within ~$secs: Arrêter et redémarrer dans $secs
+Abort immediately: Arrêter immédiatement
+Abort immediately and restart: Arrêter immédiatement et redémarrer
+Terminate cluster: Arrêter le cluster
+Terminate cluster within ~$secs: Arrêter le cluster dans $secs
+Terminate and restart cluster: Arrêter le cluster et redémarrer le cluster
+Terminate and restart cluster within ~$secs: Arrêter le cluster et redémarrer le cluster dans $secs
+Terminate fail-safe: Arrêter (sans échec)
+Terminate fail-safe within: Arrêter (sans échec) dans $secs
+Documentation: Documentation
+Forum: Forum
+Downloads: Downloads
+Release Notes: notes de version
+Follow us on Twitter: Suivez-nous sur Twitter
+About: Sur
+Settings: Paramètres
+Monitor: Moniteur
+Configuration: Configuration
+every $secs: toutes les $secs
+ID: ID
+State: Etat
+Pid: Pid
+Time: Heure
+jobs: Tâches
+need process: en attente de processus
+tasks: Instances
+orders: Ordres
+$cnt in cluster: $cnt dans le Cluster
+Start Time: Heure de démarrage
+starting: démarrage en cours
+running: en cours d\'exécution
+paused: en pause
+stopping: arrêt en cours
+stopping_let_run: arrêt en cours
+stopped: arrêté
+waiting_for_activation: en attente de l\'activation
+unknown: inconnu
+THIS IS A BACKUP...: CECI EST UNE SAUVEGARDE...
+Backup JobScheduler: Sauvegarde de JobScheduler:
+JobScheduler is waiting for database ...: JobScheduler est en attente de la base de donnée ...
+Waiting for response from JobScheduler ...: En attente de réponse de JobScheduler ...
+No connection to JobScheduler: Aucune connexion à JobScheduler
+Error at XML answer:: Errerr dans la réponse XML:
+$trial trial (of 5) to (re)connect to JobScheduler: $trial tentative (sur 5) pour se (re)connecter à JobScheduler
+First: Première
+Second: Seconde
+Third: Troisième
+Fourth: Quatrième
+Last: Dernière
+never: jamais
+now: maintenant
+days: Jours
+The settings dialog is not available,\nbecause $file is used as settings file.: La fenêtre de dialogue \'Paramètres\' n\'est pas disponible,\ncar le fichier $file est utilisé en tant que fichier de paramétrage.
+You can enable the settings dialog \nvia the _disable_cookie_settings flag in the settings file: Vous pouvez activer le dialogue par le _disable_cookie_settings \ninterrupteur dans le fichier ci-dessus.
+from: de
+update: Actualiser
+last update: Dernière mise à jour
+Scheduler is running since: L\'ordonnanceur est démarré depuis
+Show tasks: Visualiser Instances
+All jobs: Toutes les tâches
+Standalone jobs: Tâches indépendantes
+Order jobs: Tâches d\'ordre
+with state: dans l\'état
+(all): (tout)
+(other): (autre)
+running or stopped: en cours d\'exécution ou arrêté
+and with process class: et avec la classe de processus
+Sort jobs by: Trier les tâches par
+(unsorted): (non trié)
+name in ascending order: Nom (ordre croissant)
+name in descending order: Nom (ordre décroissant)
+next start time in ascending order: Prochaine exécution (ordre  croissant)
+next start time in descending order: Prochaine exécution (ordre décroissant)
+state in ascending order: Etat (ordre croissant)
+state in descending order: Etat (ordre décroissant)
+toggle to: passer à
+list view: voir la liste
+tree view: voir l\'arbre
+open all folders: ouvrir tous les repertoires
+close all folders: fermer tous les repertoires
+Filter jobs by: Tâches triées par
+(no filtering): (pas de filtre)
+Job: Tâche
+Steps: Etapes
+Process steps: Etapes du processus
+Next start: Prochain démarrage
+JOB: TACHES
+TASK: INSTANCE DE TACHE
+File timestamp: Timestamp fichier
+State text: Texte de l\'état
+Error: Erreur
+Error in configuration file: Erreur dans le fichier de configuration
+Error in changed file: Erreur dans le fichier modifié
+(not loaded): (non chargé)
+Removing delayed: Suppression repoussée
+Tasks: Instance de tâche
+Run time defined by: Date de démarrage définie par
+orders to process: ordres à exécuter
+Mail subject: Sujet
+To: A
+CC: CC
+BCC: BCC
+From: De
+SMTP: SMTP
+Last error: Dernière erreur
+Last warning: Dernier Avertissement
+Log level: Niveau de log
+mail on error: Email si erreur
+mail on warning: Email si avertissement
+mail on success: Email si succès
+mail on process: Email à l\'exécution
+start cause: Cause du démarrage
+waiting for order: En attente d\'un ordre
+Idle since: En attente depuis
+In process since: En cours de traitement depuis
+Running since: En cours d\'exécution depuis
+Enqueued at: En File d\'attente à
+Subprocesses: Sous-Processus
+enqueued tasks: Instances des tâches en file d\'attente
+Id: ID
+Enqueued: En file d\'attente
+Start at: Démarrer à
+Delete: Supprimer
+No tasks in the history: Pas d\'instance de tâche dans l\'historique
+Started: Démarré
+Cause: Cause
+Ended: Terminé
+Duration: Durée
+Start: Démarrer
+Task Queue: File des Instances
+Task History: Historique des Instances
+Order Queue: File des Ordres
+Job menu: Menu Tâche
+Show configuration: Visualiser configuration
+Show description: Visualiser description
+Show dependency: Visualiser dépendance
+Start task immediately: Lancer instance immédiatement
+Start task unforced now: Lancer instance non forcé immédiatement
+Start task at: Lancer instance à ...
+Start task parametrized: Lancer instance avec paramètres
+Set run time: Programmer
+Stop: Désactiver
+Unstop: Activer
+Reread: Relire
+End tasks: Terminer instances
+Suspend tasks: Suspendre instances
+Continue tasks: Continuer instances
+Delete job: Supprimer tâche
+Do you really want to delete this job?: Voules-vous vraiment supprimer cette instance?
+Task menu: Menu Instance
+End: Terminer
+Kill immediately: Tuer immédiatement
+show job details: Voir les détails de la tâche
+show task details: Voir les détails de l\'instance
+Order is deleted: L\'ordre est supprimé
+Order is replaced: L\'ordre est remplacé
+Without start time: Sans heure de démarrage
+Task: Instance
+No jobs found: Aucune tâche trouvé
+pending: en attente
+loaded: chargé
+initialized: initialisé
+not_initialized: non initialisé
+disabled: inactif
+none: aucun
+read_error: erreur de lecture
+delayed after error: retardé après erreur
+needs process: en attente de processus
+needs lock: en attente de verrou
+loading: chargement
+waiting_for_process: en attente de process
+opening: ouverture
+opening_waiting_for_locks: ouverture en attente de verrou
+running_process: démarrage processus
+running_remote_process: démarrage processus distant
+running_waiting_for_order: démarrage en attente d\'ordre
+running_waiting_for_locks: démarrage en attente de verrou
+running_delayed: démarrage retardé
+suspended: suspendu
+ending_waiting_for_subprocesses: en cours d\'arrêt en attente de sous-processus
+ending: en cours d\'arrêt
+on_success: si succès
+on_error: si erreur
+exit: sortir
+error: erreur
+release: en cours d\'arrêt
+ended: terminé
+deleting_files: suppression fichiers StdIn, StdOut und StdErr
+closed: fermé
+Replacement is standing by: Le remplacement va être effectué
+changed file has error: le fichier modifié comporte une erreur
+not an order job: n\'est pas tâche d\'ordre
+is incorrect or missing: est incorrecte ou manquante
+non-excl.: non-excl
+is being replaced: est en cours de remplacement
+undefined: non défini
+none: aucun
+period_once: durée_une_fois
+period_single: durée_seule
+period_repeat: durée_répétition
+queue: file
+queue_at: file 
+directory: repertoire
+delay_after_error: retardé après erreur
+order: ordre
+wake: réveil
+Job chains containing jobs: Voir les chaînes des tâches contenant des tâches
+Show order history: Voir l\'historique des ordres
+Show jobs: Voir les tâches
+Show orders: Voir les ordres
+Sort job chains by: Trier les châines des tâches par
+Filter job chains by: Filtrer les châines des tâches par
+Order state: Etat de l\'ordre
+Job chain: Chaîne des tâches
+Job state: Etat de la tâche
+JOB CHAIN: CHAINE DES TACHES
+ORDER HISTORY: HISTORIQUE DES ORDRES
+Create job chain: Créer une chaîne des tâches
+Job chain menu: Menu Chaîne des Tâches
+Job node menu: Menu Tâche Noeud
+Add order: Ajouter un ordre
+Add persistent order: Ajouter un ordre persistent
+Delete job chain: Supprimer une chaîne des tâches
+Unskip: Annuler la saute
+Skip node: Skip le noeud
+Stop node: Désactiver le noeud
+Stop job: Désactiver la tâche
+Unstop job: Activer la tâche
+Do you really want to delete this job chain?: Voulez-vous vraiment supprimer cette chaîne des tâches?
+show job chain details: Voir les détails de la chaîne des tâches
+under_construction: en construction
+finished: fini
+removing: en cours de suppression
+Node is stopped: Le noeud est arrété
+Node is skipped: Le noeud est sauté
+No job chains found: Aucune chaîne des tâches trouvé
+Web service: Web service
+file orders: ordres des fichiers
+pattern: modèle
+delay: retard
+repeat: répeter
+blacklist: liste noire
+Sort orders by: Trier les ordres par
+job chain in ascending order: Chaînes des tâches triées par ordre croissant
+job chain in descending order: Chaînes des tâches triées par ordre décroissant
+Filter orders by: Filtrer les ordres par
+Order is processed by Scheduler member: L\'ordre est traité par le membre de JobScheduler
+show order details: Voir les détails de l\'ordre
+This order is a replacement for another order with the same ID: Cet ordre est un remplaçant d\'un autre ordre avec la même identification
+ORDER: ORDRE
+Order menu: Menu Ordre
+Start order now: Lancer l\'ordre immédiatement
+Start order at: Lancer l\'ordre à
+Start order parametrized: Lancer l\'ordre avec des paramètres
+Set order state: Positionner l\'état de l\'ordre
+Suspend order: Suspendre l\'ordre
+Resume order: Reprendre l\'ordre
+Reset order: Réinitialiser l\'ordre
+Delete order: Supprimer l\'ordre
+Remove setback: Supprimer le report
+Do you really want to delete this order?: Voulez-vous vraiment supprimer cet ordre?
+No orders found: Aucun ordre trouvé
+Processed by: Traité par
+Order: Ordre
+Setback: Reporté
+deleted: supprimé
+Replacement: Remplacement
+No orders in the history: Aucun ordre dans l\'historique
+Process class: Classe des processus
+Operations: Opérations
+Callbacks: Callbacks
+Current operation: Opération actuelle
+(default): (défaut)
+max processes: processus max.
+Remote Scheduler: JobScheduler distant
+No process classes found: Aucune classe des processus trouvé
+Last heart beat: Dernier \'heart beat\
+Detected heart beats: \'heart beats\' détectés
+Backup precedence: Priorité sauvegarde
+Cluster member menu: Menu Membre de Cluster
+Delete entry: Entrée supprimée
+Restart: Redémarrage
+active Scheduler(s): JobScheduler(s) actif
+exclusive Scheduler(s): JobScheduler(s) exclusif(s)
+This Scheduler is active: Ce JobScheduler est actif
+and exclusive: et exclusif
+Only non-backup Schedulers are allowed to start operation.: Uniquement les JobSchedulers qui ne font pas de sauvegardes sont autorisés à lancer des opérations.
+This Scheduler: Ce JobScheduler
+(was active!): (était actif!)
+active: actif
+inactive: inactif
+distributed orders: ordres distribués
+exclusive: exclusif
+backup: sauvegarde
+still checking...: en cours de vérification...
+dead: mort
+discovered: découvert
+after: après
+Deactivated by: Désactivé par
+ago: il y a
+IP: IP
+Hostname: Nom d\'hôte
+Port: Port
+Connected: Connecté
+Disconnected: Déconnecté
+Version: Version
+Scheduler(s): JobScheduler(s)
+connected: connecté
+No locks found: Aucun verrou trouvé
+Lock: Verrou
+non-exclusively locked: verrouillé de manière non-exclusive
+locked: verrouillé
+free: libre
+Holders (non-exclusive): Titulaire (non-exclusif)
+Holders (exclusive): Titulaire (exclusif)
+Waiting jobs (exclusive): En attente des tâches (exclusif)
+Waiting jobs (non-exclusive): En attente des tâches (non-exclusif)
+Lock is not available, it is locked: Le verrou n\'est pas disponible, il est déjà utilisé
+Lock is available: Le verrou est disponible
+Show all: Voir tout
+Show only orders: Voir uniquement les ordres
+Show only tasks: Voir uniquement les tâches
+Show only faulty tasks and orders: Voir uniquement les tâches et les ordres en erreur
+Show last tasks error: Voir les dernières instances échouées
+Job name: Nom de la tâche
+Exitcode: Code de sortie
+Order ID: ID Ordre
+Order state: Etat de l\'ordre
+Show order log: Voir le log de l\'ordre
+Show task log: Voir le log de l\'instance
+No last activities found: Aucune activité récente trouvé
+Create schedule: Créer une programmation 
+Schedule menu: Menu Programmations
+Substitute menu: Menu Substituts
+Add substitute: Ajouter un substitut
+Edit schedule: Editer la programmation
+Delete schedule: Supprimer la programmation
+Do you really want to delete this scheduler?: Voulez-vous vraiment supprimer cette programmation?
+Schedule: Programmation
+Valid from: Valable de
+Valid to: Valable pour
+Substituted by: Substitué par
+show schedule details: voir les détails de la programmation
+incomplete: incomplète
+Green: Vert
+marked schedules are currently active: Les programmations en vert sont actuellement actives
+No schedules found: Aucune programmation trouvé
+Used by jobs: Utilisé par les tâches
+Used by orders: Utilisé par les ordres
+of job chain: d\'une chaîne des tâches
+Substituted schedule: Programmation substituée
+SCHEDULE: PROGRAMMATION
+Valid: Valable
+LOG CATEGORIES: CATEGORIES DE LOG
+The default log caregories are marked: Les catégories de log sont marquées
+orange: orange
+and they are active after each reset.: et elles sont actives après chaque réinitialisation.
+Current log categories setting: Paramétrage actifs des catégories de log
+Set: Activer
+log categories for a duration of: catégories de log pour une durée de
+seconds: secondes
+log categories are updated: les catégories de log sont à jour
+reset is executed: la réinitialisation est lancée
+reset is executed after: la réinitialisation est lancée après
+Next reset: Réinitialisation suivante
+implicit: implicite
+explicit: explicite
+Category: Catégorie
+Mode: Mode
+Description: Description
+No log categories found: Aucune catégorie de log trouvé
+CALENDAR: CALENDRIER
+job: tâche
+job chain: chaîne des tâches
+of job chain: de la chaîne des tâches
+all jobs: toutes les tâches
+all jobs and orders: toutes les tâches et tous les ordres
+Start times for: Date de lancement pour
+by calling: en appelant
+with output format: avec le format de sortie
+at: à
+FILTER ADMINISTRATION: ADMINISTRATION DES FILTRES
+close: fermer
+store: enregistrer
+store as ...: enregistrer sous ...
+remove: supprimer
+quick check: vérification rapide
+regular expression for quick check: expression régulière pour une vérification rapide
+select all: sélectionner tout
+deselect all: désélectionner tout
+new filter: nouveau filtre
+filter was stored: le filtre a été enregistré
+new filter was stored: le nouveau filtre a été enregistré
+filter was removed: le filtre a été supprimé
+Filter name must be stated: Un filtre doit être renseigné
+Using\n\n|\n=>\n;\n\nis not allowed: Utiliser\n\n|\n=>\n
+A filter "$filter_name" is already defined in the file $file.: Le même nom de filtre "$filter_name" est déjà utilisé par le fichier $file.
+The same filter name "$filter" was already defined\n\nDo you want nevertheless to store it ?: Le même nom de filtre "$filter" est déjà utilisé.\nToutefois voulez-vous l\'enregistrer ?
+source: source
+line: ligne
+column: colonne
+unknown error: erreur inconnue
+submit: soumettre
+cancel: annuler
+new param: nouveau paramètre
+run time editor: Editeur de dates de lancement
+$field must be stated!: $field doit être renseigné!
+Period from ($field) is invalid date or before 1970-01-01.: La durée de ($field) n\'est pas une date valide ou est antérieur au 01/01/1970.
+Max. hits ($field) is not a positive number.: Nombre d\'occurrences max. ($field) n\'est pas un entier positif.
+Please add an existing order job to the job chain nodes.: S\'il vous plait, ajoutez un ordre existant à la chaîne des tâches.
+Please select an existing order job on the left hand side.: S\'il vous plait, ajoutez un ordre existant du coté gauche.
+Start time: Date de lancement
+Name: Nom
+The following values will be stored in a cookie. If no cookies are available the values which are set in <code>./custom.js</code> are used.: Les valeurs suivantes seront enregistrées dans un cookie. Si aucun cookie n\'est disponible, les valeurs qui sont utilisées sont celles du fichier <code>./custom.js</code>.
+Onload Values: Valeurs au démarrage
+periodically every: périodiquement tous les
+Tabs: Onglets
+Switch to: Enchaîner sur
+as the beginning view: comme vue de départ
+View Mode: Mode de voir
+for: pour les
+Selects, Checkboxes and Radios: Selects, Checkboxes et Radios
+in the <i>jobs</i> tab: dans l\'onglet des <i>Tâches</i>
+in the <i>job chains</i> tab: dans l\'onglet des <i>Chaînes des Tâches</i>
+in the <i>job chain</i> details: dans les détails des <i>Chaînes des Tâches</i>
+in the <i>last activities</i> tab: dans l\'onglet des <i>Activités Récentes</i>
+all orders and tasks: tous les ordres et les instances
+only tasks: seulement les instance
+only orders: seulement les ordres
+Runtime Values: Paramètres de démarrage
+Limits: Limites
+Max. number of orders per job chain: Nombre maximum d\'ordres par chaîne des tâches
+Max. number of last activities: Nombre maximum d\'activités récentes
+Max. number of history entries per order: Nombre maximum d\'entrées par ordre dans l\'historique
+Max. number of history entries per task: Nombre maximum d\'entrées par instance dans l\'historique
+Terminate within: Terminer dans la durée
+Max. seconds within the JobScheduler terminates: Durée maximum avant que JobScheduler se termine
+Dialogs: Dialogues
+Default start time in the &quot;<i>Start task/order at</i> &quot;-Dialog is <i>now</i>: Date de lancement par défaut pour &quot
+Debugging of the operations GUI: Déverminage d\'operations GUI 
+Level: Niveau
+Start task $task: Lancer l\'instance $task
+Start order $order: Lancer l\'ordre $order
+<b>Enter a run time</b> or use the $editor: <b>Rentrez une date de lancement</b> ou utilisez <span style="display:inline-block
+Start enforced: Lancement forcé
+Change parameters: Changer des paramètres
+Declare parameters: Déclarer des paramètres
+Declare new parameters: Déclarer de nouveaux paramètres
+name: nom
+value: valeur
+Add order to $job_chain: Ajouter un ordre à $job_chain
+Enter an order id: Id ordre
+Enter an order title: Titre de l\'ordre
+Select an order state: Etat de l\'ordre
+Select an order end state: Etat de fin de l\'ordre
+In order to store this order in a hot folder you have to state an order id.\nYour order will only be stored permanently, however, it is valid for\nthe lifetime of this JobScheduler session. Do you want to continue?: Dans le but d\'enregistrer cet ordre dans le \"Hot Folder\" vous devez paramétrer un id d\'ordre.\nVotre ordre sera enregistré de manière permanent mais il sera valide\n pour la durée de validité de la session JobScheduler. Voulez-vous continuer?
+Set order state of $order: Fixez l\'état de $order
+<b>Select a new order state</b>: <b>Choisissez un nouvel état de l\'ordre.</b>
+<span class="small">The current order state is $state.</span>: <span class="small">L\'état actuel de l\'ordre est $state.</span>
+<b>Select a new order end state</b>: <b>Sélectionnez un nouvel état de fin pour l\'ordre.</b>
+<span class="small">The current order end state is $state.</span>: <span class="small">L\'état actuel de fin de l\'ordre est $state.</span>
+Set run time of $job: Fixez une date de lancement de $job
+or choose a schedule: ou choisissez une programmation
+Add schedule: Ajouter une programmation
+Add substitute for $schedule: Ajouter un substitut pour $schedule
+Edit $schedule: Modifier $schedule
+Enter a schedule name: Nom de la programmation
+Parameterize the start times list: Paramétrez la liste des dates de démarrage
+<b>Set the period</b>: <b>Fixez la période</b>
+<span class="small">(Timestamps in ISO format yyyy-mm-dd[ hh:mm:ss])</span>: <span class="small">(Date au format ISO yyyy-mm-dd[ hh:mm:ss])</span>
+...from: ...de
+...to: ...pour
+Max. hits: Nombre  max. d\'occurrences
+Output format: Format de sortie
+Include order start times: Ajoutez les dates de démarrage d\'ordre
+Sorry, but this feature is only supported for\nJobScheduler version 2.0.204.5774 or higher: Désolé, cette fonctionnalité est supportée à partir de la version 2.0.204.5774 de JobScheduler
+Modify job chain: Modifier la chaîne des tâches
+Now you can modify the job chain by editing the text area content.: Dorénavant vous pouvez modifier la chaîne des tâches en éditant le contenu du champ texte.
+Orders are stored in the database (orders_recoverable): Les ordres sont stockés en base de données (orders_recoverable)
+Existing order jobs: Tâches d\'ordre existants
+Job chain nodes: Noeuds de la chaîne des tâches
+Enter a folder: Repertoire
+Enter a job chain name: Nom de la chaîne des tâches
+Enter a job chain title: Titre de la chaîne des tâches
+The JobScheduler $scheduler has no jobs with a description.: The JobScheduler $scheduler has no jobs with a description.
+Because of a security sanction of your browser you must reload this site!: Because of a security sanction of your browser you must reload this site!
+Please select a job to display its description.: Please select a job to display its description.
+Please enter a job name to display its description.: Please enter a job name to display its description.

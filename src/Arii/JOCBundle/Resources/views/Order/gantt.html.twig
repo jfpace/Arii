@@ -1,0 +1,219 @@
+{# src/Arii/JOCBundle/Resources/views/orders.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block dhtmlx_plus %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('dhtmlxGantt_pro/codebase/skins/dhtmlxgantt_terrace.css') }}" media="screen" title="no title" charset="utf-8">
+        <script src="{{ asset('dhtmlxGantt_gpl/codebase/dhtmlxgantt.js') }}" type="text/javascript"></script>
+{% endblock dhtmlx %}
+{% block content %}
+<div id="MyGantt" style='width:100%; height:100%;'></div>
+<style>
+gantt_task_line.custom_css {
+    background-color: #65c16f;
+    background-color: red;
+    border: 1px solid #3c9445;
+}
+gantt_task_line.custom_css  .gantt_task_progress {
+    background-color: #65c16f;
+}
+
+.failure .gantt_cell, .odd.failure .gantt_cell, .even.failure .gantt_cell,
+.failure .gantt_task_cell, .odd.failure .gantt_task_cell, .even.failure .gantt_task_cell{
+    background-color: #fbb4ae;
+}
+.success .gantt_cell, .odd.success .gantt_cell, .even.success .gantt_cell,
+.success .gantt_task_cell, .odd.success .gantt_task_cell, .even.success .gantt_task_cell {
+    background-color: #ccebc5;
+}
+.running .gantt_cell, .odd.running .gantt_cell, .even.running .gantt_cell,
+.running .gantt_task_cell, .odd.running .gantt_task_cell, .even.running .gantt_task_cell {
+    background-color: #ffffcc;
+}
+.fatal .gantt_cell, .odd.fatal .gantt_cell,
+.fatal .gantt_task_cell, .odd.fatal .gantt_task_cell {
+    background-color: red;
+    color: yellow;
+}
+.suspended .gantt_cell, .odd.suspended .gantt_cell,
+.suspended .gantt_task_cell, .odd.suspended .gantt_task_cell {
+    background-color: red;
+    color: yellow;
+}
+.skipped .gantt_cell, .odd.skipped .gantt_cell,
+.skipped .gantt_task_cell, .odd.skipped .gantt_task_cell {
+    background-color: orange;
+    color: yellow;
+}
+.gantt_task_link.error .gantt_line_wrapper div{
+        background-color: #dd5640;
+}
+.gantt_task_link.error:hover .gantt_line_wrapper div{
+        box-shadow: 0 0 5px 0px #dd5640;
+}
+.gantt_task_link.error .gantt_link_arrow_right{
+        border-left-color: #dd5640;
+}
+
+.gantt_task_link.job_chain .gantt_line_wrapper div{
+        background-color: #7576ba;
+}
+.gantt_task_link.job_chain:hover .gantt_line_wrapper div{
+        box-shadow: 0 0 5px 0px #7576ba;
+}
+.gantt_task_link.job_chain .gantt_link_arrow_right{
+        border-left-color: #7576ba;
+}
+
+.gantt_task_link.next .gantt_line_wrapper div{
+        background-color: #55d822;
+}
+.gantt_task_link.next:hover .gantt_line_wrapper div{
+        box-shadow: 0 0 5px 0px #55d822;
+}
+.gantt_task_link.next .gantt_link_arrow_left{
+        border-right-color: #55d822;
+}
+.gantt_tree_icon.gantt_folder_C_open {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/job_chain.png') }}' );
+}
+.gantt_tree_icon.gantt_folder_C_closed {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/job_chain.png') }}' );
+}
+.gantt_tree_icon.gantt_folder_O_open {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/order.png') }}' );
+} 
+.gantt_tree_icon.gantt_folder_O_closed {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/order.png') }}' );
+} 
+.gantt_tree_icon.gantt_folder_S_open {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/spooler.png') }}' );
+} 
+.gantt_tree_icon.gantt_folder_S_closed {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/spooler.png') }}' );
+} 
+.gantt_tree_icon.gantt_folder_T_open {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/task.png') }}' );
+} 
+.gantt_tree_icon.gantt_folder_T_closed {
+    background-image: url( '{{ asset('bundles/ariicore/images/wa/task.png') }}' );
+} 
+.failure .gantt_task_progress, .failure .gantt_task_progress{
+        background: red;
+}
+</style>
+<script>
+
+gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+gantt.config.api_date = "%Y-%m-%d %H:%i:%s";
+gantt.config.grid_width = 380;
+gantt.config.add_column = false;
+
+gantt.templates.grid_row_class = function(start_date, end_date, item) {
+return item.status;
+};
+gantt.templates.task_row_class = function(start_date, end_date, item) {
+return item.status;
+};
+gantt.templates.link_class = function(link){
+    return link.state;
+};
+gantt.templates.grid_folder = function(item) {
+    type = item.id.substr(0,1);
+    if ( type==='F') {
+        return "<div class='gantt_tree_icon gantt_folder_" + (item.$open ? "open" : "closed") + "'></div>";
+    }
+    return "<div class='gantt_tree_icon gantt_folder_" + type +"_"+
+    (item.$open ? "open" : "closed") + "'></div>";
+};
+
+gantt.config.columns = [
+    {name:"text", label:"Task name", tree:true, width:'*' },
+   {name:"start_date", label:"Start date", width:60, align: "right",
+        template: function(item) {
+            if ((item.objtype == "S") || (item.objtype == "F") || (item.objtype == "C"))
+                return "";            return item.start_date.toString().substring(16);
+        }
+    },
+    {name:"duration", label:"Duration", width:60, align: "right",
+        template: function(item) {
+            if ((item.objtype == "S") || (item.objtype == "F") || (item.objtype == "C")  || (item.objtype == "H"))
+                return "";
+            return item.runtime;
+        }
+    },
+    {name:"progress", label:"Progress", width:50, align: "right",
+        template: function(item) {
+            if ((item.objtype == "S") || (item.objtype == "F") || (item.objtype == "C")  || (item.objtype == "H"))
+                return "";
+            if ((item.status=='failure') || (item.progress==0))
+                return '';
+            return Math.round(item.progress*100) + "%";
+        }
+    }
+
+];
+
+ScaleConfig('hour');
+gantt.config.server_utc = true;
+gantt.init("MyGantt");
+gantt.load("{{ url('xml_JOC_orders_gantt') }}");
+gantt.attachEvent("onTaskOpened",function(id) {
+    dhtmlxAjax.get( "{{ url('arii_session_update') }}?state=gantt_orders::"+encodeURIComponent(id)+'::1', function (loader) {
+    });    
+});
+gantt.attachEvent("onTaskClosed",function(id) {
+    dhtmlxAjax.get( "{{ url('arii_session_update') }}?state=gantt_orders::"+encodeURIComponent(id)+'::0', function (loader) {
+    });    
+});
+
+var toolbar;
+toolbar = new dhtmlXToolbarObject("toolbarObj");
+toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+toolbar.loadStruct("{{ url('xml_JOC_toolbar_gantt') }}");
+toolbar.attachEvent( "onClick", function(id, value) {
+    switch (id) {
+        case "refresh":
+            GlobalRefresh();
+            break;
+        case "print":
+            // gantt.printToWindow();
+            break;
+        default:
+            alert(id);
+    }
+});
+
+gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
+    return true;
+});
+
+function FilterType(parent){
+    return true;
+    task_type = gantt.getTask(parent).type;
+    if (( task_type !='' ) & ( toolbar.getItemState("type_".task_type) == false ) ) {
+        return false;
+    }
+
+    var child = gantt.getChildren(parent);
+    for(var i = 0; i < child.length; i++){
+        if(FilterType(child[i]))
+            return true;
+    }
+    return true;
+}
+
+gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
+return FilterType(id);
+});
+  
+function GlobalRefresh() {
+/*    gantt.clearAll();
+    gantt.load("{{ url('xml_JOC_orders_gantt') }}");
+*/
+dhtmlxAjax.get("{{ url('xml_JOC_orders_gantt') }}", function(loader){
+      gantt.clearAll();
+      gantt.parse(loader.xmlDoc.responseText);
+ });
+//    gantt.refreshData();
+};
+</script>
+{% endblock %}

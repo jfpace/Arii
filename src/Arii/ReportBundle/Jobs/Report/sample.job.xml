@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ 
+<job title="Create JasperReport" java_options="-Djava.awt.headless=true">
+    <description>
+        <include file="jobs/JobSchedulerJasperReport.xml"/>
+    </description>
+    <params>
+        <param name="output_type" value="html;pdf"/>
+        <param name="settings_filename" value="config/sos_settings.ini"/>
+        <param name="mail_it" value="true"/>
+        <param name="suspend_attachment" value="false"/>
+        <param name="report_filename" value="jasperreports/scheduler_job_history.jasper"/>
+        <param name="query_filename" value="jasperreports/scheduler_job_history_mysql.sql"/>
+        <param name="output_filename" value="jasperreports/scheduler_job_history.html"/>
+    </params>
+    <script java_class="com.sos.jitl.jasperreports.JobSchedulerJasperReportJob"
+            language="java"/>
+    <run_time/>
+</job>

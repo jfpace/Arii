@@ -1,0 +1,220 @@
+arii_homepage:
+    pattern:  /
+    defaults: {_controller: AriiCoreBundle:Default:default }
+
+arii_home:
+    pattern:  /home/{_locale}
+    defaults: { _controller: AriiCoreBundle:Default:index }
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+# ========================================
+# DOC Bundle
+# ----------------------------------------
+arii_doc:
+    resource: "@AriiDOCBundle/Resources/config/routing.yml"
+    prefix:   /doc/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+# ========================================
+# Core Bundle
+# ----------------------------------------
+arii_core:
+    resource: "@AriiCoreBundle/Resources/config/routing.yml"
+    prefix:   /home/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+        
+# ========================================
+# Tools Bundle
+# ----------------------------------------
+arii_tools:
+    resource: "@AriiToolsBundle/Resources/config/routing.yml"
+    prefix:   /tools/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+        
+# ========================================
+# Config Bundle
+# ----------------------------------------
+arii_Config:
+    resource: "@AriiConfigBundle/Resources/config/routing.yml"
+    prefix:   /config/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+        
+# ========================================
+# Admin 
+# ----------------------------------------
+arii_Admin:
+    resource: "@AriiAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+        
+# ========================================
+# JID 
+# ----------------------------------------
+arii_jid:
+    resource: "@AriiJIDBundle/Resources/config/routing.yml"
+    prefix:   /jid/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+        
+arii_jid_public:
+    resource: "@AriiJIDBundle/Resources/config/routing_public.yml"
+    prefix:   /public
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+arii_jid_nagios:
+    resource: "@AriiJIDBundle/Resources/config/routing_nagios.yml"
+    prefix:   /nagios
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# JOE 
+# ----------------------------------------
+arii_joe:
+    resource: "@AriiJOEBundle/Resources/config/routing.yml"
+    prefix:   /joe/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# MFT 
+# ----------------------------------------
+arii_mft:
+    resource: "@AriiMFTBundle/Resources/config/routing.yml"
+    prefix:   /mft/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+# ========================================
+# Graphviz
+# ----------------------------------------
+arii_GVZ:
+    resource: "@AriiGraphvizBundle/Resources/config/routing.yml"
+    prefix:   /gvz/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+# ========================================
+# Focus
+# ----------------------------------------
+arii_Focus:
+    resource: "@AriiFocusBundle/Resources/config/routing.yml"
+    prefix:   /cache
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+        
+# Appels internes
+arii_Internal:
+    resource: "@AriiFocusBundle/Resources/config/routing_internal.yml"
+    prefix:   /focus
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# JOC
+# ----------------------------------------
+arii_JOC:
+    resource: "@AriiJOCBundle/Resources/config/routing.yml"
+    prefix:   /joc/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# Report
+# ----------------------------------------
+arii_Report:
+    resource: "@AriiReportBundle/Resources/config/routing.yml"
+    prefix:   /report/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+# ========================================
+# Autosys
+# ----------------------------------------
+arii_ATS:
+    resource: "@AriiATSBundle/Resources/config/routing.yml"
+    prefix:   /ats/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# I5
+# ----------------------------------------
+arii_I5:
+    resource: "@AriiI5Bundle/Resources/config/routing.yml"
+    prefix:   /i5/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ----------------------------------------
+# Housekeeping
+# ----------------------------------------
+arii_JID_purge:
+    pattern:  /housekeeping/purge
+    defaults: { _controller: AriiJIDBundle:DB:purge }
+
+arii_JID_purge_history:
+    pattern:  /housekeeping/purge_history
+    defaults: { _controller: AriiJIDBundle:DB:purge_history }
+
+arii_JID_purge_order_history:
+    pattern:  /housekeeping/purge_order
+    defaults: { _controller: AriiJIDBundle:DB:purge_order }
+
+arii_JID_purge_history_out:
+    pattern:  /housekeeping/purge/history/{DB}
+    defaults: { _controller: AriiJIDBundle:DB:purgeHistory }
+
+arii_JID_purge_orders_history_out:
+    pattern:  /housekeeping/purge/orders/{DB}
+    defaults: { _controller: AriiJIDBundle:DB:purgeOrdersHistory }
+    
+arii_JID_status_history:
+    pattern:  /housekeeping/status
+    defaults: { _controller: AriiJIDBundle:DB:status }
+
+# ========================================
+arii_JID_purge_history_public:
+    pattern:  /public/purge/history
+    defaults: { _controller: AriiJIDBundle:DB:purge_history }
+
+arii_JID_purge_order_public:
+    pattern:  /public/purge/orders
+    defaults: { _controller: AriiJIDBundle:DB:purge_order }
+
+arii_JID_purge_order_step_public:
+    pattern:  /public/purge/steps
+    defaults: { _controller: AriiJIDBundle:DB:purge_order_steps }
+
+# ========================================
+# User Bundle
+# ----------------------------------------
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /change-password
+
+arii_user:
+    resource: "@AriiUserBundle/Resources/config/routing.yml"
+    prefix:   /user/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp

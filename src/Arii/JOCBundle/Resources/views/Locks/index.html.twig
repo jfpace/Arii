@@ -1,0 +1,99 @@
+{# src/Arii/JOCBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block body %}
+<script language="javascript">
+update = 30;
+dhtmlxEvent(window,"load",function(){ 
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");
+    globalLayout.cells("a").setWidth(340); 
+    globalLayout.cells("b").hideHeader(); 
+    globalLayout.cells("c").hideHeader(); 
+    
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOC_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+/*
+    globalToolbar = globalLayout.cells("b").attachToolbar();
+    globalToolbar.setIconsPath("{{ asset('bundles/ariicore/images/globalToolbar/') }}");
+    globalToolbar.loadStruct("{{ url('arii_JOC_toolbar') }}");
+    globalToolbar.attachEvent( "onClick", function(id, value) {
+        switch (id) {
+            case "refresh":
+                GridRefresh();
+            break;
+            default:
+                alert(id);
+        }
+    });
+*/
+    globalLayout.cells("a").hideHeader();
+
+    myGrid = globalLayout.cells("b").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Spooler" | trans }},{{ "Folder" | trans }},{{ "Name" | trans }},{{ "Status" | trans }},{{ "Max" | trans }}");
+    myGrid.attachHeader("#select_filter,#text_filter,#text_filter,#select_filter,#numeric_filter");
+    myGrid.setInitWidths("200,*,200,120,100");
+    myGrid.setColAlign("left,left,left,right,right");
+    myGrid.setColTypes("ro,ro,ro,ro,ro");
+    myGrid.setColSorting("str,str,str,str,numeric");
+    myGrid.enableAlterCss("","");
+    myGrid.loadXML( "{{ url('xml_JOC_locks') }}" );
+    myGrid.enableLightMouseNavigation( true );
+    myGrid.init();
+
+    myUse = globalLayout.cells("c").attachGrid();
+    myUse.selMultiRows = true;
+    myUse.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myUse.setHeader("{{ "Job" | trans }},{{ "Status" | trans }}");
+    myUse.attachHeader("#text_filter,#select_filter");
+    myUse.setInitWidths("*,200");
+    myUse.setColAlign("left,left");
+    myUse.setColTypes("ro,ro");
+    myUse.setColSorting("str,str");
+    myUse.enableAlterCss("","");
+    myUse.enableLightMouseNavigation( true );
+    myUse.init();
+    myGrid.attachEvent("onRowDblClicked", function(id) {
+        globalLayout.cells("c").progressOn();
+        myUse.loadXML( "{{ url('xml_JOC_locks_use') }}?id="+id, function() {
+            globalLayout.cells("c").progressOff();            
+        } ); 
+    });
+    
+    GridRefresh;
+});
+
+function GridRefresh() {
+    clearInterval( autorefresh );
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10){
+    minutes = "0" + minutes;
+    }
+    if (seconds < 10){
+    seconds = "0" + seconds;
+    }
+    myRibbon.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
+    globalLayout.cells("b").progressOn();
+    myGrid.load("{{ url('xml_JOC_locks') }}", function (id) {
+        globalLayout.cells("b").progressOff();
+        autorefresh = setInterval( "GridRefresh()", update*1000 );
+    });
+}
+
+function GlobalRefresh() {
+    GridRefresh();
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+arii_doc_homepage:
+    path:     /{doc}
+    defaults: { _controller: AriiDOCBundle:Default:index }
+    requirements:
+        doc: .+

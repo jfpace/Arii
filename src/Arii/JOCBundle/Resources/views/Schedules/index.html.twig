@@ -1,0 +1,84 @@
+{# src/Arii/JOCBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiJOCBundle::layout.html.twig" %}
+{% block body %}
+<script language="javascript">
+var myGrid;
+
+dhtmlxEvent(window,"load",function(){ 
+
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");
+    globalLayout.cells("a").hideHeader();
+    globalLayout.cells("a").setWidth(315); 
+    
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_JOC_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    globalLayout.cells("b").hideHeader();
+    toolbar =  globalLayout.cells("b").attachToolbar();
+    toolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    toolbar.loadStruct("{{ url('arii_JOC_toolbar') }}");
+    toolbar.attachEvent( "onClick", function(id, value) {
+        switch (id) {
+            case "refresh":
+                GridRefresh();
+            break;
+            default:
+                alert(id);
+        }
+    });
+    toolbar.attachEvent("onStateChange",function(id,state){
+        dhtmlxAjax.get("{{ url('arii_global_toolbar_update') }}?"+id+"="+state,function(loader){
+            GlobalRefresh();
+        });
+    });
+
+    globalLayout.cells("c").hideHeader();
+    myGrid = globalLayout.cells("b").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Spooler" | trans }},{{ "Location" | trans }},{{ "Name" | trans }},{{ "Title" | trans }},{{ "Act." | trans }}");
+    myGrid.attachHeader("#select_filter,#text_filter,#text_filter,#text_filter,#text_filter");
+    myGrid.setInitWidths("100,*,200,300,50");
+    myGrid.setColAlign("left,left,left,left,center");
+    myGrid.setColTypes("ro,ro,ro,ro,ch");
+    myGrid.setColSorting("str,str,str,int");
+    myGrid.loadXML( "{{ url('xml_JOC_schedules') }}" );
+    myGrid.enableLightMouseNavigation( true );
+    myGrid.init();
+
+
+});
+
+function GridRefresh() {
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10){
+    minutes = "0" + minutes;
+    }
+    if (seconds < 10){
+    seconds = "0" + seconds;
+    }
+    toolbar.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
+    var page_number = myGrid.currentPage;
+        myGrid.loadXML("{{ url('xml_JOC_schedules') }}?time="+seconds+"&ordered="+ordered, function(){
+        myGrid.refreshFilters();
+        myGrid.filterByAll();
+        myGrid.changePage(page_number);
+    });    
+}
+
+function GlobalRefresh() {
+    GridRefresh();
+}
+</script>
+
+{% endblock %}

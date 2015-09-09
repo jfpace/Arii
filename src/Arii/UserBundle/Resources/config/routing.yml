@@ -1,0 +1,12 @@
+#--------------------------------------------------------------------
+# Login form
+#--------------------------------------------------------------------
+json_User_login_form:
+    pattern:  /login.json
+    defaults: { _controller: AriiUserBundle:Arii:login}
+
+
+xml_User_menu:
+    pattern:  /menu.xml
+    defaults: { _controller: AriiUserBundle:Arii:menu }
+

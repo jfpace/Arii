@@ -1,0 +1,40 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"140" },
+    {type:"input", name: "SPOOLER_ID", label:"{{ "Spooler" | trans}}" },
+    {type:"input",    name: "START_TIME", label:"{{ "Start" | trans}}"},
+    {type:"input",    name: "END_TIME", label:"{{ "End" | trans}}"},
+    {type:"input",    name: "STATE", label:"{{ "State" | trans}}"},
+    {type:"input",    name: "ERROR", label:"{{ "Error" | trans}}"},
+    {type:"hidden",    name: "HISTORY_ID" },
+    {type:"newcolumn"},
+  {   type:"input",    
+            name: "JOB_CHAIN", 
+            label:"{{ "Chain" | trans}}",
+            inputWidth:"300" 
+    },
+    {   type:"input",    
+            name: "ORDER_ID", 
+            label:"{{ "Order" | trans}}", 
+            inputWidth:"300"  
+    },
+    {   type:"input",    
+            name: "TITLE", 
+            label:"{{ "Title" | trans}}",
+            inputWidth:"300"  
+    },
+    {   type:"input",    
+            name: "STATE_TEXT", 
+            label:"{{ "Output" | trans}}", 
+            inputWidth:"300"  
+    }
+    ,
+    {   type:"input",    
+            name: "ERROR_TEXT", 
+            label:"{{ "Message" | trans}}", 
+            inputWidth:"300"  
+    }
+]

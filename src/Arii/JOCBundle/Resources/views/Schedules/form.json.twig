@@ -1,0 +1,42 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"60",
+        inputWidth:"200" },
+    {   type:"input",    
+            name: "FOLDER", 
+            label:"{{ "Folder" | trans}}"
+    },
+    {   type:"input",    
+            name: "NAME", 
+            label:"{{ "Name" | trans}}"
+    },
+    {   type:"input",    
+            name: "CHAIN", 
+            label:"{{ "Chain" | trans}}"
+    },
+    {   type:"input",    
+            name: "TITLE", 
+            label:"{{ "Title" | trans}}",
+            rows: 2
+    },
+    {type:"newcolumn"},  
+    {type:"input",    name: "START_TIME", label:"{{ "Begin" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "SETBACK", label:"{{ "Setback" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "END_TIME", label:"{{ "End" | trans}}", inputWidth:"150"}, 
+    {   type:"input",    
+            name: "STATE_TEXT", 
+            label:"{{ "Output" | trans}}", inputWidth:"150"
+    },
+    {type:"newcolumn"},  
+    {type:"input",    name: "PRIORITY", label:"{{ "Priority" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "SETBACK_COUNT", label:"{{ "Count" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "NEXT_START_TIME", label:"{{ "Next" | trans}}", inputWidth:"150"},
+    {type:"input",    name: "IN_PROCESS_SINCE", label:"{{ "Since" | trans}}", inputWidth:"150"},
+    {type:"checkbox",    name: "ON_BLACKLIST", label:"{{ "Black list" | trans}}", inputWidth:"150"}, 
+/*    {type:"input",    name: "TOUCHED", label:"{{ "Touched" | trans}}", inputWidth:"150"}, */
+    {type:"hidden",    name: "SUSPENDED" },
+    {type:"hidden",    name: "SPOOLER_ID" },
+    {type:"hidden",    name: "ID" }
+]

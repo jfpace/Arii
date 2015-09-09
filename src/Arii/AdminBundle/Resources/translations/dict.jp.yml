@@ -1,0 +1,518 @@
+$cnt in cluster: $cnt台のクラスタ
+$field must be stated!: $fieldを入力してください!
+$trial trial (of 5) to (re)connect to JobScheduler: $trial trial (of 5) to (re)connect to JobScheduler
+(all): (全て)
+(default): (初期値)
+(no filtering): (フィルタリング無し)
+(not loaded): (not loaded)
+(other): (その他)
+(unsorted): (非ソート)
+(was active!): (アクティブでした)
+-id: -ID
+...from: 開始
+...to: 終了
+<b>Enter a run time</b> or use the $editor: ランタイム定義を記述するか、$editorを使って定義してください
+<b>Enter a start time</b><span class="small"> in ISO format &quot;yyyy-mm-dd HH:MM[:SS]&quot; or &quot;now&quot;. The time at which a task is to be started &lt;run_time&gt; is deactivated. Relative times - &quot;now + HH:MM[:SS]&quot; and &quot;now + SECONDS&quot; - are allowed.<span>: <b>開始時刻を入力してください</b> ISOフォーマットの 「yyyy-mm-dd HH:MM[:SS] 」、即時実行の場合は「now」、 ジョブ定義内で設定された &lt
+<b>Select a new order end state</b>: 新規オーダーの終了ステートを選択
+<b>Select a new order state</b>: <b>新規オーダーステートを選択</b>
+<b>Set the period</b>: <b>期間設定</b>
+<span class="small">(Timestamps in ISO format yyyy-mm-dd[ hh:mm:ss])</span>: <span class="small">(ISOフォーマット「yyyy-mm-dd[ hh:mm:ss]」)</span>
+<span class="small">The current order end state is $state.</span>: オーダーの終了ステートは$stateです</span>
+<span class="small">The current order state is $state.</span>: <span class="small">オーダーの現在ステートは$stateです</span>
+A filter "$filter_name" is already defined in the file $file.: $filter_nameは、すでに$fileで使用されています。
+Abort immediately and restart: 即時強制終了後再開
+Abort immediately: 即時強制終了
+About: 情報
+active Scheduler(s): アクティブJobScheduler
+active: アクティブ
+Add order to $job_chain: オーダーを$job_chainに登録
+Add order: オーダー作成
+Add persistent order: 永続オーダー作成
+Add schedule: スケジュールを追加
+Add substitute for $schedule: $scheduleを置換
+Add substitute: 置換スケジュール作成
+after: 後
+ago: 前
+all jobs and orders: 全てのJob/Order
+All jobs: 全ジョブ表示
+all jobs: 全ジョブ
+all orders and tasks: 全オーダー/タスク
+and exclusive: 優先です
+and they are active after each reset.: で、リセット後有効です
+and with process class: プロセスクラス
+as the beginning view: を表示
+at: 日時
+Backup JobScheduler:: Backup JobScheduler:
+Backup precedence: Backup precedence
+backup: バックアップ
+BCC: BCC
+Because of a security sanction of your browser you must reload this site!: Because of a security sanction of your browser you must reload this site!
+blacklist: ブラックリスト
+Build: Build
+by calling: 出力条件
+CALENDAR: 実行予定
+Callbacks: コールバック
+cancel: キャンセル
+Category: 設定
+Cause: 理由
+CC: CC
+Change parameters: パラメータ変更
+changed file has error: 変更されたファイルはエラーになります
+close all folders: 全て閉じる
+close: 終了
+closed: クローズ
+Cluster member menu: クラスタメニュー
+Cluster: クラスタ
+column: column
+Configuration: Configuration
+Connected: 接続
+connected: 接続
+Continue tasks: タスク再開
+Continue: 再開
+Create job chain: ジョブチェーン作成
+Create schedule: スケジュール作成
+Current log categories setting: 現在のログ設定は
+Current operation: オペレーション中
+days: 日
+Deactivated by: 非活化
+dead: デッド
+Debugging of the operations GUI: WEB GUIのデバッグレベル
+Declare new parameters: 新規パラメータ設定
+Declare parameters: パラメータ設定
+Default start time in the &quot;<i>Start task/order at</i> &quot;-Dialog is <i>now</i>: 「タスク/オーダー実行」ダイアログの初期値が「即時」
+delay: 間隔
+delayed after error: 再試行
+delay_after_error: 再試行
+Delete entry: エントリ削除
+Delete job chain: ジョブチェーン削除
+Delete job: ジョブ削除
+Delete order: オーダー削除
+Delete schedule: スケジュール作成
+Delete: 削除
+deleted: 削除
+deleting_files: ファイル削除
+Description: 備考
+deselect all: 選択解除
+Detected heart beats: ハートビート検出数
+Dialogs: ダイアログ設定
+directory: ディレクトリ
+disabled: 無効
+Disconnected: 切断
+discovered: ディスカバー
+distributed orders: 分散オーダー
+Do you really want to delete this job chain?: 本当にジョブチェーン削除しますか?
+Do you really want to delete this job?: 本当にジョブ削除しますか
+Do you really want to delete this order?: 本当にオーダー削除しますか?
+Do you really want to delete this scheduler?: 本当にスケジュール削除しますか?
+Documentation: ドキュメント
+Downloads: ダウンロード
+Duration: 時間
+Edit $schedule: $scheduleを編集
+Edit schedule: スケジュール編集
+End tasks: タスク終了
+End: タスク終了
+Ended: 終了時刻
+ended: 終了
+ending: 終了
+ending_waiting_for_subprocesses: 子プロセス多雨期中
+Enqueued at: 待機中
+enqueued tasks: 待機タスク
+Enqueued: 待機中
+Enter a folder: フォルダ名を入力
+Enter a job chain name: ジョブチェーン名を入力
+Enter a job chain title: ジョブチェーンのタイトルを入力
+Enter a schedule name: スケジュール名を入力
+Enter an order id: オーダーIDを入力
+Enter an order title: オーダー名を入力
+Error at XML answer:: Error at XML answer:
+Error in changed file: ファイル変更エラー
+Error in configuration file: ジョブ定義エラー
+error: エラー
+Error: エラー
+every $secs: $sec秒毎
+exclusive Scheduler(s): 優先JobScheduler
+exclusive: 優先
+Existing order jobs: 既にオーダージョブが存在します
+exit: 終了
+Exitcode: 終了コード
+explicit: explicit
+Extras: 情報
+file orders: ファイルオーダー
+File timestamp: ファイル更新日付
+FILTER ADMINISTRATION: フィルタ設定
+Filter job chains by: ジョブチェーンのフィルタ
+Filter jobs by: フィルタリング
+Filter name must be stated: フィルタ名を入力して下さい
+Filter orders by: オーダーフィルタ
+filter was removed: フィルタは削除されました
+filter was stored: フィルタは保存されました
+finished: 終了
+First: 1回目
+Follow us on Twitter: Twitterでフォロー
+for: 表示
+Forum: フォーラム(英語)
+Fourth: 4回目
+free: 開放中
+From: From
+from: from
+Green: 緑色
+Help: ヘルプ
+Hide: 非表示
+Holders (exclusive): ロック保持(排他)
+Holders (non-exclusive): ロック保持(共有)
+Hostname: ホスト名
+Id: ID
+ID: ID
+Idle since: アイドル中
+implicit: implicit
+In order to store this order in a hot folder you have to state an order id.\nYour order will only be stored permanently, however, it is valid for\nthe lifetime of this JobScheduler session. Do you want to continue?: ホットフォルダにこのオーダーを保存するためにはオーダーIDが必要です。\n保存されたオーダーはこのJobSchedulerセッション中有効になります。\n保存しますか?
+In process since: 処理中
+in the <i>job chains</i> tab: （「ジョブチェーン」タブ）
+in the <i>jobs</i> tab: （「ジョブ」タブ）
+in the <i>last activities</i> tab: （「実行状況」タブ）
+in the job chain details: （「ジョブチェーン」詳細）
+inactive: 非アクティブ
+Include order start times: オーダー開始時刻を含む
+incomplete: 未完了
+initialized: 初期化されました
+IP: IP
+is being replaced: は置換されます
+is incorrect or missing: は、不正か見つかりません
+job chain in ascending order: ジョブチェーン(昇順)
+job chain in descending order: ジョブチェーン(降順)
+Job chain menu: ジョブチェーンメニュー
+Job chain nodes: ジョブチェーンノード
+Job chain: ジョブチェーン
+job chain: ジョブチェーン
+JOB CHAIN: ジョブチェーン
+Job chains containing jobs: ジョブを含むジョブチェーン
+Job Chains: ジョブチェーン
+Job menu: ジョブメニュー
+Job name: ジョブ名
+Job node menu: ジョブノードメニュー
+Job state: 状態
+JOB: ジョブ
+job: ジョブ
+Job: ジョブ
+jobs: ジョブ
+Jobs: ジョブ
+JobScheduler is waiting for database ...: JobScheduler is waiting for database ...
+JobScheduler: JobScheduler
+Kill immediately: タスク強制終了
+Last Activities: 最新履歴
+Last error: 最新エラー
+Last heart beat: 前回のハートビート
+last update: last update
+Last warning: 最新ワーニング
+Last: 最終
+Level: レベル
+Limits: 制限値
+line: line
+list view: リスト
+loaded: ロードされました
+loading: ロード中
+Lock is available: ロックできます
+Lock is not available, it is locked: ロックされています
+Lock: ロック
+locked: ロック中
+Locks: ロック
+log categories are updated: 設定が更新されました
+log categories for a duration of: 経過時間の設定
+LOG CATEGORIES: ログ設定
+Log level: ログレベル
+mail on error: エラー時メール
+mail on process: 処理時メール
+mail on success: 成功時メール
+mail on warning: ワーニング時メール
+Mail subject: メール件名
+Manage filters: フィルタ設定
+Manage log categories: ログ設定
+marked schedules are currently active: スケジュールはアクティブ
+max processes: 最大プロセス数
+Max. hits ($field) is not a positive number.: 最大数($field)が、正数ではありません
+Max. hits: 最大件数
+Max. number of history entries per order: オーダー当たり最大履歴表示数
+Max. number of history entries per task: タスク当たり最大履歴表示数
+Max. number of last activities: 実行状況の最大表示数
+Max. number of orders per job chain: ジョブチェーン当たり最大オーダー数
+Max. seconds within the JobScheduler terminates: JobScheduler終了時の最大猶予時間（秒）
+Menu: メニュー
+Mode: モード
+Modify job chain: ジョブチェーンの編集
+Monitor: Monitor
+name in ascending order: ジョブ名(昇順)
+name in descending order: ジョブ名(降順)
+Name: ジョブ名
+name: パラメータ名
+need process: 必要プロセス
+needs lock: ロックが必要
+needs process: プロセスが必要
+never: 未実行
+new filter was stored: 新規フィルタは保存されました
+new filter: 新規フィルタ
+new param: 新規パラメータ
+Next reset: 次のリセット
+next start time in ascending order: 次回開始時刻 (昇順)
+next start time in descending order: 次回開始時刻 (降順)
+Next start: 次回開始時刻
+No connection to JobScheduler: No connection to JobScheduler
+No job chains found: ジョブチェーンはありません
+No jobs found: ジョブはありません
+No last activities found: 実行状況はありません
+No locks found: ロックはありません
+No log categories found: ログ設定はありません
+No orders found: オーダーはありません
+No orders in the history: オーダー履歴はありません
+No process classes found: プロセスクラスはありません
+No schedules found: スケジュールはありません
+No tasks in the history: タスク履歴はありません
+Node is skipped: ノードスキップ
+Node is stopped: ノード停止
+non-excl.: non-excl.
+non-exclusively locked: 共有ロック
+none: 未指定
+none: 未指定
+not an order job: オーダージョブではありません
+not_initialized: 初期化されていません
+Now you can modify the job chain by editing the text area content.: テキストエリアの内容を編集して、ジョブチェーンを変更できます
+now: 即時
+of job chain: ジョブチェーン
+of job chain: ジョブチェーン
+Onload Values: 表示設定
+Only active JobSchedulers are allowed to start operation.: アクティブなJobSchedulerからしか操作開始できません
+only orders: オーダーのみ
+only tasks: タスクのみ
+on_error: エラー
+on_success: 成功
+open all folders: 全て開く
+opening: オープン中
+opening_waiting_for_locks: ロック開放待ち
+Operations GUI: Operations GUI
+Operations: オペレーション
+or choose a schedule: 又はスケジュールを選択
+orange: オレンジ色
+ORDER HISTORY: オーダー履歴
+Order ID: オーダーID
+Order is deleted: オーダーは削除されました
+Order is processed by Scheduler member: 他のJobSchedulerからオーダーが実行されています
+Order is replaced: オーダーは置換されました
+Order jobs: オーダージョブ
+Order menu: オーダーメニュー
+Order Queue: 待機オーダー
+Order state: ステート
+Order state: ステート
+Order: オーダー
+order: オーダー
+ORDER: オーダー
+Orders are stored in the database (orders_recoverable): オーダーはデータベースに保存されます(orders_recoverable)
+orders to process: 実行予定オーダー
+orders: オーダー
+Orders: オーダー
+Output format: 出力形式
+Parameterize the start times list: 実行予定表示設定
+pattern: 条件
+Pause: 一時停止
+paused: 一時停止中
+pending: 待機中
+Period from ($field) is invalid date or before 1970-01-01.: ($field)からのピリオドは無効か、1970-01-01以前です
+periodically every: リフレッシュ間隔
+period_once: 初期実行
+period_repeat: 繰返し実行
+period_single: 単独実行
+Pid: Pid
+Please add an existing order job to the job chain nodes.: 既存のオーダージョブをジョブチェーンノードに登録してください
+Please enter a job name to display its description.: 説明を表示するジョブ名を入力してください
+Please select a job to display its description.: 説明を表示するジョブを選択してください
+Please select an existing order job on the left hand side.: 既存のオーダージョブを左側から選択してください
+Port: ポート
+Process class: プロセスクラス
+Process Classes: プロセスクラス
+Process steps: 完了
+Processed by: 処理
+queue: キュー
+queue_at: キュー時刻
+quick check: クイックチェック
+read_error: リードエラー
+regular expression for quick check: 正規表現チュック
+release: リリース
+Remote Scheduler: リモートJobScheduler
+Remote Schedulers: リモートJobScheduler
+Remove setback: 再試行設定削除
+remove: 削除
+Removing delayed: Removing delayed
+removing: 削除中
+repeat: 繰返回数
+Replacement is standing by: 次によって置換されました
+Replacement: 置換
+Reread: reread
+reset is executed after: リセットされるまで後
+reset is executed: リセットされます
+Reset order: オーダー初期化
+Restart: リスタート
+Resume order: オーダー再開
+Run time defined by: Run time defined by
+run time editor: ランタイムエディタ
+running or stopped: 実行中、又は停止
+Running since: 起動日時
+running: 実行中
+running_delayed: 再試行待機中
+running_process: 処理中
+running_remote_process: リモート処理中
+running_waiting_for_locks: ロック待機中
+running_waiting_for_order: オーダー待機中
+Runtime Values: 実行設定
+Schedule menu: スケジュールメニュー
+SCHEDULE: スケジュール
+Schedule: スケジュール
+Scheduler is running since: JobScheduler起動日時
+Scheduler(s): JobScheduler
+Schedules: スケジュール
+Second: 2回目
+seconds: 秒
+select all: 全て選択
+Select an order end state: オーダーの終了ステートを選択
+Select an order state: オーダーのステートを選択
+Selects, Checkboxes and Radios: 表示設定
+Set order state of $order: $orderにステートを設定
+Set order state: オーダーステート設定
+Set run time of $job: $jobのランタイム設定
+Set run time: スケジュール設定
+Set: 設定
+Setback: 再試行
+Settings: 環境設定
+Show all: 全て表示
+Show configuration: ジョブ定義表示
+Show dependency: ジョブフロー表示
+Show description: ジョブ説明表示
+Show job chain dependencies: ジョブチェーンフロー表示
+show job chain details: ジョブチェーン詳細表示
+Show job dependencies: ジョブフロー表示
+show job details: ジョブ詳細表示
+Show jobs: ジョブ表示
+Show last tasks error: エラーのある最新タスクを表示
+Show log: ログ表示
+Show only faulty tasks and orders: 失敗したタスク/オーダーのみ表示
+Show only orders: オーダーのみ表示
+Show only tasks: タスクのみ表示
+show order details: オーダー詳細表示
+Show order history: オーダー履歴表示
+Show order log: オーダーログ表示
+Show orders: オーダー表示
+show schedule details: スケジュール詳細表示
+show schedule details: スケジュール詳細表示
+Show start times: 実行予定表示
+show task details: タスク詳細表示
+Show task log: タスクログ表示
+Show tasks: タスク表示
+Skip node: ノードスキップ
+SMTP: SMTP
+Sorry, but this feature is only supported for\nJobScheduler version 2.0.204.5774 or higher: Sorry, but this feature is only supported for\nJobScheduler version 2.0.204.5774 or higher
+Sort job chains by: ジョブチェーンのソート順
+Sort jobs by: ジョブ表示順
+Sort orders by: オーダーソート順
+source: source
+Standalone jobs: スタンドアロンジョブ
+Start at: 開始時間
+start cause: 開始理由
+Start enforced: 強制開始
+Start order $order: オーダー実行 $order
+Start order at: オーダー実行時刻設定
+Start order now: オーダー即時実行
+Start order parametrized: オーダー実行パラメータ設定
+Start task $task: タスク実行 $task
+Start task at: タスク実行時刻設定
+Start task immediately: タスク即時実行
+Start task parametrized: タスク実行パラメータ設定
+Start task unforced now: タスクスケジュール実行
+Start Time: 起動日時
+Start time: 開始時刻
+Start times for: 実行予定
+Start: 開始時刻
+Started: 開始時刻
+starting: 開始中
+state in ascending order: ステート (昇順)
+state in descending order: ステート (降順)
+State text: 最終実行ログ
+State: ステート
+Steps: ステップ
+still checking...: 確認中...
+Stop job: ジョブ停止
+Stop node: ノード停止
+Stop: 停止
+stopped: 停止
+stopping: 停止中
+stopping_let_run: タスクを残して停止
+store as ...: 別名で保存...
+store: 保存
+submit: OK
+Subprocesses: サブプロセス
+Substitute menu: 置換スケジュールメニュー
+Substituted by: 置換スケジュール
+Substituted schedule: 置換されたスケジュール
+Suspend order: オーダー保留
+Suspend tasks: タスク保留
+suspended: 保留中
+Switch to: 初期画面は
+Tabs: タブ
+Task History: タスク履歴
+Task menu: タスクメニュー
+Task Queue: 待機タスク
+Task: タスク
+TASK: タスク
+tasks: タスク
+Tasks: タスク
+Terminate and restart cluster within ~$secs: ~$sec秒後クラスタ終了再開
+Terminate and restart cluster: クラスタ終了再開
+Terminate and restart within ~$secs: 終了後 ~$sec秒後再開
+Terminate and restart: 終了後再開
+Terminate cluster within ~$secs: ~$sec秒後クラスタ終了
+Terminate cluster: クラスタ終了
+Terminate fail-safe within ~$secs: ~$sec秒後フェイルセーフ終了
+Terminate fail-safe: フェイルセーフ終了
+Terminate within ~$secs: ~$sec秒後に終了
+Terminate: 終了
+Termintate within: 終了設定
+The default log caregories are marked: ログ初期設定は
+The following values will be stored in a cookie. If no cookies are available the values which are set in <code>./custom.js</code> are used.: 下欄の値はcookieに保存されます。cookieが有効ではない場合は<code>./custom.js</code>に保存されます
+The JobScheduler $scheduler has no jobs with a description.: $schedulerは説明があるジョブはありません
+The same filter name "$filter" was already defined\n\nDo you want nevertheless to store it ?: 同じ名前の"$filter"が既に使われています。\n\n無視して保存しますか?
+The settings dialog is not available,\nbecause $file is used as settings file.: The settings dialog is not available,\nbecause $file is used as settings file.
+Third: 3回目
+THIS IS A BACKUP...: THIS IS A BACKUP...
+This order is a replacement for another order with the same ID: 同じIDの他のオーダーによって置換されました
+This Scheduler is active: このJobSchedulerはアクティブです
+This Scheduler: このJobScheduler
+Time: 時刻
+To: To
+toggle to: 表示切替
+tree view: ツリー
+undefined: 未定義
+under_construction: 作成中
+unknown error: unknown error
+unknown: unknown
+Unskip: スキップしない
+Unstop job: ジョブ再開
+Unstop: 再開
+Update: リフレッシュ
+update: update
+Used by jobs: 使用中のジョブ
+Used by orders: 使用中のオーダー
+Using\n\n|\n=>\n;\n\nis not allowed: \n\n|\n=>\n
+Valid from: から有効
+Valid to: まで有効
+Valid: 有効
+value: 値
+Version: バージョン
+View Mode: 表示切替
+waiting for order: オーダー待機
+Waiting for response from JobScheduler ...: Waiting for response from JobScheduler ...
+Waiting jobs (exclusive): ジョブ待機(排他)
+Waiting jobs (non-exclusive): ジョブ待機(共有)
+waiting_for_activation: 待機中
+waiting_for_process: 処理待ち
+wake: 再開
+Web service: Webサービス
+with output format: 出力形式
+with state: ステート
+Without start time: 開始時刻無し
+You can enable the settings dialog \nvia the _disable_cookie_settings flag in the settings file: You can enable the settings dialog \nvia the _disable_cookie_settings flag in the settings file

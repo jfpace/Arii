@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<schedule  title="Report generation">
+    <period  single_start="10:00"/>
+</schedule>

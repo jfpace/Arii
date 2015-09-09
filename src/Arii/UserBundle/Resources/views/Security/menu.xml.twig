@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="login" img="lock.png"/>
+	<item id="toolbox" img="tools.png">
+                <item id="silent_install" text="{{ "Silent install" | trans }}" >
+                <href><![CDATA[{{ path('arii_Tools_silent') }}]]></href>
+                </item>
+                <item id="cron" text="{{ "Cron converter" | trans }}" >
+                <href><![CDATA[{{ path('arii_Tools_cron') }}]]></href>
+                </item>
+	</item>
+
+    <item id="lang" img="{{ app.request.locale }}.png">
+            {% for lang,info in LANG %}
+               <item id="{{ lang }}" text="{{ info.string }}" img="{{ lang }}.png">
+                <href>{{ info.url }}</href>
+               </item>    
+            {% endfor %}
+    </item>
+</menu>

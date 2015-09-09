@@ -1,0 +1,461 @@
+{# src/Arii/AdminBundle/Resources/views/User/list.html.twig #}
+{% extends "AriiConfigBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "New enterprise" | trans }}</h2>
+                <ul  class="section_menu">
+      <li><a href="{{ url('arii_Config_enterprises') }}" class=""><span><span><img src="{{ asset('arii/images/menu/building.png') }}"/>&nbsp;{{ "Spoolers" | trans }}</span></span></a></li>
+      <li><a href="{{ url('arii_Config_enterprise_new') }}" class="active"><span><span><img src="{{ asset('arii/images/menu/building_add.png') }}"/>&nbsp;{{ "Repositories" | trans }}</span></span></a></li>
+                </ul>
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                              <div class="sct_right">
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endfor %}
+<form class="form-horizontal" role="form" action="{{ url('arii_Config_enterprise_create') }}" method="POST">
+<table width="100%">
+<tr><td valign="top">
+    <fieldset>
+    <legend>{{ "Organisation" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="enterprise">{{ "Name" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="enterprise" name="enterprise" value=""/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="title">{{ "Title" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="title" name="title" value=""/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="maildomain">{{ "Mail domain" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="maildomain" name="maildomain" value=""/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="address">{{ "Address" | trans }}</label>
+    <div class="controls col-lg-8">
+     <textarea class="form-control"  id="address" name="address" rows="2"></textarea>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="city">{{ "City" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="city" name="city" value=""/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="zipcode">{{ "Zip code" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="zipcode" name="zipcode" value=""/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="country_code">{{ "Country" | trans }}</label>
+    <div class="controls col-lg-8">
+    <select class="form-control bfh-countries"  id="country_code" name="country_code" ></select>
+    </div>
+    </div>
+    </fieldset>
+</td>
+<td valign="top">
+    <fieldset>
+    <legend>{{ "Site" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="site_name">{{ "Name" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="site_name" name="site_name" value="{{ "Central" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="site_desc">{{ "Description" | trans }}</label>
+    <div class="controls col-lg-8">
+     <textarea class="form-control"  id="site_desc" name="site_desc" rows="3">{{ "Default site" | trans }}</textarea>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="timezone">{{ "Timezone" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="timezone" name="timezone" value="{{ timezone }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="latitude">{{ "Latitude" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="latitude" name="latitude" value="{{ latitude }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="longitude">{{ "Longitude" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="longitude" name="longitude" value="{{ longitude }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <div class="controls col-lg-8">
+    <button type="submit" class="btn btn-primary">{{ "Create enterprise" | trans }}</button>
+    </div>
+    </div>    
+    </fieldset>
+</td></tr>
+<tr><td valign="top">
+    <fieldset>
+    <legend>{{ "Teams" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="administrators">{{ "Administrators" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="administrators" name="administrators" value="{{ "administrators" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="managers">{{ "Managers" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="managers" name="managers" value="{{ "managers" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="operators">{{ "Operators" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="operators" name="operators" value="{{ "operators" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="developpers">{{ "Developpers" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="developpers" name="developpers" value="{{ "developpers" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="users">{{ "Users" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="users" name="users" value="{{ "users" | trans }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td><td valign="top">
+    <fieldset>
+    <legend>{{ "Users" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="administrator">{{ "Administrator" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="administrator" name="administrator" value="{{ "administrator" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="manager">{{ "Manager" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="manager" name="manager" value="{{ "manager" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="operator">{{ "Operator" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="operator" name="operator" value="{{ "operator" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="developper">{{ "Developper" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="developper" name="developper" value="{{ "developper" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="user">{{ "User" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="user" name="user" value="{{ "user" | trans }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td></tr>
+<tr><td valign="top">
+    <fieldset>
+    <legend>{{ "Repository" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db">{{ "Name" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db" name="db" value="{{ "Arii DB" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_host" name="db_host" value="{{ db_host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_port" name="db_port" value="{{ db_port }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_name">{{ "Database" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_name" name="db_name" value="{{ db_name }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_driver">{{ "Driver" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_driver" name="db_driver" value="{{ db_driver }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_user">{{ "Login" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_user" name="db_user" value="{{ db_user }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="db_password">{{ "Password" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="db_password" name="db_password" value="{{ db_password }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td>
+<td valign="top">
+    <fieldset>
+    <legend>{{ "Mailer" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="mailer">{{ "Name" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="mailer" name="mailer" value="{{ "Arii mail" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="mailer_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="mailer_host" name="mailer_host" value="{{ mailer_host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="mailer_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="mailer_port" name="mailer_port" value="25"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" formailerdb_user">{{ "Login" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control"  type="text" id="mailer_user" name="mailer_user" value="{{ mailer_user }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="mailer_password">{{ "Password" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="mailer_password" name="mailer_password" value="{{ mailer_password }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td></tr>
+<tr><td valign="top">
+    <fieldset>
+    <legend>{{ "Supervisor" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor">arii</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor" name="supervisor" value="{{ "Arii Spooler" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor" name="supervisor_host" value="{{ host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor_ip">{{ "IP address" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor" name="supervisor_ip" value="localhost"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor_port" name="supervisor_port" value="44444"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor_install_path">{{ "Install path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor_install_path" name="supervisor_install_path" value="{{ install_path }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="supervisor_user_path">{{ "User path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="supervisor_user_path" name="supervisor_user_path" value="{{ user_path }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td>
+<td valign="top">
+    <fieldset>
+    <legend>{{ "Scheduler" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="spooler">{{ "Name" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="spooler" name="spooler" value="{{ "scheduler" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="spooler_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="spooler" name="spooler_host" value="{{ host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="spooler_ip">{{ "IP address" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="spooler" name="spooler_ip" value="localhost"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="spooler_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="spooler_port" name="spooler_port" value="4445"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="install_path">{{ "Install path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="install_path" name="install_path" value="{{ install_path }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="user_path">{{ "User path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="user_path" name="user_path" value="{{ user_path }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td></tr>
+
+<!--
+<tr><td valign="top">
+    <fieldset>
+    <legend>{{ "Workload #1" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1">arii</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload1" name="workload1" value="{{ "Arii Spooler" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload1_host" name="workload1_host" value="{{ host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1_ip">{{ "IP address" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload1_ip" name="workload1_ip" value="localhost"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="workload1_port" name="workload1_port" value="4448"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1_install_path">{{ "Install path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload1_install_path" name="workload1_install_path" value="{{ install_path }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload1_user_path">{{ "User path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload1_user_path" name="workload1_user_path" value="{{ user_path }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td>
+<td valign="top">
+    <fieldset>
+    <legend>{{ "Workload #2" | trans }}</legend>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2">arii</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload2" name="workload2" value="{{ "Arii Spooler" | trans }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2_host">{{ "Host" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload2_host" name="workload2_host" value="{{ host }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2_ip">{{ "IP address" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload2_ip" name="workload2_ip" value="localhost"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2_port">{{ "Port" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input class="form-control" type="text" id="workload2_port" name="workload2_port" value="4449"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2_install_path">{{ "Install path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload2_install_path" name="workload2_install_path" value="{{ install_path }}"/>
+    </div>
+    </div>
+    <div class="form-group">
+    <label class="col-lg-3 control-label" for="workload2_user_path">{{ "User path" | trans }}</label>
+    <div class="controls col-lg-8">
+    <input  class="form-control" type="text" id="workload2_user_path" name="workload2_user_path" value="{{ user_path }}"/>
+    </div>
+    </div>
+    </fieldset>
+</td></tr>
+-->
+
+</table>
+                                              </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+
+<script language="javascript">
+function GlobalRefresh() { }
+
+</script>
+
+{% endblock %}

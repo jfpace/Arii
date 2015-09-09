@@ -1,0 +1,103 @@
+{# src/Arii/GraphvizBundle/Resources/views/index.html.twig #}
+
+{% extends "AriiGraphvizBundle::layout.html.twig" %}
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section table_section">
+	<!--[if !IE]>start title wrapper<![endif]-->
+	<div class="title_wrapper">
+		<h2>{{ "Graphviz" | trans }}</h2>
+		
+		<!--[if !IE]>start section menu<![endif]-->
+		<!--[if !IE]>end section menu<![endif]-->
+		
+		
+		<span class="title_wrapper_left"></span>
+		<span class="title_wrapper_right"></span>
+	</div>
+	<!--[if !IE]>end title wrapper<![endif]-->
+<!--[if !IE]>start section content<![endif]-->
+	<div class="section_content">
+		<!--[if !IE]>start section content top<![endif]-->
+		<div class="sct">
+			<div class="sct_left">
+				<div class="sct_right">
+					<div class="sct_left">
+						<div class="sct_right">
+
+<div id="busy" style="display:none">Loading...</div>
+
+<form action="javascript:void(0)" id="graph_form">
+
+<fieldset>
+<legend>Magnification</legend>
+<input type="button" class="little_button" value="-" onclick="change_scale(1)" />
+<select name="graph_scale" id="graph_scale" onchange="set_graph_scale()"></select>
+<input type="button" class="little_button" value="+" onclick="change_scale(-1)" />
+</fieldset>
+
+</form>
+
+<div id="page_container">
+
+<div id="graph_container"></div>
+
+<div id="debug_output"></div>
+
+</div>                                                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--[if !IE]>end section content top<![endif]-->
+		<!--[if !IE]>start section content bottom<![endif]-->
+		<span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+		<!--[if !IE]>end section content bottom<![endif]-->
+		
+	</div>
+	<!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+<script>
+<!--
+Ajax.Responders.register({
+	onCreate: function() {
+		Element.show('busy');
+	},
+	onComplete: function() {
+		if (0 == Ajax.activeRequestCount) {
+			Element.hide('busy');
+		}
+	}
+});
+
+var canviz;
+document.observe('dom:loaded', function() {
+	list = $('graph_scale');
+	[4, 2, 1.5, 1, 0.75, 0.5].each(function(scale) {
+		list.options[list.options.length] = new Option(100 * scale + '%', scale, false, 1 == scale);
+	});
+	
+	canviz = new Canviz('graph_container');
+	canviz.setImagePath( '{{ asset( 'arii/images/silk' ) }}' );
+	canviz.setScale($F('graph_scale'));
+	load_graph();
+});
+function load_graph() {
+	canviz.load( '{{ url('arii_GVZ_generate') }}' );
+} 
+function set_graph_scale() {
+	canviz.setScale($F('graph_scale'));
+	canviz.draw();
+}
+function change_scale(inc) {
+	var new_scale = $('graph_scale').selectedIndex + inc;
+	if (new_scale < 0 || new_scale >= $('graph_scale').options.length) {
+		return;
+	}
+	$('graph_scale').selectedIndex = new_scale;
+	set_graph_scale();
+}
+// -->
+</script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{# src/Arii/AdminBundle/Resources/views/User/list.html.twig #}
+
+{% extends "AriiAdminBundle::layout.html.twig" %}
+
+{% block content %}
+<!--[if !IE]>start section<![endif]-->	
+<div class="section">
+        <!--[if !IE]>start title wrapper<![endif]-->
+        <div class="title_wrapper">
+                <h2>{{ "Users" | trans }}</h2>
+
+                <span class="title_wrapper_left"></span>
+                <span class="title_wrapper_right"></span>
+        </div>
+        <!--[if !IE]>end title wrapper<![endif]-->
+        <!--[if !IE]>start section content<![endif]-->
+        <div class="section_content">
+                <!--[if !IE]>start section content top<![endif]-->
+                <div class="sct">
+                        <div class="sct_left">
+                                <div class="sct_right">
+                                        <div class="sct_left">
+                                                <div class="sct_right">
+    <div id="toolbarObj"></div>
+    <div id="mygrid" style="height:659px;background-color:white;overflow:hidden;position:relative;">TEST</div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <!--[if !IE]>end section content top<![endif]-->
+                <!--[if !IE]>start section content bottom<![endif]-->
+                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
+                <!--[if !IE]>end section content bottom<![endif]-->
+
+        </div>
+        <!--[if !IE]>end section content<![endif]-->
+</div>
+<!--[if !IE]>end section<![endif]-->
+
+<script language="javascript">
+dhtmlx.skin = "dhx_skyblue";
+
+var mygrid,dhxLayout,toolbar;
+dhxLayout = new dhtmlXLayoutObject("mygrid","1C");
+dhxLayout.cells("a").hideHeader();
+toolbar = dhxLayout.attachToolbar();
+toolbar.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+toolbar.loadXML("{{ url('xml_Admin_users_toolbar') }}");
+toolbar.attachEvent( "onClick", function(id, value) {
+    switch (id) {
+        case "refresh":
+            GridRefresh();
+        break;
+        default:
+            alert(id);
+    }
+});
+
+var sb = dhxLayout.cells("a").attachStatusBar();
+sb.setText('<div id="recinfoArea"></div>');
+dhxLayout.cells("a").vs[dhxLayout.cells("a").av].sbHeight = 40;
+mygrid = dhxLayout.cells("a").attachGrid();
+mygrid.setMultiRows = true;
+mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
+mygrid.enableTreeCellEdit(false);
+mygrid.enableTreeGridLines(true);
+mygrid.setHeader("{{ "Location" | trans }},{{ "Email" | trans }},{{ "Last Login" | trans }}");
+mygrid.attachHeader("#text_filter,#text_filter,#text_filter");
+mygrid.setInitWidths("400,220,180");
+mygrid.setColAlign("left,left,right");
+mygrid.setColTypes("tree,ro,ro");
+mygrid.setColSorting("str,str,date");
+mygrid.enablePaging(true, "20", 5, "recinfoArea");
+mygrid.setPagingSkin("toolbar","dhx_skyblue");
+mygrid.setPagingWTMode(true,true,true,["20"]);
+mygrid.init();
+mygrid.loadXML("{{ url('xml_Admin_users') }}");
+mygrid.saveOpenStates();
+mygrid.setSkin("dhx_skyblue");
+function GridRefresh()
+{
+    toolbar.setItemText("refresh","{{ "Refreshing" | trans }}");
+    mygrid.loadXML("{{ url('xml_Admin_users') }}");
+}
+
+</script>
+
+{% endblock %}

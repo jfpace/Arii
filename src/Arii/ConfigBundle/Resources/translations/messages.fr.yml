@@ -1,0 +1,259 @@
+Account: Compte
+Action: Action
+Add: Ajouter
+Add Site: Ajouter un Site
+Add Team: Ajouter Team
+Add User: Ajouter Utilisateur
+Add connection: Ajouter connexion
+Add repository: Ajouter repository
+Add site: Ajouter site
+Add site on Company: Ajouter site sur la société
+Add spooler: Ajouter spooler
+Administration: Administration
+Allowed Host: Hôte autorisé
+Attach Filter on Team: Joindre un Filtre dans Team
+Audit: Audit
+Authentication: Authentication
+Backup server: Serveur de sauvegarde
+Base de données: Base de données
+Batch Installer: Installer Batch 
+Category: Categorie
+Change command: Changer commande
+Check for update: Vérifier la mise à jour
+Commercial: Commerciale
+Connection: Connexion
+Connections: Connexions
+Connector: Connecteur
+Country: Pays
+Country Code: Code du Pays
+Country code: Code du pays
+Cron System: Système Cron 
+Cron adapter: adaptateur Cron
+Custom: __Custom
+Data: Données
+Database: Base de données
+Database Connection: Connexion base de données
+Databases: Base de données
+Delete: Supprimer
+Delete Connection: Supprimer Connexion
+Delete Filter: Supprimer Filtre
+Delete Repository: Supprimer Référentiel
+Delete Team: Supprimer équipe
+Delete User: Supprimer Utilisateur
+Delete connection: Supprimer connexion
+Delete package: supprimer package
+Delete repository: Supprimer Référentiel
+Delete right: Supprimer un droit
+Delete site: Supprimer site
+Delete spooler: Supprimer spooler
+Delete team: Supprimer une équipe
+Delete user: Supprimer utilisateur
+Description: Description
+Directory: Annuaire
+Do you really want to delete this connection ?: Voulez-vous vraiment supprimer cet connexion?
+Do you really want to delete this filter ?: Voulez-vous vraiment supprimer ce filtre?
+Do you really want to delete this queue ?: Voulez vous vraiment supprimer cette file d'attente?
+Do you really want to delete this team ?: Voulez-vous vraiment supprimer cette équipe?
+Do you really want to delete this user ?: Voulez-vous vraiment supprimer cet utilisateur ?
+EM: __EM
+Edit: Éditer
+Edit Filter: Éditer un Filtre
+Edit connection: Éditer une connexion
+Edit repository: Éditer un référentiel
+Edit right: Éditer un droit
+Edit rights: Éditer les droits
+Edit site: Éditer un site
+Edit spooler: Éditer spooler
+Edit team: Éditer une équipe
+Edit user: Éditer un utilisateur
+Email: Email
+Events: Événements
+Execution: Exécution
+File Transfer: Transfert de fichiers
+File transfer: Transfert de fichiers
+Filters: Filtres
+First Name: Prénom
+GPL: GPL
+HOST: HÔTE
+Host: Hôte
+IP: IP
+IP Adress: Adresse IP
+Id: Id
+Install path: Installer chemin 
+Installation: Installation
+JDBC driver: Pilote JDBC
+Jetty Http Connection: Jetty Http Connexion
+Job: Traitement
+Job Chain: Séquence de Traitements
+Job chain: Séquence de traitements
+Job events: Traitements evenements
+Last Login: Dernière Connexion
+Last Name: Nom de famille
+Latitude: Latitude
+Licence: Licence
+List: Liste
+Load balancing: L'équilibrage de charge
+Location: Location
+Log Time: Temps de connexion
+Longitude: Longitude
+Mail: Mail
+Mail Bcc: en copie cachée
+Mail Cc: en copie
+Mail Connection: Mail Connexion
+Mail Server: Messagerie
+Mail from: Expéditeur
+Mail on Error: Mail sur Erreur
+Mail on Success: Mail sur Succès
+Mail on Warning: Mail sur Avertissement
+Mail to: Destinataire(s)
+Management: Management
+Map: Map
+Menu: Menu
+Module: Module
+Name: Nom
+Network: Réseau
+New: Nouveau
+New Site: Nouveau Site
+New connection: Nouvelle connexion
+New package: Nouveau package
+New repository: Nouveau référentiel
+New right: Nouveau droit
+New site: Nouveau site
+New spooler: Nouveau spooler
+No: Non
+No database: No base de donnée
+Notifications: Notifications
+Operating System: Système d'Exploitation
+Order: Ordre
+Order ID: ID de l'Ordre
+Organisation: Organisation
+PDF: PDF
+Package: Package
+Packages: Packages
+Password: Mot de passe
+Path: Chemin
+Port: Port
+Primary server: Serveur Principal
+R: R
+ROLE_ADMIN: Rôle de l'Admin
+ROLE_DEVELOPER: Rôle du développeur
+ROLE_OPERATOR: Rôle de l'Operateur
+ROLE_USER: Rôle de l'Utilisateur
+Record deleted: Enregistrement supprimé
+Record updated: Enregistrement mis à jour
+Refresh: Actualise
+Refreshing: Actualiser
+Remove Filter: Supprimer Filtre
+Repositories: Référentiels
+Repository: Référentiel
+Save: Sauvegarder
+Saved: Sauvegardé
+Schema: Schéma
+Security: Sécurité
+Servers: Serveurs
+Servers management: Management des Serveurs
+Site: Site
+Site Name: Nom du Site
+Sites: Sites
+Spooler: Spooler
+Spooler Name: Nom du Spooler
+Spooler Saved: Spooler Enregistré
+Standalone server: Serveur Autonome
+Team: Equipe
+Team Management: Team Management
+Team Name: Nom de la team
+Time Zone: Fuseau horaire
+Timeout (s): Timeout (s)
+Timezone: Fuseau horaire
+Title: Titre
+Traitements: Traitements
+Type: Type
+Update: Mettre à jour
+User: Utilisateur
+User Management: Management Utilisateur
+User Name: Nom d'Utilisateur
+User change: Changement d'Utilisateur 
+User path: Chemin d'Utilisateur 
+Username: Nom d'utilisateur
+Users: Utilisateurs
+Users management: Management des Utilisateurs
+Version: Version
+W: W
+X: X
+XLS: XLS
+XML Export: Exportation d'XML
+Yes: Oui
+cluster_options: Options de cluster
+connection.category.note: Sélectionnez la catégorie de cette connexion
+connection.description.note: Donnez une description à cette connexion
+connection.host.note: Indique le nom de la machine
+connection.message.delete: Souhaitez-vous vraiment supprimer cette connexion ?
+connection.message.save: Connexion enregistrée
+connection.title.note: Indiquez le titre de la connexion
+dow.Friday: Vendredi
+dow.Monday: Lundi
+dow.Saturday: Samedi
+dow.Sunday: Dimanche
+dow.Thursday: Jeudi
+dow.Tuesday: Mardi
+dow.Wednesday: Mercredi
+events: événements
+install_date: installer date
+install_path: installer chemin
+job: traitement
+jobchain: séquence de traitements
+licence: licence
+on this team ?: Dans cette équipe ?
+os_target: os cible
+repository: référentiel
+repository.db.note: __repository.db.note
+repository.db.tooltip: spécifier une base de données pour ce référentiel
+repository.description: 
+repository.description.note: __repository.description.note
+repository.description.tooltip: Saisir la description de ce référentiel
+repository.message.delete: __repository.message.delete
+repository.message.save: Référentiel enregistré
+repository.name.note: __repository.name.note
+repository.name.tooltip: donnez un nom à ce référentiel
+repository.timezone.note: __repository.timezone.note
+repository.timezone.tooltip: sélectionner le fuseau horaire de ce référentiel
+scheduler_id: __scheduler_id
+site.country_code.note: __site.country_code.note
+site.description.note: __site.description.note
+site.description.tooltip: entrez dans la description pour ce site
+site.latitude.note: __site.latitude.note
+site.longitude.note: __site.longitude.note
+site.message.delete: __site.message.delete
+site.message.save: __site.message.save
+site.name.note: __site.name.note
+site.name.tooltip: donnez un nom du site
+site.timezone.note: __site.timezone.note
+site.timezone.tooltip: sélectionnez le fuseau horaire de ce site
+spooler.all: Tous les spooler
+spooler.connection: 
+spooler.connection.note: __spooler.connection.note
+spooler.connection.tooltip: spécifiez une connexion d'accès à la file d'attente
+spooler.database.note: __spooler.database.note
+spooler.event.note: Vérifiez si ce spooler est un gestionnaire d'événement
+spooler.events.note: __spooler.events.note
+spooler.mail.note: __spooler.mail.note
+spooler.message.delete: __spooler.message.delete
+spooler.name.note: __spooler.name.note
+spooler.site.note: __spooler.site.note
+spooler.supervisor.note: __spooler.supervisor.note
+spooler.transfer.note: spécifier une connexion pour le fichier tranferation de la file d'attente
+spooler.version.note: Spécifiez la version de ce spooler
+status: statut
+status_date: statut date
+team.description.note: S'il vous plait donner une description rapide à cette équipe
+team.message.delete: Voulez vous vraiment supprimer cette équipe ?
+team.message.save: équipe enregistrée.
+team.title.note: Donner un titre à cette équipe
+user.mail.note: __user.mail.note
+user.mail.tooltip: Enter votre Email valide ici
+user.message.delete: Voulez vous vraiment supprimer cet utilisateur ?
+user.message.save: Utilisateur enregistré
+user.name.note: __user.name.note
+user.name.tooltip: __user.name.tooltip
+user_path: chemin d'utilisateur
+version: version

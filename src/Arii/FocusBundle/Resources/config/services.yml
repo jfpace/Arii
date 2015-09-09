@@ -1,0 +1,12 @@
+parameters:
+#    arii_jid.example.class: Arii\JIDBundle\Example
+
+services:
+#    arii_jid.example:
+#        class: %arii_jid.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    arii_focus.focus:
+        class: Arii\FocusBundle\Service\AriiFocus
+        arguments: [ "@arii_core.tools", "@arii_core.db" ]
+                

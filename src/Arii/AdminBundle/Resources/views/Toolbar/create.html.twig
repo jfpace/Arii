@@ -1,0 +1,74 @@
+<div id="GlobalBarObj"></div>
+<script>
+{% set site = app.session.get('site') %}
+var timezone = "GMT";
+
+var refreshing = {{ app.session.get('refresh') }},
+    autorefresh;
+autorefresh = setInterval( "GlobalRefresh()", refreshing*1000 );
+
+var GlobalBar;
+
+GlobalBar = new dhtmlXToolbarObject("GlobalBarObj", "dhx_skyblue");
+GlobalBar.setIconsPath( "{{ asset('arii/images/toolbar/') }}" );
+GlobalBar.loadXML( "{{ url('xml_Admin_toolbar') }}", function(){
+});
+
+// init calendar;
+
+GlobalBar.attachEvent("onClick", function(id) {
+    switch (id) {
+        case 'enterprise':
+            // refresh sites dans la session
+            break;
+        default:
+            alert(id);
+            break;
+    }
+});
+
+function listSpoolers(loader) {
+    if ( loader.xmlDoc.responseXML != null ) {
+         // loader.doXPath("//spooler")[0].firstChild.data
+         GlobalBar.setItemText( 'spooler', '{{ "spooler.all" | trans }}');
+         GlobalRefresh();
+         var result = loader.doXPath("//spoolers/spooler");
+         GlobalBar.forEachListOption('spooler', function(optionId){
+            GlobalBar.removeListOption('spooler', optionId);
+         });
+         GlobalBar.addListOption('spooler', 'default', 1, "button", "{{ "spooler.all" }}");
+         if (result.length>0) {
+            GlobalBar.addListOption('spooler', 'sep', 2, "separator"  );
+            for(var i=0;i<result.length;i++){ 
+               GlobalBar.addListOption('spooler', "spooler_"+result[i].id,3+i,"button", result[i].firstChild.data  );
+            }
+         }
+    }
+}
+
+GlobalBar.attachEvent("onStateChange", function(id) {
+    switch (id) {
+        case 'layout_sidebar':
+            if (GlobalBar.getItemState(id)) {
+                 document.getElementById(  "sidebar" ).style.display = 'none'; 
+                 document.getElementById(  "main_content" ).style.marginLeft = '10px';               
+            }
+            else {
+                 document.getElementById(  "sidebar" ).style.display = 'block';                 
+                 document.getElementById(  "main_content" ).style.marginLeft = '263px';              
+            }
+            resizeLayout();
+            break;
+        case 'layout_header':
+            if (GlobalBar.getItemState(id)) {
+                 document.getElementById(  "logo_user_details" ).style.display = 'none'; 
+            }
+            else {
+                 document.getElementById(  "logo_user_details" ).style.display = 'block';                 
+            }
+            break;
+        default:
+            alert('state '+id);
+    }
+});
+</script>

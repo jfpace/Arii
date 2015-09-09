@@ -1,0 +1,77 @@
+<script type="text/javascript">
+/* Gestion du menu contextuel */
+function onButtonClick(menuitemId, type) {
+    var data = mygrid.contextID.split("_");
+    //rowInd_colInd;
+    var rId = data[0];
+    var cInd = data[1];
+
+    alert(rId);    
+    switch (menuitemId) {
+       case "show_info":
+            JobInfo( rId );
+        break;
+        case "doc":
+            window.open('{{ url('arii_JID_job_doc') }}?id='+rId,'arii_doc');
+            break;
+       case "show_history":
+            document.location.href = "{{ url('arii_JID_history_job') }}?id="+rId;
+        break;
+        case "start_task":
+            StartJob( rId );
+        break;
+        case "show_why":
+            ShowWhy( rId);
+            break;
+        case "kill":
+            KillJob( rId );
+            break;
+        case "stop":
+            StopJob( rId );
+        break;
+        case "unstop":
+            UnstopJob( rId );
+        break;
+        case "pause_spooler":
+            PauseSpooler(rId);
+        break;
+        case "continue_spooler":
+            ContinueSpooler(rId);
+        break;
+        case "check_spooler":
+            CheckSpooler(rId);
+        break;
+        case "terminate_spooler":
+            TerminateSpooler(rId);
+        break;
+        case "abort_spooler":
+            AbortSpooler(rId);
+        break;
+        case "purge":
+            PurgeJob( rId );
+        break;
+        default:
+            alert(menuitemId);    
+    }
+    return true;
+}
+
+menu.attachEvent("onClick", onButtonClick);
+
+// Fonctions
+function Spooler(url,rid)
+{
+    dhxLayout.cells("a").progressOn();
+    dhtmlxAjax.get(url+"="+rid.substr(2),function(loader,response){
+        dhxLayout.cells("a").progressOff();
+        dhtmlx.message({
+            type: "Notice",
+            expire: 10000,
+            width: "500px",
+            text: loader.xmlDoc.responseText
+        });
+        CheckSpooler(rid);
+    });
+    return true;
+}
+</script>

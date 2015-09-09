@@ -1,0 +1,66 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+	
+    repository_driver: 	localhost
+    repository_name: 	Autosys TEST
+    repository_dbname: 	OTO61P.vaudoise.ch
+    repository_host: 	xxusil
+    repository_port: 	1521
+    repository_user: 	aedbadmin
+    repository_password: Aedb_Adm!
+        
+    arii_modules:   ATS(ROLE_USER),I5(ROLE_USER),JID(ROLE_USER),Report(ROLE_USER),Config(ROLE_ADMIN),Admin(ROLE_ADMIN)
+    arii_tmp: c:\temp
+    arii_save_states: false
+    skin:      skyblue
+    workspace: c:/temp
+    packages:  %workspace%/packages
+    packages:  D:\www\arii\src\Arii\CoreBundle\Packages
+    perl:      c:/xampp/perl/bin/perl
+
+    arii_pro: false
+
+    ats_doc: /doc/{locale}/Jobs Autosys/{JOB}.job.yml
+    
+    color_status:
+        SUCCESS:          "#00cccc"
+        STARTING:         "#00ff33"
+        RUNNING:          "#00cc33"
+        FAILURE:          "#ff0033"
+        STOPPED:          "#FF0000"
+        TERMINATED:       "#ff66cc"
+        QUEUED:           "#AAA"
+        STOPPING:         "#ffffcc"
+        INACTIVE:         "lightgrey"
+        ACTIVATED:        "#006633/lightgrey"
+        WAIT_REPLY:       "grey"       
+        CHK_RUN_WINDOW:   "white"
+        STARTJOB:         "#00ff33"
+        JOB_ON_ICE:       "#ccffff"
+        JOB_ON_HOLD:      "#3333ff"
+        OPEN:             "#fbb4ae"
+        ACKNOWLEDGED:     "#ffffcc"
+        CLOSED:           "#ccebc5"
+   
+    report_path: C:\Program Files\jobscheduler\pgsql\scheduler_data\config\jasperreports
+    charset: utf-8
+    
+    graphviz_dot: C:\Program Files (x86)\Graphviz2.38\bin\dot.exe
+    

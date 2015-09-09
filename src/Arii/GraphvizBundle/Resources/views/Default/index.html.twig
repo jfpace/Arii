@@ -1,0 +1,210 @@
+{# src/Arii/GraphvizBundle/Resources/views/index.html.twig #}
+{% extends "AriiGraphvizBundle::layout.html.twig" %}
+{% block body %}
+<script>
+var toolbar;
+var rankdir = 'TB';
+var splines = 'polyline';
+var graph_path= 'live';
+var graph_file= '.*';
+var graph_paths = '';
+var show_params = 'n';
+var show_events = 'n';
+var show_jobs = 'n';
+var show_chains = 'n';
+var show_config = 'n';
+var path= 'live';
+var folder = '';
+
+dhtmlxEvent(window,"load",function(){     
+    
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");
+    globalLayout.cells("a").setWidth(300);
+    globalLayout.cells("a").hideHeader();
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_GVZ_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+
+    myAccordion = globalLayout.cells("a").attachAccordion();
+    myAccordion.addItem("folders", "{{ "Live" | trans }}");
+    myAccordion.addItem("legend", "{{ "Legend" | trans }}");
+
+    myTree = myAccordion.cells("folders").attachTree();
+    myTree.setImagePath("{{ asset('bundles/ariicore/images/tree/') }}");
+    myTree.enableSmartXMLParsing(true);
+    myTree.attachEvent( "onDblClick", SendPath );
+    myTree.loadXML( '{{ url('xml_GVZ_tree') }}');
+
+    myLegend = myAccordion.cells("legend").attachGrid();
+    myLegend.setImagePath( "{{ asset('bundles/ariicore/images/wa/') }}");
+    myLegend.setHeader("{{ "Ico." | trans }},{{ "Description" | trans }}");
+    myLegend.setNoHeader(true);
+    myLegend.setInitWidths("50,*");
+    myLegend.setColAlign("right,left");
+    myLegend.setColTypes("img,ro");
+    myLegend.init();
+    myLegend.loadXML( "{{ url('xml_GVZ_legend') }}");
+
+    globalLayout.cells("b").hideHeader();
+    globalLayout.attachEvent("onContentLoaded", function(win){
+        globalLayout.cells("b").progressOff();
+    });
+
+    globalLayout.cells("b").attachURL('{{ asset('/bundles/ariicore/images/arii.jpg') }}');
+
+    myGridToolbar = globalLayout.cells("b").attachToolbar();
+    myGridToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myGridToolbar.loadStruct( "{{ url('xml_GVZ_toolbar') }}");
+    myGridToolbar.attachEvent("onClick",function(id){
+        switch (id) {
+            case "picture":
+            case "spline":
+                break;
+            case "polyline":
+            case "ortho":
+            case "curved":
+            case "line":
+            case "none":
+                splines = id;
+                DrawJobs();
+            break;
+            case "svg":
+                window.open( GetUrl()+'&output='+id);
+                break; 
+            case "png":
+                window.open( GetUrl()+'&output='+id);
+                break; 
+            case "pdf":
+                window.open( GetUrl()+'&output='+id);
+                break; 
+            case "splines":
+                break;
+            default:
+              //  alert("click "+id);
+        }
+    });
+    myGridToolbar.attachEvent("onStateChange",function(id, state){
+        switch (id) {
+             case 'events':
+                 show_events = state;
+                 DrawJobs();
+                 break;
+             case 'parameters':
+                 show_params = state;
+                 DrawJobs();            
+                 break;
+             case 'jobs':
+                 show_jobs = state;
+                 DrawJobs();
+                 break;
+             case 'chains':
+                 show_chains = state;
+                 DrawJobs();
+                 break;
+             case 'config':
+                 show_config = state;
+                 DrawJobs();
+                 break;
+             default:
+                 alert(id);
+             break;
+        }
+    });
+
+});
+
+function SendPath(id) {
+//    globalLayout.cells("b").progressOn();
+//    dhtmlxAjax.get( "{{ url('arii_session_update') }}?current_dir="+id, function () {
+        folder = id;
+        DrawJobs();
+//        globalLayout.cells("b").progressOff();
+//    });
+}
+
+function DrawJobs() {
+    url = GetUrl();
+    globalLayout.cells("b").progressOn();
+    globalLayout.cells("b").attachURL(url);
+/*    globalLayout.cells("b").attachURL("{{ url('arii_GVZ_generate') }}",null,
+    {   path: folder,
+        splines: splines,
+        paths: graph_paths,
+        show_params: show_params,
+        show_events: show_events,
+        show_chains: show_chains,
+        show_config: show_config
+    }   );
+*/}
+
+function GetUrl() {
+    var url = "{{ url('arii_GVZ_generate') }}";
+    url += "?path="+encodeURIComponent(folder);
+    url += "&splines="+encodeURIComponent(splines);
+    url += "&paths="+encodeURIComponent(graph_paths);
+    url += "&show_params="+encodeURIComponent(show_params);
+    url += "&show_events="+encodeURIComponent(show_events);
+    url += "&show_chains="+encodeURIComponent(show_chains);
+    url += "&show_jobs="+encodeURIComponent(show_jobs);
+    url += "&show_config="+encodeURIComponent(show_config);
+return url;
+}
+
+function ClickRibbon(id, value) {
+
+    switch (id) {
+        case 'live':
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            path = 'live';            
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}', function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case '_all':
+            path = 'remote/_all';
+            globalLayout.cells("a").progressOn();
+            myTree.deleteChildItems(0);
+            myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                myAccordion.cells('folders').setText(path);
+                globalLayout.cells("a").progressOff();                
+            });
+            break;
+        case 'map':
+            window.location.href = "{{ url('arii_GVZ_index') }}";
+            break;
+        case 'audit':
+            window.location.href = "{{ url('arii_GVZ_audit') }}";
+            break;
+        default:
+            if (id.substr(0,7)=='remote_') {
+                path = 'remote/'+id.substr(7);
+                globalLayout.cells("a").progressOn();
+                myTree.deleteChildItems(0);
+                myTree.loadXML( '{{ url('xml_GVZ_tree') }}?path='+path, function () {
+                    myAccordion.cells('folders').setText(path);
+                    globalLayout.cells("a").progressOff();                
+                });
+            }
+            else {
+                alert("click "+id);
+            }
+    }
+}
+
+function StateRibbon(id, state) {
+    switch (id) {
+        default:
+            alert("click "+id);
+    }
+}
+</script>
+{% endblock %}
