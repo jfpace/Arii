@@ -82,6 +82,11 @@ class DefaultController extends Controller
         return $this->render('AriiJOCBundle:Default:index.html.twig', array('refresh' => $refresh, 'Timeline' => $Timeline ) );
     }
 
+    public function readmeAction()
+    {
+        return $this->render('AriiJOCBundle:Default:readme.html.twig');
+    }
+
     public function ribbonAction()
     {
         $response = new Response();

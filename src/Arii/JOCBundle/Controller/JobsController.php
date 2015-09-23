@@ -460,6 +460,7 @@ class JobsController extends Controller {
         $state = $this->container->get('arii_joc.state');
         $Jobs = $state->Jobs($ordered,$only_warning);
         
+        $State = array();
         foreach ($Jobs as $k=>$job) {
             $state = $job['STATE'];
             if (isset($State[$state]))

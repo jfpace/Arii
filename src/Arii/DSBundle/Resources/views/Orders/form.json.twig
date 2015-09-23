@@ -1,0 +1,28 @@
+[
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"100" },
+    {   type:"input",    
+            name: "FOLDER", 
+            label:"{{ "Dossier" | trans}}",
+            inputWidth:"300" 
+    },
+    {type:"input",    name: "JOB_CHAIN", label:"{{ "Chain" | trans}}", inputWidth:"300"},
+    {type:"input",    name: "ORDER_ID", label:"{{ "Order" | trans}}", inputWidth:"300"},
+    {type:"newcolumn"},
+    {type:"settings",
+        position: "label-left", 
+        labelAlign:"right", 
+        labelWidth:"80",
+        inputWidth:"150" },    
+    {type:"input",    name: "SCHEDULE_PLANNED", label:"{{ "Planned" | trans}}"},
+    {type:"input",    name: "SCHEDULE_EXECUTED", label:"{{ "Executed" | trans}}"},
+    {type:"input",    name: "SPOOLER_ID", label:"{{ "Spooler" | trans}}" },
+    {type:"newcolumn"},
+    {type:"input",    name: "PERIOD_BEGIN", label:"{{ "Begin" | trans}}"},
+    {type:"input",    name: "PERIOD_END", label:"{{ "End" | trans}}"},
+    {type:"input",    name: "IS_REPEAT", label:"{{ "Repeat" | trans}}"},
+    {type:"hidden",    name: "ID" }
+]

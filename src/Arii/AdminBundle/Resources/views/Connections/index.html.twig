@@ -1,160 +1,119 @@
-{# src/Arii/AdminBundle/Resources/views/Default/database.html.twig #}
-
 {% extends "AriiAdminBundle::layout.html.twig" %}
-
-{% block content %}
-<!--[if !IE]>start section<![endif]-->	
-<div class="section">
-        <!--[if !IE]>start title wrapper<![endif]-->
-        <div class="title_wrapper">
-                <h2>{{ "Connections" | trans }}</h2>
-                <ul  class="section_menu">
-      <li><a href="{{ url('arii_Admin_spoolers') }}" class=""><span><span><img src="{{ asset('arii/images/menu/cog.png') }}"/>&nbsp;{{ "Spoolers" | trans }}</span></span></a></li>
-      <li><a href="{{ url('arii_Admin_repositories') }}" class=""><span><span><img src="{{ asset('arii/images/menu/database.png') }}"/>&nbsp;{{ "Repositories" | trans }}</span></span></a></li>
-      <li><a href="{{ url('arii_Admin_connections') }}" class="active"><span><span><img src="{{ asset('arii/images/menu/transmit.png') }}"/>&nbsp;{{ "Connections" | trans }}</span></span></a></li>
-      <li><a href="{{ url('arii_Admin_sites') }}" class=""><span><span><img src="{{ asset('arii/images/menu/world.png') }}"/>&nbsp;{{ "Sites" | trans }}</span></span></a></li>
-      </ul>
-                <span class="title_wrapper_left"></span>
-                <span class="title_wrapper_right"></span>
-        </div>
-        <!--[if !IE]>end title wrapper<![endif]-->
-        <!--[if !IE]>start section content<![endif]-->
-        <div class="section_content">
-                <!--[if !IE]>start section content top<![endif]-->
-                <div class="sct">
-                        <div class="sct_left">
-                                <div class="sct_right">
-                                        <div class="sct_left">
-                                                <div class="sct_right">
-    <div id="mygrid" style="height:659px;overflow:hidden;width: 100%;position: relative;"></div>
-                                                </div>
-                                        </div>
-                                </div>
-                        </div>
-                </div>
-                <!--[if !IE]>end section content top<![endif]-->
-                <!--[if !IE]>start section content bottom<![endif]-->
-                <span class="scb"><span class="scb_left"></span><span class="scb_right"></span></span>
-                <!--[if !IE]>end section content bottom<![endif]-->
-
-        </div>
-        <!--[if !IE]>end section content<![endif]-->
-</div>
-<!--[if !IE]>end section<![endif]-->
-
+{% block body %}
 <script language="javascript">
+dhtmlxEvent(window,"load",function(){  
+        
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");  
+    globalLayout.cells("a").setWidth(350); 
+    globalLayout.cells("a").hideHeader(); 
+    globalLayout.cells("b").hideHeader(); 
 
-dhtmlx.skin = "dhx_skyblue";
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
 
-var menu = new dhtmlXMenuObject();
-menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
-menu.renderAsContextMenu();
-menu.attachEvent("onClick", onMenuClick);
-menu.loadXML("{{ url('xml_Admin_connections_menu') }}");
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('/bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_Admin_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );    
+    
+    menu = new dhtmlXMenuObject();
+    menu.setIconsPath( "{{ asset('arii/images/menu/') }}" );
+    menu.renderAsContextMenu();
+    menu.attachEvent("onClick", onMenuClick);
+    menu.loadStruct("{{ url('xml_Admin_connections_menu') }}");
 
-var dhxLayout = new dhtmlXLayoutObject("mygrid","2U");
-dhxLayout.cells("a").hideHeader();
-dhxLayout.cells("b").hideHeader();
-dhxLayout.cells("b").setWidth(470);
+    var toolbarb;
+    toolbarb = globalLayout.cells("b").attachToolbar();
+    toolbarb.setIconsPath("{{ asset('arii/images/toolbar/') }}");
+    toolbarb.loadStruct("{{ url('xml_Admin_connection_toolbar') }}", function () {
+        toolbarb.hideItem("delete_connection");
+    });
+    toolbarb.attachEvent("onClick",onClick);
 
-var toolbarb;
-toolbarb = dhxLayout.cells("b").attachToolbar();
-toolbarb.setIconsPath("{{ asset('arii/images/toolbar/') }}");
-toolbarb.loadXML("{{ url('xml_Admin_connection_toolbar') }}", function () {
-    toolbarb.hideItem("delete_connection");
-});
-toolbarb.attachEvent("onClick",onClick);
+    mygrid = globalLayout.cells("a").attachGrid();
+    mygrid.selMultiRows = true;
+    mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
 
-var mygrid;
-var sb = dhxLayout.cells("a").attachStatusBar();
-sb.setText('<div id="recinfoArea"></div>');
-dhxLayout.cells("a").vs[dhxLayout.cells("a").av].sbHeight = 40;
+    mygrid.setHeader("{{ "Connection"| trans }},{{ "Description"| trans }},{{ "Host"| trans }}");
+    mygrid.attachHeader("#text_filter,#text_filter,#select_filter");
+    mygrid.setInitWidths("300,*,150");
+    mygrid.setColAlign("left,left,left");
+    mygrid.setColTypes("ro,ro,ro");
+    mygrid.enableContextMenu(menu);
+    mygrid.enableLightMouseNavigation( true );
+    mygrid.load("{{ url('xml_Admin_connections_grid') }}");
+    mygrid.i18n.paging={
+          results:"Results",
+          records: "{{ "Records from" | trans }} ",
+          to: " to ",
+          page:"Page ",
+          perpage:"rows per page",
+          first:"To first Page",
+          previous:"Previous Page",
+          found:"Found records",
+          next:"Next Page",
+          last:"To last Page",
+          of:" of ",
+          notfound:"No Records Found" };
+    mygrid.init();
+    mygrid.attachEvent("onRowDblClicked", function (rid) {
+        EditConnection(rid);
+    });
 
-mygrid = dhxLayout.cells("a").attachGrid();
-mygrid.selMultiRows = true;
-mygrid.setImagePath("{{ asset('arii/images/treegrid/') }}");
-mygrid.enableTreeGridLines(true);
-mygrid.enableTreeCellEdit(false);
-mygrid.setHeader("{{ "Connection"| trans }},{{ "Description"| trans }},{{ "Host"| trans }}");
-mygrid.attachHeader("#text_filter,#text_filter,#select_filter");
-mygrid.setInitWidths("300,*,150");
-mygrid.setColAlign("left,left,left");
-mygrid.setColTypes("tree,ro,ro");
-mygrid.enableContextMenu(menu);
-mygrid.enableLightMouseNavigation( true );
-mygrid.enablePaging(true,"25", 3, "recinfoArea");
-mygrid.setPagingSkin("toolbar","dhx_skyblue");
-mygrid.setPagingWTMode(true,true,true,["25"]);
-mygrid.load("{{ url('xml_Admin_connections_grid') }}");
-mygrid.i18n.paging={
-      results:"Results",
-      records: "{{ "Records from" | trans }} ",
-      to: " to ",
-      page:"Page ",
-      perpage:"rows per page",
-      first:"To first Page",
-      previous:"Previous Page",
-      found:"Found records",
-      next:"Next Page",
-      last:"To last Page",
-      of:" of ",
-      notfound:"No Records Found" };
-mygrid.init();
-mygrid.attachEvent("onRowDblClicked", function (rid) {
-    EditConnection(rid);
-});
-
-var myform,formData;
-formData = [
-{ type: "settings", position: "label-left", labelWidth: 70, inputWidth: 300,labelAlign: "right" },
-      { type: "hidden",
-        name: "id"
-      },         
-      {    name: "fieldset",
-          type: "fieldset",
-         label: "{{ "New connection" | trans }}",
-         width: "auto",
-         list: 
-           [  {  type: "input",
-                 name: "title",
-                 label: "{{ "Title" | trans }}",
-                 required: true,
-                 note: 
-                   {  text: "{{ "connection.title.note" | trans }}"
+    var myform,formData;
+    formData = [
+    { type: "settings", position: "label-left", labelWidth: 70, inputWidth: 300,labelAlign: "right" },
+          { type: "hidden",
+            name: "id"
+          },         
+          {    name: "fieldset",
+              type: "fieldset",
+             label: "{{ "New connection" | trans }}",
+             width: "auto",
+             list: 
+               [  {  type: "input",
+                     name: "title",
+                     label: "{{ "Title" | trans }}",
+                     required: true,
+                     note: 
+                       {  text: "{{ "connection.title.note" | trans }}"
+                       }
+                  },
+                  {  type: "input",
+                     name: "description",
+                     label: "{{ "Description"| trans }}",
+                     rows: 2,
+                     note: {  text: "{{ "connection.description.note" | trans }}"
+                     }
+                  },
+                  {  type: "input",
+                     name: "host",
+                     label: "{{ "Host"| trans }}",
+                     note: 
+                       {  text: "{{ "connection.host.note" | trans }}"
+                       }
+                  },
+          {  type: "select",
+                     name: "category_id",
+                     label: "{{ "Category"| trans }}",
+                     note:
+                       {  text: "{{ "connection.category.note" | trans }}"
+                       },
+                     required: true,
+                    options:
+                     [ {{ render(controller( "AriiAdminBundle:Connection:form_structure" )) }}
+                     ]
                    }
-              },
-              {  type: "input",
-                 name: "description",
-                 label: "{{ "Description"| trans }}",
-                 rows: 2,
-                 note: {  text: "{{ "connection.description.note" | trans }}"
-                 }
-              },
-              {  type: "input",
-                 name: "host",
-                 label: "{{ "Host"| trans }}",
-                 note: 
-                   {  text: "{{ "connection.host.note" | trans }}"
-                   }
-              },
-      {  type: "select",
-                 name: "category_id",
-                 label: "{{ "Category"| trans }}",
-                 note:
-                   {  text: "{{ "connection.category.note" | trans }}"
-                   },
-                 required: true,
-                options:
-                 [ {{ render(controller( "AriiAdminBundle:Connection:form_structure" )) }}
-                 ]
-               }
-            
-           ]
-          }
-];
-myform = dhxLayout.cells("b").attachForm(formData);
-myform.setSkin("dhx_skyblue");
-myform.enableLiveValidation(true);
+
+               ]
+              }
+    ];
+    myform = globalLayout.cells("b").attachForm(formData);
+    myform.setSkin("dhx_skyblue");
+    myform.enableLiveValidation(true);
+});
 
 function onClick(id){
     switch (id){
@@ -176,9 +135,9 @@ function onClick(id){
                  });
                 return;
             }
-            dhxLayout.cells("b").progressOn();
+            globalLayout.cells("b").progressOn();
             myform.send("{{ url('xml_Admin_connection_save') }}","POST",function(loader,response){
-                dhxLayout.cells("b").progressOff();
+                globalLayout.cells("b").progressOff();
                 if(response === "success")
                {
                  dhtmlx.message({
@@ -235,12 +194,12 @@ function NewConnection() {
 }
 
 function EditConnection(id) {
-    dhxLayout.cells("a").progressOn();
+    globalLayout.cells("a").progressOn();
     toolbarb.showItem("delete_connection");
     myform.setItemLabel("fieldset","{{ "Edit connection" | trans }}");
     myform.clear();
     myform.load("{{ url('xml_Admin_connection_form') }}?id="+id, function () {
-        dhxLayout.cells("a").progressOff();
+        globalLayout.cells("a").progressOff();
         cat = myform.getItemValue("category_id");
         myform.updateValues();
 /*

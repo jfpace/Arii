@@ -12,4 +12,4 @@ services:
 
     arii_ats.exec:
         class: Arii\ATSBundle\Service\AriiExec
-        arguments: [ "@arii_core.session" ]
+        arguments: [ "%ATS%" ]

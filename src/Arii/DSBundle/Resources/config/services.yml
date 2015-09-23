@@ -1,0 +1,14 @@
+parameters:
+#    arii_ds.example.class: Arii\DSBundle\Example
+
+services:
+#    arii_ds.example:
+#        class: %arii_ds.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    arii_ds.sos:
+        class: Arii\DSBundle\Service\AriiSOS
+        arguments: ["@arii_core.dhtmlx", "@arii_core.sql"]
+
+    arii_ds.dailyschedule:
+        class: Arii\DSBundle\Service\AriiDailySchedule
+        arguments: ["@arii_core.dhtmlx", "@arii_core.sql", "@arii_core.date", "@arii_core.tools"]

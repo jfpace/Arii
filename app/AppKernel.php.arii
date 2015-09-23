@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Arii\ConfigBundle\AriiConfigBundle(),
             new Arii\AdminBundle\AriiAdminBundle(),
             new Arii\JIDBundle\AriiJIDBundle(),
+            new Arii\DSBundle\AriiDSBundle(),
             new Arii\JOEBundle\AriiJOEBundle(),
             new Arii\JOCBundle\AriiJOCBundle(),
             new Arii\MFTBundle\AriiMFTBundle(),
@@ -31,7 +32,7 @@ class AppKernel extends Kernel
             new Arii\ReportBundle\AriiReportBundle(),
             new Arii\ToolsBundle\AriiToolsBundle(),
             new Arii\I5Bundle\AriiI5Bundle(),
-            new Arii\DOCBundle\AriiDOCBundle(),
+            new Arii\TimeBundle\AriiTimeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

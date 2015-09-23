@@ -28,6 +28,13 @@ class JobsController extends Controller
         return $this->render('AriiATSBundle:Jobs:grid_toolbar.xml.twig',array(), $response );
     }
 
+    public function grid_menuAction()
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+        return $this->render('AriiATSBundle:Jobs:grid_menu.xml.twig',array(), $response );
+    }
+
     public function statusAction($only_warning=0,$job_only=0)
     {
         $request = Request::createFromGlobals();
@@ -161,7 +168,7 @@ class JobsController extends Controller
                 $Status[$status] = $line['NB'];
         }
         $pie = '<data>';
-        foreach (array('SUCCESS','FAILURE','TERMINATED','RUNNING','INACTIVE','ACTIVATED') as $s) {
+        foreach (array('SUCCESS','FAILURE','TERMINATED','RUNNING','INACTIVE','ACTIVATED','WAIT_REPLY','JOB_ON_ICE','JOB_ON_HOLD','JOB_ON_NOEXEC') as $s) {
             list($bgcolor,$color) = $autosys->ColorStatus($s);
             if (isset($Status[$s]))
                 $pie .= '<item id="'.$s.'"><STATUS>'.$s.'</STATUS><JOBS>'.$Status[$s].'</JOBS><COLOR>'.$bgcolor.'</COLOR></item>';

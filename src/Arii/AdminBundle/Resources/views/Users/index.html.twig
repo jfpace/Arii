@@ -53,7 +53,6 @@ dhtmlxEvent(window,"load",function(){
     mygrid.enableContextMenu(menu);
     mygrid.init();
     mygrid.loadXML("{{ url('xml_Admin_users_treegrid') }}");
-    mygrid.setSkin("dhx_skyblue");
 
     mygrid.attachEvent("onDragIn",function(did,tid,sObj,tObj){
         var did_type = mygrid.getUserData(did,"type");
@@ -149,7 +148,6 @@ dhtmlxEvent(window,"load",function(){
 
     ];
     myform = tabbar.cells("b1").attachForm(formData);
-    myform.setSkin("dhx_skyblue");
     myform.enableLiveValidation(true);
     var dp = new dataProcessor("{{ url('xml_Admin_user_save') }}");
     dp.setUpdateMode("off");

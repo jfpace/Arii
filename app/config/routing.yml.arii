@@ -9,15 +9,6 @@ arii_home:
         _locale: en|fr|es|de|cn|ar|ru|jp
 
 # ========================================
-# DOC Bundle
-# ----------------------------------------
-arii_doc:
-    resource: "@AriiDOCBundle/Resources/config/routing.yml"
-    prefix:   /doc/{_locale}
-    requirements:
-        _locale: en|fr|es|de|cn|ar|ru|jp
-
-# ========================================
 # Core Bundle
 # ----------------------------------------
 arii_core:
@@ -75,6 +66,15 @@ arii_jid_nagios:
     requirements:
         _locale: en|fr|es|de|cn|ar|ru|jp 
 
+# ========================================
+# DS 
+# ----------------------------------------
+arii_ds:
+    resource: "@AriiDSBundle/Resources/config/routing.yml"
+    prefix:   /ds/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+        
 # ========================================
 # JOE 
 # ----------------------------------------
@@ -148,6 +148,15 @@ arii_ATS:
 arii_I5:
     resource: "@AriiI5Bundle/Resources/config/routing.yml"
     prefix:   /i5/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# Time code
+# ----------------------------------------
+arii_TC:
+    resource: "@AriiTimeBundle/Resources/config/routing.yml"
+    prefix:   /time/{_locale}
     requirements:
         _locale: en|fr|es|de|cn|ar|ru|jp 
 

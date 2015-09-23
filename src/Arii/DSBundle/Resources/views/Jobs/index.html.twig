@@ -1,0 +1,296 @@
+{# src/Arii/JIDBundle/Resources/views/Default/history.html.twig #}
+{% extends "AriiDSBundle::layout.html.twig" %}
+{% block dhtmlx_plus %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('dhtmlx_scheduler/codebase/dhtmlxscheduler.css') }}" />
+    <script src="{{ asset('dhtmlx_scheduler/codebase/dhtmlxscheduler.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('dhtmlx_scheduler/codebase/ext/dhtmlxscheduler_agenda_view.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block body %}
+<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+<div class="dhx_cal_navline">
+<div class="dhx_cal_prev_button">&nbsp;</div>
+<div class="dhx_cal_next_button">&nbsp;</div>
+<div class="dhx_cal_today_button"></div>
+<div class="dhx_cal_date"></div>
+<div class="dhx_cal_tab" name="day_tab" style="right:205px;"></div>
+<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+<div class="dhx_cal_tab" name="month_tab" style="right:75px;"></div>
+<div class="dhx_cal_tab" name="agenda_tab" style="right:10px;"></div>
+</div>
+<div class="dhx_cal_header">
+</div>
+<div class="dhx_cal_data">
+</div>	
+</div>
+<body>
+<script type="text/javascript">
+var max_history = 0; // pas d'historique
+var cyclic = 0; // que des standalone
+var only_warning = 0; // que les problemes
+var update=30;
+var autorefresh;
+
+dhtmlxEvent(window,"load",function(){     
+    globalLayout = new dhtmlXLayoutObject(document.body,"3L");  
+    globalLayout.cells("a").setWidth(330); 
+    globalLayout.cells("a").hideHeader(); 
+    globalLayout.cells("b").hideHeader(); 
+    globalLayout.cells("c").setHeight(200); 
+
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_DS_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );
+    
+    var myMainTabbar = globalLayout.cells("b").attachTabbar();
+    myMainTabbar.addTab("a","{{ "List" | trans }}","200px", null, true);
+    myMainTabbar.addTab("b","{{ "Schedule" | trans }}","200px");
+    
+    myDonut =  globalLayout.cells("a").attachChart({
+            view:"donut",
+            container:"pie_chart_container",
+            value:"#JOBS#",
+            label:"",
+            tooltip: "#STATUS#",
+            color: "#COLOR#",
+            border:false,
+            pieInnerText: "#JOBS#",
+            shadow: 0,
+            legend:{
+                width: 0,
+                template: "#STATUS#",
+                valign:"top",
+                align:"left"
+            } 
+    });
+    myDonut.load( "{{ url('xml_DS_jobs_pie') }}?cyclic="+cyclic+"&only_warning="+only_warning );
+/*        
+    myGridMenu = new dhtmlXMenuObject(null);
+    myGridMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/wa/') }}" );
+    myGridMenu.renderAsContextMenu();
+    myGridMenu.loadStruct("{{ url('xml_JID_jobs_grid_menu') }}");
+*/          
+    myGrid = myMainTabbar.cells("a").attachGrid();
+    myGrid.selMultiRows = true;
+    myGrid.setImagePath( "{{ asset('bundles/ariicore/images/treegrid/') }}");
+    myGrid.setHeader("{{ "Spooler" | trans }},{{ "Folder" | trans }},{{ "Job" | trans }},{{ "Status" | trans }},{{ "Planned" | trans }},{{ "Executed" | trans }}");
+    myGrid.attachHeader("#select_filter,#text_filter,#text_filter,#select_filter,#text_filter,#text_filter");
+    myGrid.setInitWidths("100,*,200,90,150,150");
+    myGrid.setColAlign("left,left,left,center,right,right");
+    myGrid.setColTypes("ro,ro,ro,ro,ro,ro");
+    myGrid.setColSorting("str,str,str,str,date,date");
+/*
+    myGrid.enableContextMenu(myGridMenu);
+    myGrid.attachEvent("onBeforeContextMenu", onShowMenu );
+*/
+    myGrid.init();
+    myGrid.load( "{{ url('xml_DS_jobs_grid') }}?cyclic="+cyclic+"&only_warning="+only_warning);
+    myGrid.attachEvent("onRowDblClicked",JobDetail );
+
+    myDonut.attachEvent("onItemClick",function(id, value){
+        myGrid.filterBy(3, id);  
+    });
+
+    myGridToolbar = myMainTabbar.cells("a").attachToolbar();
+    myGridToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myGridToolbar.loadStruct( "{{ url('xml_DS_jobs_toolbar') }}");
+    myGridToolbar.attachEvent("onClick",function(itemid){
+         switch (itemid) {
+            case 'refresh':
+                globalLayout.cells("b").progressOn();
+                GlobalRefresh();
+                break;
+            case "print":
+                myGrid.printView();
+                break;
+            case "rss":
+                document.location.href = "{{ url('rss_JID_history_orders') }}";
+                break;
+            default:
+                alert(itemid);
+                break;
+        }
+    });
+    myGridToolbar.attachEvent("onStateChange",function(itemid, state){
+         switch (itemid) {
+            default:
+                alert(itemid);
+                break;
+        }
+    });
+    
+    myTabbar = globalLayout.cells("c").attachTabbar();
+    myTabbar.addTab("b1","{{ "Job" | trans }}","100px", null, true);
+    myTabbar.addTab("b2","{{ "Log" | trans }}","100px");
+//    myTabbar.addTab("b3","{{ "History" | trans }}","100px");
+
+    myForm = myTabbar.cells("b1").attachForm();
+    myForm.loadStruct("{{ url('json_DS_jobs_form') }}");
+
+    myDetailToolbar = myTabbar.cells("b1").attachToolbar();
+    myDetailToolbar.setIconsPath("{{ asset('bundles/ariicore/images/toolbar/') }}");
+    myDetailToolbar.loadStruct( "{{ url('xml_DS_jobs_form_toolbar') }}" , function(){
+/*        GBCalendar = new dhtmlXCalendarObject(myDetailToolbar.getInput('ref_date'));
+        GBCalendar.setDateFormat("%Y-%m-%d %H:%i:%s");
+        GBCalendar.setWeekStartDay(1);
+*/    });
+            
+    myLog = myTabbar.cells("b2").attachGrid();
+    myLog.setHeader("{{ "Date" | trans }},{{ "Type" | trans }},{{ "Message" | trans }},{{ "Code" | trans }}");
+    myLog.attachHeader("#text_filter,#select_filter,#text_filter,#select_filter");
+    myLog.setInitWidths("160,40,*,60");
+    myLog.setColAlign("right,left,left,right");
+    myLog.setColTypes("ro,ro,ro,ro");
+    myLog.setColSorting("date,str,str,int");
+    myLog.init();
+
+    myDetailToolbar.attachEvent("onClick",function(itemid){
+        Text = '';
+        var id = myForm.getItemValue('ID');
+        switch(itemid) {
+            case "start_job":
+                Text = "{{ "Start job" | trans }}";
+                break;
+            case "stop_job":
+                Text = "{{ "Stop job" | trans }}";
+                break;
+            case "unstop_job":
+                Text = "{{ "Unstop job" | trans }}";
+                break;
+            case "delete_task":
+            case "kill_task":
+                Text = "{{ "Kill task" | trans }}";
+                break;
+        }
+        switch(itemid) {
+            case "start_job":
+            case "stop_job":
+            case "unstop_job":
+            case "delete_task":
+            case "kill_task":
+                var params = new Array();
+                var paramsStr = params.join(",");
+                var start_time = '';
+                start_time = 'now';
+                // alert("{{ url('arii_XML_Command') }}?command="+Command+"&params="+encodeURIComponent(params)+"&time="+start_time+"&job_id="+id); 
+                dhtmlx.message({
+                type: "Notice",
+                text: Text });
+                globalLayout.cells("a").progressOn();        
+                globalLayout.cells("b").progressOn();
+                // alert("{{ url('arii_DS_Command') }}?command="+itemid+"&params="+encodeURIComponent(params)+"&time="+start_time+"&id="+id);
+                dhx4.ajax.post("{{ url('arii_DS_Command') }}","command="+itemid+"&params="+encodeURIComponent(params)+"&time="+start_time+"&id="+id,function(loader,response){
+                    dhtmlx.message({
+                    type: "Notice",
+                    expire: 10000,
+                    width: "500px",
+                    text: loader.xmlDoc.responseText });
+                    GlobalRefresh();
+                });
+                break;
+            default:
+                alert(itemid);
+                break;
+        }
+        return true;
+    });
+
+    scheduler.config.details_on_create=false;
+    scheduler.config.details_on_dblclick=false;
+    scheduler.config.server_utc = true; 
+    scheduler.config.xml_date="%Y-%m-%d %H:%i";
+
+    scheduler.config.first_hour = 0;
+    scheduler.config.last_hour = 24;
+
+    scheduler.locale.labels.agenda_tab = "{{ "Agenda" | trans }}";
+scheduler.locale= {
+    date:{  month_full: ["{{ "month.1" | trans }}","{{ "month.2" | trans }}","{{ "month.3" | trans }}","{{ "month.4" | trans }}","{{ "month.5" | trans }}","{{ "month.6" | trans }}","{{ "month.7" | trans }}","{{ "month.8" | trans }}","{{ "month.9" | trans }}","{{ "month.10" | trans }}","{{ "month.11" | trans }}","{{ "month.12" | trans }}"],
+            month_short:["{{ "short_month.1" | trans }}","{{ "short_month.2" | trans }}","{{ "short_month.3" | trans }}","{{ "short_month.4" | trans }}","{{ "short_month.5" | trans }}","{{ "short_month.6" | trans }}","{{ "short_month.7" | trans }}","{{ "short_month.8" | trans }}","{{ "short_month.9" | trans }}","{{ "short_month.10" | trans }}","{{ "short_month.11" | trans }}","{{ "short_month.12" | trans }}"],
+            day_full:["{{ "dow.Sunday" | trans }}","{{ "dow.Monday" | trans }}","{{ "dow.Tuesday" | trans }}","{{ "dow.Wednesday" | trans }}","{{ "dow.Thursday" | trans }}","{{ "dow.Friday" | trans }}","{{ "dow.Saturday" | trans }}"],
+            day_short:["{{ "short_dow.Sunday" | trans }}","{{ "short_dow.Monday" | trans }}","{{ "short_dow.Tuesday" | trans }}","{{ "short_dow.Wednesday" | trans }}","{{ "short_dow.Saturday" | trans }}"]},
+            labels: {   dhx_cal_today_button: "Aujourd'hui",
+                        day_tab:"{{ "Day" | trans }}", week_tab:"{{ "Week" | trans }}", month_tab:"{{ "Month" | trans }}", new_event:"{{ "New event" | trans }}",icon_save:"{{ "Save" | trans }}",
+icon_cancel:"{{ "Cancel" | trans }}",icon_details:"{{ "Détails" | trans }}",icon_edit:"{{ "Edit" | trans }}",icon_delete:"{{ "Delete" | trans }}",confirm_closing:"",confirm_deleting:"{{ "Do you confirm ?" | trans }}",section_description:"{{ "Description" | trans }}",section_time:"{{ "Period" | trans }}",full_day:"{{ "Full day" | trans }}",confirm_recurring:"{{ "Day" | trans }}",section_recurring:"PÃ©riodicitÃ©",button_recurring:"DÃ©sactivÃ©",button_recurring_open:"ActivÃ©",button_edit_series:"Modifier la sÃ©rie",button_edit_occurrence:"Modifier une copie",
+agenda_tab:"Jour",date:"Date",description:"Description",year_tab:"AnnÃ©e",week_agenda_tab:"Jour",grid_tab:"Grille",drag_to_create:"Drag to create",drag_to_move:"Drag to move",message_ok:"OK",message_cancel:"Cancel"}};
+//# sourceMappingURL=../sources/locale/locale_fr.js.map
+    scheduler.config.lightbox.sections=[	
+        { name:"description", height:130, map_to:"text", type:"textarea" , focus:true},
+        {name:"time", height:72, type:"time", map_to:"auto"}
+     ];
+
+    scheduler.templates.event_class=function(start,end,event){
+     return event.color;
+    }
+
+    scheduler.config.readonly = true;
+    scheduler.init('scheduler_here');	
+
+    timeline  = myMainTabbar.cells("b").attachScheduler( null , "day", 'scheduler_here');
+    scheduler.attachEvent("onClick",function(id, value){
+        JobDetail(id)
+    });
+
+    // Premier chargement avant le smart rendering
+    autorefresh = setInterval( "GridRefresh()",update*1000);
+});
+
+function GlobalRefresh() {
+    clearInterval( autorefresh );
+    GridRefresh();
+    autorefresh = setInterval( "GridRefresh()", update*1000 );
+}
+
+function GridRefresh() {
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    if (minutes < 10){
+    minutes = "0" + minutes;
+    }
+    if (seconds < 10){
+    seconds = "0" + seconds;
+    }
+    myRibbon.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
+    myGrid.load("{{ url('xml_DS_jobs_grid') }}?time="+seconds+"&history="+max_history+"&cyclic="+cyclic+"&only_warning="+only_warning, function(){    
+        globalLayout.cells("b").progressOff();
+        myGrid.refreshFilters();
+        myGrid.filterByAll();
+        myDonut.load( "{{ url('xml_DS_jobs_pie') }}?cyclic="+cyclic+"&only_warning="+only_warning, function () {
+            myDonut.refresh();                
+            globalLayout.progressOff();
+            globalLayout.cells("a").progressOff();
+            dhx4.ajax.get( "{{ url('xml_DS_jobs_timeline') }}?cyclic="+cyclic+"&only_warning="+only_warning, function(loader1){                
+                scheduler.clearAll();
+                scheduler.parse(loader1.xmlDoc.responseText);
+            });            
+        });
+    });    
+}
+
+function JobDetail(id) {
+    globalLayout.cells("c").progressOn();
+    myForm.load("{{ url('xml_DS_jobs_form') }}?id="+id, function () {
+        var status = myGrid.cells(id, 3 ).getValue();
+        myLog.clearAll();
+        var history_id = myGrid.getUserData(id,"SCHEDULER_HISTORY_ID");
+        if (history_id>0) {
+            myLog.load("{{ url('xml_JID_order_log') }}?id="+history_id, function (id) {
+                globalLayout.cells("c").progressOff()
+            });
+        }
+        else {
+            globalLayout.cells("c").progressOff();
+        }
+    });
+}
+
+</script>
+</body>
+{% endblock %}

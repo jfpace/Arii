@@ -14,8 +14,8 @@ arii_JOC_index:
     pattern:  /
     defaults: { _controller: AriiJOCBundle:Orders:index }
 
-arii_ATS_readme:
-    pattern:  /
+arii_JOC_readme:
+    pattern:  /readme
     defaults: { _controller: AriiJOCBundle:Default:readme }
 
 json_JOC_ribbon:

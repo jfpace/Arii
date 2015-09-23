@@ -25,6 +25,43 @@ arii_ATS_doc:
     pattern:  /doc
     defaults: { _controller: AriiATSBundle:Default:doc }
 
+arii_ATS_sendevent:
+    pattern:  /sendevent
+    defaults: { _controller: AriiATSBundle:Default:sendevent }
+
+arii_ATS_autorep:
+    pattern:  /autorep
+    defaults: { _controller: AriiATSBundle:Default:autorep }
+
+arii_ATS_autosyslog:
+    pattern:  /autosyslog
+    defaults: { _controller: AriiATSBundle:Default:autosyslog }
+
+xml_ATS_autosyslog:
+    pattern:  /autosyslog.xml
+    defaults: { _controller: AriiATSBundle:Default:autosyslog_grid }
+
+html_ATS_chk_auto_up:
+    pattern:  /chk_auto_up.html
+    defaults: { _controller: AriiATSBundle:Default:chk_auto_up }
+
+# SENDEVENT
+json_ATS_sendevent_form:
+    pattern:  /sendevent/form.json
+    defaults: { _controller: AriiATSBundle:Sendevent:form }
+
+xml_ATS_sendevent_form_toolbar:
+    pattern:  /sendevent/form_toolbar.xml
+    defaults: { _controller: AriiATSBundle:Sendevent:form_toolbar }
+
+xml_ATS_sendevent_toolbar:
+    pattern:  /sendevent/toolbar.xml
+    defaults: { _controller: AriiATSBundle:Sendevent:toolbar }
+
+html_ATS_sendevent_exec:
+    pattern:  /sendevent/exec.html
+    defaults: { _controller: AriiATSBundle:Sendevent:sendevent }
+
 # --------------------------------------------------------------------------
 # JOBS
 # --------------------------------------------------------------------------
@@ -48,10 +85,13 @@ xml_ATS_jobs_grid_toolbar:
     pattern:  /jobs/toolbar.xml
     defaults: { _controller: AriiATSBundle:Jobs:grid_toolbar }
 
+xml_ATS_jobs_grid_menu:
+    pattern:  /jobs/menu.xml
+    defaults: { _controller: AriiATSBundle:Jobs:grid_menu }
+
 xml_ATS_jobs_barchart:
     pattern:  /jobs/barchart.xml
     defaults: { _controller: AriiATSBundle:Jobs:barchart }
-
 
 # --------------------------------------------------------------------------
 # JOB
@@ -64,10 +104,18 @@ xml_ATS_job_form:
     pattern:  /job/form.xml
     defaults: { _controller: AriiATSBundle:Job:xml }
 
+arii_ATS_job_history:
+    pattern:  /job/history
+    defaults: { _controller: AriiATSBundle:Job:history }
+
 xml_ATS_job_history:
     pattern:  /job/history.xml
-    defaults: { _controller: AriiATSBundle:Job:history }
-    
+    defaults: { _controller: AriiATSBundle:Job:history_grid }
+
+xml_ATS_job_history_chart:
+    pattern:  /job/history_chart.xml
+    defaults: { _controller: AriiATSBundle:Job:history_chart  }
+
 # --------------------------------------------------------------------------
 # EVENTS
 # --------------------------------------------------------------------------
@@ -88,7 +136,7 @@ xml_ATS_events_grid_toolbar:
     defaults: { _controller: AriiATSBundle:Events:toolbar }
 
 # --------------------------------------------------------------------------
-# EVENTS
+# SERVERS
 # --------------------------------------------------------------------------
 arii_ATS_servers:
     pattern:  /servers
@@ -106,14 +154,32 @@ xml_ATS_servers2_grid:
     pattern:  /servers/grid2.xml
     defaults: { _controller: AriiATSBundle:Servers:grid2 }
 
-xml_ATS_servers3_grid:
-    pattern:  /servers/grid3.xml
-    defaults: { _controller: AriiATSBundle:Servers:grid3 }
-
 xml_ATS_servers_grid_toolbar:
     pattern:  /servers/toolbar.xml
     defaults: { _controller: AriiATSBundle:Servers:toolbar }
-    
+
+xml_ATS_processes_pie:
+    pattern:  /servers/pie.xml
+    defaults: { _controller: AriiATSBundle:Servers:pie }    
+
+# AGENTS
+
+arii_ATS_agents:
+    pattern:  /agents
+    defaults: { _controller: AriiATSBundle:Agents:index }
+
+xml_ATS_agents_grid:
+    pattern:  /agents/grid.xml
+    defaults: { _controller: AriiATSBundle:Agents:agents }
+
+xml_ATS_agents_pie:
+    pattern:  /agents/pie.xml
+    defaults: { _controller: AriiATSBundle:Agents:pie }
+
+xml_ATS_agents_pie:
+    pattern:  /agents/pie.xml
+    defaults: { _controller: AriiATSBundle:Agents:pie }
+
 # --------------------------------------------------------------------------
 # PROCESSED
 # --------------------------------------------------------------------------
@@ -270,3 +336,18 @@ xml_ATS_instructions_grid_toolbar:
 arii_ATS_generate:
     pattern:  /generate
     defaults: { _controller: AriiATSBundle:Graphviz:generate }
+
+# --------------------------------------------------------------------------
+# REQUESTS
+# --------------------------------------------------------------------------
+arii_ATS_requests:
+    pattern:  /requests
+    defaults: { _controller: AriiATSBundle:Requests:index }
+
+arii_ATS_requests_result:
+    pattern:  /requests/result.html
+    defaults: { _controller: AriiATSBundle:Requests:result }
+
+arii_ATS_requests_summary:
+    pattern:  /requests/summary.html
+    defaults: { _controller: AriiATSBundle:Requests:summary }

@@ -1,0 +1,64 @@
+{
+   "items":
+   [
+      {   "type":"block", 
+          text:"{{ "Plan" | trans }}", 
+          "text_pos": "top", 
+          "list":
+          [
+             {   "type": "buttonSelect", 
+                 text:"", 
+                 "isbig": true, 
+                 "img": "48/plan.png", 
+                 items:
+                 [ 
+                    { id:"menu_order", text: "{{ "Orders" | trans }}", img: "order.png" },
+                    { id:"menu_job", text: "{{ "Jobs" | trans }}", img: "job.png" }
+                 ]
+              },
+          ]
+      },      
+      {   "type":"block", 
+          text:"{{ "Forecast" | trans }}", 
+          "text_pos": "bottom", 
+          "list":
+          [
+              {   id: "ref_past", 
+                  "type":"buttonSelect", 
+                  text:"{{ app.session.get('past') | slice (0,10) }}", 
+                  "img": "timeline.png",
+                  "items": 
+                  [ 
+                     { id: "0", text: "{{ "Today" | trans }}" },
+                     { id: "-1", text: "{{ "Yesterday" | trans }}" },
+                     { id: "-2", text: "2 {{ "days" | trans }}" },
+                     { id: "-3", text: "3 {{ "days" | trans }}" },
+                     { id: "-4", text: "4 {{ "days" | trans }}" },
+                     { id: "-5", text: "5 {{ "days" | trans }}" },
+                     { id: "-6", text: "6 {{ "days" | trans }}" }
+                  ]
+              },
+             {   id: "refresh", 
+                  "type":"buttonSelect", 
+                  text:"--:--:--", 
+                  "img": "refresh.png",
+                  "items": 
+                  [ 
+                     { id: "1800", text: "15 {{ "minutes" | trans }}" },
+                     { id: "1800", text: "30 {{ "minutes" | trans }}" },
+                     { id: "3600", text: "1 {{ "hour" | trans }}" },
+                     { id: "7200", text: "2 {{ "hours" | trans }}" },
+                     { id: "14400", text: "4 {{ "hours" | trans }}" },
+                     { id: "28800", text: "8 {{ "hours" | trans }}" }
+                  ]
+              },
+              {   id : "group_2", 
+                  type : "group", 
+                  list : 
+                  [   {id:"cyclic","type":"buttonTwoState",text:"","img":"repeat.png"},
+                      {id:"only_warning","type":"buttonTwoState",text:"","img":"warning.png" /*, state: true*/ }                  ]
+              }
+          ]
+      }
+   ]
+}

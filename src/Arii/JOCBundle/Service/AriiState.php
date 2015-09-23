@@ -30,20 +30,20 @@ class AriiState
         $data = $db->Connector('data');
         
         // Jobs
-        $Fields = array( '{spooler}' => 'fs.name',
-                         '{job_name}'   => 'fj.path' );
+        $Fields = array( '{spooler}' => 'NAME',
+                         '{job_name}'   => 'PATH' );
 
         if (!$ordered) {
-            $Fields['{standalone2}'] = 'fj.ordered';
+            $Fields['{standalone2}'] = 'ORDERED';
         }
         if ($only_warning) {
-            $Fields['{!pending}'] = 'fj.state';
+            $Fields['{!pending}'] = 'STATE';
         }
-        $qry = $sql->Select(array('fj.SPOOLER_NAME as SPOOLER',
-                        'fj.ID','fj.PATH','fj.STATE','fj.STATE_TEXT','fj.TITLE','fj.UPDATED','fj.ORDERED','fj.NEXT_START_TIME','fj.LAST_INFO','fj.LEVEL','fj.HIGHEST_LEVEL','fj.LAST_WARNING','fj.LAST_ERROR','fj.ERROR','fj.WAITING_FOR_PROCESS','fj.ORDERED','fj.PROCESS_CLASS_NAME','fj.SCHEDULE_NAME' ))
-                .$sql->From(array('FOCUS_JOBS fj'))
+        $qry = $sql->Select(array('SPOOLER_NAME as SPOOLER',
+                        'ID','PATH','STATE','STATE_TEXT','TITLE','UPDATED','ORDERED','NEXT_START_TIME','LAST_INFO','LEVEL','HIGHEST_LEVEL','LAST_WARNING','LAST_ERROR','ERROR','WAITING_FOR_PROCESS','ORDERED','PROCESS_CLASS_NAME','SCHEDULE_NAME' ))
+                .$sql->From(array('FOCUS_JOBS'))
                 .$sql->Where($Fields)
-                .$sql->OrderBy(array('fj.SPOOLER_NAME','fj.PATH'));
+                .$sql->OrderBy(array('SPOOLER_NAME','PATH'));
 
         $res = $data->sql->query($qry);
         $Jobs = array();

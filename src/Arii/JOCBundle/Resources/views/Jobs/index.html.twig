@@ -101,7 +101,7 @@ dhtmlxEvent(window,"load",function(){
     myGrid.enableContextMenu(menu);
     myGrid.enableAlterCss("","");
     myGrid.init();
-    myGrid.loadXML( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning );
+    myGrid.load( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning );
     myGrid.setColumnHidden(3,true); 
     myGrid.setColumnHidden(7,true); 
     myGrid.setColumnHidden(8,true); 
@@ -168,7 +168,7 @@ function GridRefresh() {
     seconds = "0" + seconds;
     }
     myRibbon.setItemText( "refresh", hours + ":" + minutes + ":" +  seconds );
-    myGrid.loadXML( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning, function () {
+    myGrid.load( "{{ url('xml_JOC_jobs_grid') }}?chained="+chained+"&only_warning="+only_warning, function () {
         globalLayout.cells("b").progressOff();
         myDonut.load( "{{ url('xml_JOC_jobs_pie') }}?chained="+chained+"&only_warning="+only_warning, function () {
             myDonut.refresh();
@@ -189,12 +189,12 @@ function JobDetail(id) {
     myTabbar.cells("execution").progressOn();
     myForm.load("{{ url('xml_JOC_job_form') }}?id="+id, function () {
         myDetailLayout.cells("a").progressOff();
-        myParameters.loadXML("{{ url('xml_JOC_job_params') }}?id="+id, function() {           
+        myParameters.load("{{ url('xml_JOC_job_params') }}?id="+id, function() {           
             myDetailLayout.cells("b").progressOff();
             myExecution.load( "{{ url('xml_JOC_job_execution_form') }}?id="+id, function () {
                     myTabbar.cells("execution").progressOff();
-    /*                mySpooler.loadXML( "{{ url('xml_JOC_job_spooler_form') }}?id="+id, function () {
-                    myTarget.loadXML( "{{ url('xml_JOC_job_target_form') }}?id="+id, function () {
+    /*                mySpooler.load( "{{ url('xml_JOC_job_spooler_form') }}?id="+id, function () {
+                    myTarget.load( "{{ url('xml_JOC_job_target_form') }}?id="+id, function () {
                     })            
                 })            
 */            })            

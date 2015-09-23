@@ -33,4 +33,9 @@ Contenu de **app/config/parameters.yml**:
 - Commandes par ssh (unix)
 - Commandes web services (11.3.6)
 
+Releases
+--------
+
+__1.5.0__
+- Exécution de commmande en ssh (serveur Autosys Linux)
 

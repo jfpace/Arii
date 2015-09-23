@@ -1,0 +1,98 @@
+arii_DS_Command:
+    pattern:  /XML/command
+    defaults: { _controller: AriiDSBundle:SOS:XMLCommand }
+
+# --------------------------------------------------------------------------
+# PAGES PRINCIPALES
+# --------------------------------------------------------------------------
+arii_DS_index:
+    pattern:  /
+    defaults: { _controller: AriiDSBundle:Jobs:index }
+
+arii_DS_readme:
+    pattern:  /readme
+    defaults: { _controller: AriiDSBundle:Default:readme }
+
+xml_DS_toolbar:
+    pattern:  /toolbar.xml
+    defaults: { _controller: AriiDSBundle:Default:toolbar }
+
+json_DS_ribbon:
+    pattern:  /ribbon.json
+    defaults: { _controller: AriiDSBundle:Default:ribbon }
+
+xml_DS_menu:
+    pattern:  /menu.xml
+    defaults: { _controller: AriiDSBundle:Default:menu }
+
+# --------------------------------------------------------------------------
+# Jobs
+# --------------------------------------------------------------------------
+arii_DS_jobs:
+    pattern:  /jobs
+    defaults: { _controller: AriiDSBundle:Jobs:index }
+    
+xml_DS_jobs_grid:
+    pattern:  /jobs/grid.xml
+    defaults: { _controller: AriiDSBundle:Jobs:grid }
+
+xml_DS_jobs_pie:
+    pattern:  /jobs/pie.xml
+    defaults: { _controller: AriiDSBundle:Jobs:pie }
+
+xml_DS_jobs_toolbar:
+    pattern:  /jobs/toolbar.xml
+    defaults: { _controller: AriiDSBundle:Jobs:toolbar }
+
+xml_DS_jobs_timeline:
+    pattern:  /jobs/timeline.xml
+    defaults: { _controller: AriiDSBundle:Jobs:timeline }
+
+json_DS_jobs_form:
+    pattern:  /jobs/form.json
+    defaults: { _controller: AriiDSBundle:Jobs:form }
+
+xml_DS_jobs_form:
+    pattern:  /job/form.xml
+    defaults: { _controller: AriiDSBundle:Job:form }
+
+xml_DS_jobs_form_toolbar:
+    pattern:  /jobs/form_toolbar.xml
+    defaults: { _controller: AriiDSBundle:Jobs:form_toolbar }
+
+
+# --------------------------------------------------------------------------
+# Orders
+# --------------------------------------------------------------------------
+arii_DS_orders:
+    pattern:  /orders
+    defaults: { _controller: AriiDSBundle:Orders:index }
+    
+xml_DS_orders_grid:
+    pattern:  /orders/grid.xml
+    defaults: { _controller: AriiDSBundle:Orders:grid }
+
+xml_DS_orders_pie:
+    pattern:  /orders/pie.xml
+    defaults: { _controller: AriiDSBundle:Orders:pie }
+
+xml_DS_orders_toolbar:
+    pattern:  /orders/toolbar.xml
+    defaults: { _controller: AriiDSBundle:Orders:toolbar }
+    
+json_DS_orders_form:
+    pattern:  /orders/form.json
+    defaults: { _controller: AriiDSBundle:Orders:form }
+
+xml_DS_order_form:
+    pattern:  /order/form.xml
+    defaults: { _controller: AriiDSBundle:Order:form }
+
+xml_DS_orders_form_toolbar:
+    pattern:  /orders/form_toolbar.xml
+    defaults: { _controller: AriiDSBundle:Orders:form_toolbar }
+
+xml_DS_orders_timeline:
+    pattern:  /orders/timeline.xml
+    defaults: { _controller: AriiDSBundle:Orders:timeline }
+

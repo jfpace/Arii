@@ -1,9 +1,25 @@
-{# src/Arii/JIDBundle/Resources/views/index.html.twig #}
 {% extends "AriiTimeBundle::layout.html.twig" %}
 {% block body %}
-<script>
+<script language="javascript">
+dhtmlxEvent(window,"load",function(){  
+        
+    globalLayout = new dhtmlXLayoutObject(document.body,"2U");  
+    globalLayout.cells("a").setWidth(350); 
+    globalLayout.cells("a").hideHeader(); 
+    globalLayout.cells("b").hideHeader(); 
 
-var dhxLayout = new dhtmlXLayoutObject("mygrid","2E");
+    globalMenu = globalLayout.cells("a").attachMenu();
+    globalMenu.setIconsPath( "{{ asset('/bundles/ariicore/images/menu/') }}" );
+    globalMenu.loadStruct("{{ url('xml_menu') }}?route={{ app.request.attributes.get('_route') }}");
+
+    myRibbon = globalLayout.cells("a").attachRibbon(); 
+    myRibbon.setIconPath( "{{ asset('/bundles/ariicore/images/ribbon/') }}" );
+    myRibbon.loadStruct("{{ url('json_Time_ribbon') }}");
+    myRibbon.attachEvent("onStateChange", StateRibbon );
+    myRibbon.attachEvent("onClick", ClickRibbon );    
+    
+
+});
 
 </script>
 {% endblock %}
