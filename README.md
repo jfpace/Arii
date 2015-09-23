@@ -2,7 +2,7 @@ Portail Ari'i
 =============
 Ari'i est un portail hébergeant des modules principalement axés sur l'exploitation informatique. 
 
-Pour toute information sur le projet: [Solutions Open Source](http://www.sosparis.com)
+Pour toute information sur le projet: [Solutions Open Source](http://www.sos-paris.com)
 
 Une machine virtuelle pré-configurée est disponible: [machine virtuelle](http://www.sosparis.com/download/Arii64.zip)
 
