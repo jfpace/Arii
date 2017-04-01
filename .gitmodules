@@ -22,3 +22,15 @@
 [submodule "src/Arii/AdminBundle"]
 	path = src/Arii/AdminBundle
 	url = https://github.com/AriiPortal/AdminBundle.git
+[submodule "web/dhtmlx_scheduler"]
+	path = web/dhtmlx_scheduler
+	url = https://github.com/DHTMLX/scheduler.git
+[submodule "web/dhtmlx_gantt"]
+	path = web/dhtmlx_gantt
+	url = https://github.com/DHTMLX/gantt.git
+[submodule "vendor/dhtmlx"]
+	path = vendor/dhtmlx
+	url = https://github.com/DHTMLX/connector-php.git
+[submodule "vendor/parsedown"]
+	path = vendor/parsedown
+	url = https://github.com/erusev/parsedown.git
