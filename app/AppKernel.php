@@ -23,7 +23,8 @@ class AppKernel extends Kernel
             new Arii\DSBundle\AriiDSBundle(),
             new Arii\JOCBundle\AriiJOCBundle(),
             new Arii\GraphvizBundle\AriiGraphvizBundle(),
-            new Arii\ReportBundle\AriiReportBundle()
+            new Arii\ReportBundle\AriiReportBundle(),
+            new Arii\AdminBundle\AriiAdminBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -19,3 +19,6 @@
 [submodule "src/Arii/ReportBundle"]
 	path = src/Arii/ReportBundle
 	url = https://github.com/AriiPortal/ReportBundle.git
+[submodule "src/Arii/AdminBundle"]
+	path = src/Arii/AdminBundle
+	url = https://github.com/AriiPortal/AdminBundle.git
