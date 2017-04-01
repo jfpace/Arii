@@ -1,3 +1,6 @@
 [submodule "src/CoreBundle"]
 	path = src/Arii/CoreBundle
 	url = https://github.com/AriiPortal/CoreBundle.git
+[submodule "src/Arii/UserBundle"]
+	path = src/Arii/UserBundle
+	url = https://github.com/AriiPortal/UserBundle.git
