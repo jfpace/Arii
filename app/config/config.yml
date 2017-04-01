@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -78,3 +78,16 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+# Sonata configuration
+
+
+# Configuration FOSUserBundle
+fos_user:
+    db_driver:     orm                        # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
+    firewall_name: main                       # Le nom du firewall duquel on utilisera ces utilisateurs
+    user_class:    Arii\UserBundle\Entity\User # La classe de l'entité User que nous venons de définir
+    from_email:
+             address: arii@sos-paris.com
+             sender_name: Arii

@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new Arii\JIDBundle\AriiJIDBundle(),
             new Arii\DSBundle\AriiDSBundle(),
             new Arii\JOCBundle\AriiJOCBundle(),
-            new Arii\GraphvizBundle\AriiGraphvizBundle()
+            new Arii\GraphvizBundle\AriiGraphvizBundle(),
+            new Arii\ReportBundle\AriiReportBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

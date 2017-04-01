@@ -1,3 +1,76 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+arii_homepage:
+    pattern:  /
+    defaults: {_controller: AriiCoreBundle:Default:index }
+
+arii_home:
+    pattern:  /home/{_locale}
+    defaults: { _controller: AriiCoreBundle:Default:index }
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+# ========================================
+# Core Bundle
+# ----------------------------------------
+arii_core:
+    resource: "@AriiCoreBundle/Resources/config/routing.yml"
+    prefix:   /home/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+# ========================================
+# JID 
+# ----------------------------------------
+arii_jid:
+    resource: "@AriiJIDBundle/Resources/config/routing.yml"
+    prefix:   /jid/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+        
+arii_jid_public:
+    resource: "@AriiJIDBundle/Resources/config/routing_public.yml"
+    prefix:   /public
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+arii_jid_nagios:
+    resource: "@AriiJIDBundle/Resources/config/routing_nagios.yml"
+    prefix:   /nagios
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+
+# ========================================
+# DS 
+# ----------------------------------------
+arii_ds:
+    resource: "@AriiDSBundle/Resources/config/routing.yml"
+    prefix:   /ds/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# JOC
+# ----------------------------------------
+arii_JOC:
+    resource: "@AriiJOCBundle/Resources/config/routing.yml"
+    prefix:   /joc/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp 
+
+# ========================================
+# Graphviz
+# ----------------------------------------
+arii_GVZ:
+    resource: "@AriiGraphvizBundle/Resources/config/routing.yml"
+    prefix:   /gvz/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp
+
+# ========================================
+# Report
+# ----------------------------------------
+arii_Report:
+    resource: "@AriiReportBundle/Resources/config/routing.yml"
+    prefix:   /report/{_locale}
+    requirements:
+        _locale: en|fr|es|de|cn|ar|ru|jp

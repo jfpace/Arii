@@ -16,3 +16,6 @@
 [submodule "src/Arii/GVZBundle"]
 	path = src/Arii/GraphvizBundle
 	url = https://github.com/AriiPortal/GraphvizBundle.git
+[submodule "src/Arii/ReportBundle"]
+	path = src/Arii/ReportBundle
+	url = https://github.com/AriiPortal/ReportBundle.git
