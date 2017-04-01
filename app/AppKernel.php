@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Arii\CoreBundle\AriiCoreBundle(),
             new Arii\UserBundle\AriiUserBundle(),
-            new Arii\JIDBundle\AriiJIDBundle()
+            new Arii\JIDBundle\AriiJIDBundle(),
+            new Arii\DSBundle\AriiDSBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

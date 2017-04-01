@@ -7,3 +7,6 @@
 [submodule "src/Arii/JIDBundle"]
 	path = src/Arii/JIDBundle
 	url = https://github.com/AriiPortal/JIDBundle.git
+[submodule "src/Arii/DSBundle"]
+	path = src/Arii/DSBundle
+	url = https://github.com/AriiPortal/DSBundle.git
