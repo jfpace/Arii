@@ -13,3 +13,6 @@
 [submodule "src/Arii/JOCBundle"]
 	path = src/Arii/JOCBundle
 	url = https://github.com/AriiPortal/JOCBundle.git
+[submodule "src/Arii/GVZBundle"]
+	path = src/Arii/GraphvizBundle
+	url = https://github.com/AriiPortal/GraphvizBundle.git
