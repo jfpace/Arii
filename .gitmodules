@@ -10,3 +10,6 @@
 [submodule "src/Arii/DSBundle"]
 	path = src/Arii/DSBundle
 	url = https://github.com/AriiPortal/DSBundle.git
+[submodule "src/Arii/JOCBundle"]
+	path = src/Arii/JOCBundle
+	url = https://github.com/AriiPortal/JOCBundle.git
