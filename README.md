@@ -66,7 +66,7 @@ Ces composants sont à intégrer dans le portail Symfony2.
 ### DHTMLX Suite
 DHTMLX offre une bibliothèque javascript complète pour la partie frontale. L'avantage notable, outre la grande diversité de composant, est sa modularité et la facilité d'attacher les composants les nus aux autres pour créer des applications complexes.
 
-La bibliothèque doit être téléchargée et déposée dans le répertoire __web__ de Symfony2 avec le nom __dhtmlx_gpl__
+La bibliothèque doit être téléchargée et déposée dans le répertoire __web__ de Symfony2 avec le nom __dhtmlx_
 
 Pour plus d'information: [DHTMLX Suite](http://dhtmlx.com/docs/products/dhtmlxSuite/)
 
@@ -115,7 +115,6 @@ puis de renommer en dhtmlx
 
     mv connector-php dhtmlx
 
-Pour plus d'information: [DHTMLX Gantt](http://dhtmlx.com/docs/products/dhtmlxGantt/)
 
 ### Parsedown
 Parsedown est utilisé pour la partie documentation en MarkDown (format utilisé pour le présent document) et pour les rst attendus par Symfony dans la partie documenation des bundles.
